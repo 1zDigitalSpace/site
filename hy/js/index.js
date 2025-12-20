@@ -24,8 +24,8 @@ const sounds = [
     { name: "Hutao", path: "https://static.codemao.cn/pickduck/B127r70bgg.mp3" },
     { name: "Furina", path: "https://static.codemao.cn/pickduck/BJl0u70Wgg.mp3" },
     { name: "Klee", path: "https://static.codemao.cn/pickduck/S1yZ_mR-eg.mp3" },
-    { name: "Ciallo～(∠・ω< )⌒★", path: "https://static.codemao.cn/pickduck/HJaHo7RZle.mp3" },
-    { name: "Mambo", path: "https://static.codemao.cn/pickduck/ryuAR9Fqlx.mp3" },
+    { name: "Ciallo～(∠・ω< )⌒★", path: "https://static.codemao.cn/pickduck/HJaHo7RZle.mp3" },/*
+    { name: "Mambo", path: "https://static.codemao.cn/pickduck/ryuAR9Fqlx.mp3" },*/
 ];
 const 音乐 = new Audio();
 
