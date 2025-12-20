@@ -217,7 +217,7 @@ function 执行抽奖(总步骤数, 当前步骤) {
 
     setTimeout(() => {
         执行抽奖(总步骤数, 当前步骤 + 1);
-    }, 50 + (当前步骤 * 5));
+    }, 110 + (当前步骤 * 10));
 }
 
 window.addEventListener('load', function () {
@@ -242,7 +242,7 @@ window.addEventListener('load', function () {
             开始按钮.disabled = true;
             开始按钮.textContent = "抽奖中...";
 
-            const 总步骤数 = 15 + Math.floor(Math.random() * 10);
+            const 总步骤数 = 40 + Math.floor(Math.random() * 5);
             执行抽奖(总步骤数, 0);
         }
     });
