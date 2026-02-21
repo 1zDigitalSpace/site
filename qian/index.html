@@ -212,18 +212,18 @@
             <pre>千 / 小千 / @千</pre>
             
             <h3>0.获取使用帮助</h3>
-            <pre>help</pre>
+            <pre>/help</pre>
             <h3>1.大语言模型(llm)功能</h3>
             <p>小千已接入<span class="a0"> qwen3-vl-8b </span>模型，支持图像识别功能</p>
             <p>触发关键词或私聊中发送任意非函数名内容即可触发llm功能,聊天信息中可以附带图片,可以查询系统时间和天气等信息,可以问一些简单题目</p>
             <p style="color: red;">在千反应异常说梦话的时候请使用下方指令重置！！！</p>
-            <pre>reset</pre>  
+            <pre>/reset</pre>  
             <h3>2.运势检测打卡</h3>
-            <pre>运势 / 签到 / 打卡 - 发送生成的当天的运势和累计打卡天数</pre>
+            <pre>/运势 签到 打卡 - 发送生成的当天的运势和累计打卡天数</pre>
             <h3>3.qq名片点赞</h3>
             <pre>赞我</pre>
             <h3>4.语音点歌</h3>
-            <pre>点歌 &lt;歌名&gt; [歌手]</pre>
+            <pre>/点歌 &lt;歌名&gt; [歌手]</pre>
             <h3>5.戳一戳互动</h3>
             <p>双击千的头像,触发一条互动消息</p>  
             <h3>6.复读</h3>
@@ -236,20 +236,20 @@
             <h3>8.github仓库解析</h3>
             <p>检测到github仓库链接后自动发送解析的链接内容</p>  
             <h3>9.生成壁纸</h3>
-            <pre>moe</pre>
+            <pre>/moe</pre>
             <h3>10.喜报悲报</h3>
             <pre>喜报 &lt;你的内容&gt; 
 悲报 &lt;你的内容&gt;</pre>
             <h3>11.开盒</h3>
-            <pre>盒 &lt;@好友&gt;</pre>
+            <pre>/盒 &lt;@好友&gt;</pre>
             <h3>13.Minecraft工具</h3>
-            <pre>mcs &lt;minecraft服务器地址&gt; - 查看服务器状态</pre>
+            <pre>/mcs &lt;minecraft服务器地址&gt; - 查看服务器状态</pre>
             <h3>14.早安晚安</h3>
-            <pre>早安 / 晚安</pre>
+            <pre>早安 晚安</pre>
             <h3>15.Arch Linux 软件包搜索</h3>
-            <pre>pkg &lt;软件包名称&gt; [仓库]</pre>
+            <pre>/pkg &lt;软件包名称&gt; [仓库]</pre>
             <h3>16.星空图解析</h3>
-            <pre>解析 &lt;需要解析的图片&gt;</pre>
+            <pre>/解析 &lt;需要解析的图片&gt;</pre>
             <h3>17.交通查询</h3>
             <pre>/车站 &lt;国铁车站名&gt; - 查看大屏信息。
 /地铁 &lt;城市&gt; &lt;起点&gt; &lt;终点&gt; [方案号] - 查看路线。
@@ -258,21 +258,32 @@
 /地铁帮助
 /机票帮助</pre>
             <h3>18.站长工具</h3>
-            <pre>tcping &lt;域名或IP地址&gt; &lt;port&gt; - TCP端口连通性测试
-ping &lt;网址&gt; - 测试指定网址的连通性
-siteno &lt;含http(s)的网址&gt; - 测试指定网址的延迟
-whois &lt;域名&gt; - 查询指定域名的whois信息
-port &lt;IP地址&gt; - 扫描指定IP地址的端口
-ip &lt;IP地址&gt; - 查询指定IP地址的信息</pre>
+            <pre>/tcping &lt;域名或IP地址&gt; &lt;port&gt; - TCP端口连通性测试
+/ping &lt;网址&gt; - 测试指定网址的连通性
+/siteno &lt;含http(s)的网址&gt; - 测试指定网址的延迟
+/whois &lt;域名&gt; - 查询指定域名的whois信息
+/port &lt;IP地址&gt; - 扫描指定IP地址的端口
+/ip &lt;IP地址&gt; - 查询指定IP地址的信息</pre>
             <h3>19.CPU/GPU查询</h3>
-            <pre>cpu - 查看CPU性能天梯图
-cpu &lt;CPU关键词&gt; - 查询特定CPU的详细信息
-cpu &lt;序号&gt; - 基于搜索结果查看详情
-gpu - 查看GPU性能天梯图
-gpu &lt;GPU关键词&gt; - 查询特定GPU的详细信息
-gpu &lt;序号&gt; - 基于搜索结果查看详情</pre>
-            <h3>20.系统状态</h3>
-            <pre>status</pre><!--
+            <pre>/cpu - 查看CPU性能天梯图
+/cpu &lt;CPU关键词&gt; - 查询特定CPU的详细信息
+/cpu &lt;序号&gt; - 基于搜索结果查看详情
+/gpu - 查看GPU性能天梯图
+/gpu &lt;GPU关键词&gt; - 查询特定GPU的详细信息
+/gpu &lt;序号&gt; - 基于搜索结果查看详情</pre>
+            <h3>20.和弦查询</h3>
+            <pre>/吟游诗人 Am7</pre>
+            <h3>21.代码分析</h3>
+            <pre>/代码分析
+int n, m;
+std::cin &gt;&gt; n &gt;&gt; m;
+for (int i = 0; i &lt; n; ++i) {
+  for (int j = 0; j &lt; n; ++j) {
+    for (int k = 0; k &lt; m; ++k) {
+      std::cout &lt;&lt; "hello world\n";
+    }
+  }
+}</pre><!--
             <h3>22.早柚核心</h3>
             <p>小千已接入早柚核心，支持原神、崩坏·星穹铁道、蔚蓝档案、明日方舟的游戏攻略查询和数据分析</p>
             <p style="color: red;">请确保信任小千以使用数据查询功能</p>
