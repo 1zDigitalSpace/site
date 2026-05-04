@@ -11,6 +11,7 @@
         <base href="">
         <style>
             :root {
+							--heo-main: linear-gradient(135deg, #4d9eff, #ff4dff);
               --canvas-opacity: 1;
             }
             
@@ -135,7 +136,7 @@
               transform: translate(-50%, -50%);
               border: 2px solid #d9d9d9;
               border-radius: 50%;
-              background-color: #FFAF50;
+              background-color: var(--heo-main);
             }
             #controlsWrap > #timelineContainer > #time {
               position: absolute;
@@ -187,7 +188,7 @@
               /* camera toggle styling */
             }
             #controlsWrap > #buttonsContainer .controlButton.toggle {
-              background: linear-gradient(90deg, transparent 0%, transparent 50%, #F60 50%, #F60 100%);
+              background: linear-gradient(90deg, transparent 0%, transparent 50%, #4d9eff 50%, #ff4dff 100%);
               background-size: 200% 100%;
               background-position: 100% 0%;
               background-repeat: no-repeat;
@@ -100530,10 +100531,10 @@ const initUI = (global) => {
     events.on('progress:changed', (progress) => {
         dom.loadingText.textContent = `${progress}%`;
         if (progress < 100) {
-            dom.loadingBar.style.backgroundImage = `linear-gradient(90deg, #F60 0%, #F60 ${progress}%, white ${progress}%, white 100%)`;
+            dom.loadingBar.style.backgroundImage = `linear-gradient(90deg, #4d9eff 0%, #ff4dff ${progress}%, white ${progress}%, white 100%)`;
         }
         else {
-            dom.loadingBar.style.backgroundImage = 'linear-gradient(90deg, #F60 0%, #F60 100%)';
+            dom.loadingBar.style.backgroundImage = 'linear-gradient(90deg, #4d9eff 0%, #ff4dff 100%)';
         }
     });
     // Hide loading bar once first frame is rendered
