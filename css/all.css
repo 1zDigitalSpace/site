@@ -1228,7 +1228,7 @@ body {
 	margin: 60px 0;
 }
 .works-container {
-	max-width: 500px;
+	max-width: 600px;
 	margin: 0 auto;
 }
 .works-title {
@@ -1288,13 +1288,18 @@ body {
 	margin-bottom: 20px;
 }
 .work-link {
+	font-size: 14px;
 	display: inline-block;
 	padding: 8px 24px;
+	margin-right:8px;
+	margin-bottom: 0;
 	background: var(--heo-main);
 	color: #fff;
 	border-radius: 30px;
 	transition: all 0.3s ease;
 	box-shadow: var(--heo-shadow-lightblack);
+	width: 70px;
+	text-align: center;
 }
 .work-link:hover {
 	transform: translateY(-2px);
