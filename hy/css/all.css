@@ -1,54 +1,44 @@
 * {
     box-sizing: border-box;
 }
-body {
-            font-family: 'Microsoft YaHei', sans-serif;
-            margin: 0;
-            padding: 0;
-            opacity: 0.7;
-            background-color: #572e2e;
-            background-image: url('https://static.codemao.cn/pickduck/H1gEDCqcxl.jpg');
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-size: cover;
-            text-align: center;
-            touch-action: manipulation;
-            /* 防止缩放时出现滚动条 */
-            overflow: hidden;
-            width: 100vw;
-            height: 100vh;
-        }
 
-/* 缩放包装容器 - 关键样式 */
-        #scaling-wrapper {
-            /* 设计稿基准尺寸 */
-            width: 1080px;
-            height: 720px;
-            /* 定位居中 */
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            /* 缩放基点设置为左上角，便于计算 */
-            /* 初始变换，后续由JS动态控制 */
-            /* 背景和阴影 */
-            background-color: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    margin: 0;
+    padding: 0;
+    opacity: 0.7;
+    background: linear-gradient(145deg, #f0f8ff, #fff0f5);
+    text-align: center;
+    touch-action: manipulation;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+#scaling-wrapper {
+    width: 1080px;
+    height: 720px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+}
 
 .舞台区域 {
-    background-color: white;
     text-align: center;
-    padding:18px 0;
+    padding: 18px 0;
     font-size: 36px;
     padding-bottom: 9px;
     padding-top: 16px;
     font-weight: bold;
-    border-bottom: 1px solid #eee;
     width: 100%;
+    background:  linear-gradient(135deg, #4d9eff, #ff4dff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* 若需保留背景渐变，可改用伪元素分离，这里为简单直接覆盖了背景，建议二选一 */
 }
 
 .容器 {
@@ -62,9 +52,9 @@ body {
     overflow: hidden;
     padding: 5px;
     padding-bottom: 0;
-    background-color: white;
     margin-bottom: 0;
 }
+
 .座位容器::-webkit-scrollbar-track {
     background-color: #00000000;
     display: none;
@@ -77,22 +67,24 @@ body {
     background-color: #00000000;
     display: none;
 }
+
 .行 {
     display: flex;
     justify-content: center;
     margin-bottom: 5px;
-    background-color: white;
 }
+
 .行标签 {
-    width: 38px;  /* 减小宽度以适应小屏幕 */
-    height:18px;
+    width: 38px;
+    height: 18px;
     text-align: center;
-    margin: 0 5px;  /* 减小边距 */
+    margin: 0 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 12.41px;  /* 设置基础字体大小 */
+    font-size: 12.41px;
+    color: #3b9dff;
 }
 
 .座位 {
@@ -105,7 +97,7 @@ body {
     align-items: center;
     border: 1px solid #9c9c9c;
     border-radius: 4px;
-    color: #572e2eab;
+    color: #1e4a6b;
     cursor: pointer;
     font-size: 12.41px;
     font-weight: 100;
@@ -113,41 +105,48 @@ body {
 }
 
 .座位.高亮 {
-    background-color: #ff0000;
-    color: white;
+    background-color: #66ccff;
+    color: #1e4a6b;
     font-weight: bold;
     transform: scale(1.8);
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(102, 204, 255, 0.7);
 }
 
 .过道 {
     width: 20.2px;
 }
+
 .控制区 {
     text-align: center;
-    background-color: white;
-    border-top: 1px solid #eee;
     padding: 15px 0;
     padding-top: 0;
     width: 100%;
     position: relative;
-    font-size: 14.4px; /* 设置基础字体大小 */
+    font-size: 14.4px;
+    color: #3b9dff;
 }
+
 .控制区 label {
-    font-size: inherit; /* 继承父元素字体大小 */
+    font-size: inherit;
+    color: inherit;
 }
 
 .控制区 input[type="number"] {
-    font-size: inherit; /* 继承父元素字体大小 */
+    font-size: inherit;
     height: 1.5em;
+    border: 1px solid #66ccff;
+    border-radius: 4px;
+    padding: 2px 6px;
+    background-color: #3b9dff;
 }
+
 button {
     font-size: 18px;
     height: 36px;
     width: 108px;
     padding-bottom: 5px;
     margin: 0 10px;
-    background-color: #ff3030;
+    background:  linear-gradient(135deg, #4d9eff, #ff4dff);;
     color: white;
     border: none;
     border-radius: 10000px;
@@ -157,27 +156,30 @@ button {
 }
 
 button:disabled {
-    background-color: #d66363;
+    background-color: #8fc3f0;
     cursor: not-allowed;
 }
 
 .特殊行 {
-    color: red;
+    color: #66ccff;
     font-weight: bold;
     text-align: center;
     margin: 5px 0;
     height: 10px;
 }
+
 .高亮列表 {
     font-size: 36px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0 18px;
+    color: #3b9dff;
 }
+
 .轮次显示 {
     font-size: 12.6px;
-    color: #666;
+    color: #3b9dff;
     margin: 7.2px 0;
 }
 
@@ -192,21 +194,22 @@ button:disabled {
 
 .输入组, .开关组 {
     display: inline;
-    User-select :none;
+    
 }
 
 #抽奖人数 {
     width: 40px;
     display: inline;
-    User-select :none;
+    
 }
 
 .开关标签 {
     margin-left: 0px;
     cursor: pointer;
-    User-select :none;
+    
+    color: #3b9dff;
 }
-.开关{
+
+.开关 {
     margin-left: 15px;
-    bottom:px;
 }
