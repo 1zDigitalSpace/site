@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>高三副本 · 破冰班会</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e6f0ff, #ffe6f0);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .card-container {
+            width: 80vw;
+            width: 80dvw;
+            height: 92vh;
+            height: 92dvh;
+            max-width: 1200px;
+            background: rgba(255, 255, 255, 0.30);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            padding: 2vh 2.8vw;
+            display: flex;
+            flex-direction: column;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            overflow: hidden;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        /* 导航 */
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1vh;
+            padding: 0 0.2vw;
+            flex-shrink: 0;
+            gap: 1vw;
+        }
+
+        .page-dots {
+            display: flex;
+            gap: 0.6vw;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .dot {
+            width: 1vw;
+            height: 1vw;
+            min-width: 10px;
+            min-height: 10px;
+            border-radius: 20px;
+            background: rgba(120, 120, 140, 0.25);
+            transition: 0.25s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: linear-gradient(135deg, #4d9eff, #ff4dff);
+            width: 2.8vw;
+            min-width: 30px;
+            box-shadow: 0 0 20px rgba(77, 158, 255, 0.35);
+            border-color: transparent;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(4px);
+            border: none;
+            border-radius: 40px;
+            padding: 0.4vh 1.4vw;
+            font-weight: 600;
+            font-size: clamp(0.7rem, 1.2vh, 1rem);
+            color: #1a1a2e;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .nav-btn:hover {
+            background: white;
+            transform: scale(0.96);
+        }
+        .nav-btn:active {
+            transform: scale(0.92);
+        }
+        .nav-btn:disabled {
+            opacity: 0.25;
+            pointer-events: none;
+            filter: grayscale(0.5);
+        }
+
+        /* 页面容器 */
+        .page {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeSlide 0.25s ease;
+            padding: 0.2vh 0;
+            overflow-y: auto;
+            gap: 1.2vh;
+            width: 100%;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0.4;
+                transform: translateY(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================================ */
+        /* 通用组件 */
+        /* ============================================================ */
+
+        .page-title {
+            font-size: clamp(2rem, 4.8vh, 4rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 4px 20px rgba(255, 77, 255, 0.08);
+            line-height: 1.2;
+            border-bottom: 3px dashed rgba(77, 158, 255, 0.2);
+            padding-bottom: 0.4vh;
+            margin-bottom: 0.2vh;
+            width: 100%;
+            text-align: center;
+        }
+
+        .page-subhead {
+            font-size: clamp(1.2rem, 2.4vh, 2rem);
+            font-weight: 500;
+            color: #1f1f3a;
+            opacity: 0.6;
+            margin-top: -0.1vh;
+            text-align: center;
+        }
+
+        .rule-box {
+            background: rgba(255, 255, 255, 0.40);
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            padding: 1.6vh 2.6vw;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.03);
+            width: 100%;
+            max-width: 94%;
+            flex-shrink: 0;
+            overflow-y: auto;
+            max-height: 52vh;
+        }
+
+        .rule-box h3 {
+            font-size: clamp(1.4rem, 2.6vh, 2.2rem);
+            font-weight: 600;
+            color: #1e1e3a;
+            margin-bottom: 0.6vh;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .rule-box ul {
+            list-style: none;
+            padding-left: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2vh;
+        }
+
+        .rule-box li {
+            padding-left: 30px;
+            position: relative;
+            font-size: clamp(1.1rem, 2rem, 1.8rem);
+            line-height: 1.5;
+            color: #1f1f3a;
+            white-space: normal;
+        }
+
+        .rule-box li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: #ff4dff;
+            font-weight: 700;
+            opacity: 0.5;
+            font-size: 0.9rem;
+        }
+
+        .rule-box .highlight {
+            background: linear-gradient(135deg, #4d9eff22, #ff4dff22);
+            padding: 0 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: 1px solid rgba(77, 158, 255, 0.12);
+            font-size: 0.9em;
+        }
+
+        .rule-box .warning {
+            color: #b21f1f;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .tag-grid {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.3vh 1vw;
+            justify-content: center;
+            margin: 0.3vh 0 0;
+        }
+
+        .tag-item {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
+            padding: 0.2vh 1.4vw;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.5em;
+            color: #1a1a3a;
+            border: 1px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4d9eff, #ff4dff);
+            border: none;
+            border-radius: 60px;
+            padding: 0.6vh 0.5vw;
+            font-weight: 700;
+            font-size: clamp(0.9rem, 1.6vh, 1.4rem);
+            color: white;
+            box-shadow: 0 10px 28px -6px rgba(77, 158, 255, 0.35);
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 80px;
+            min-width: 120px;
+            max-width: 120px;
+            height: 40px;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        .btn-primary:hover {
+            transform: scale(0.96);
+        }
+        .btn-primary:active {
+            transform: scale(0.92);
+        }
+
+        .draw-area {
+            background: rgba(255, 255, 255, 0.20);
+            border-radius: 28px;
+            padding: 1vh 2vw;
+            text-align: center;
+            border: 1px dashed rgba(77, 158, 255, 0.2);
+            width: 100%;
+            max-width: 94%;
+            flex-shrink: 0;
+            max-height: 18vh;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 2vw;
+        }
+
+        .draw-area .draw-label {
+            font-weight: 500;
+            font-size: clamp(1.2rem, 2vh, 1.8rem);
+            color: #1f1f3a;
+            opacity: 0.7;
+        }
+
+        /* ============================================================ */
+        /* 第一页：主标题页 */
+        /* ============================================================ */
+        .page-cover {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 0.8vh;
+        }
+
+        .mega-title {
+            font-size: clamp(3.5rem, 12vh, 9rem);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 8px 40px rgba(255, 77, 255, 0.12);
+            line-height: 1.15;
+            padding: 0 1vw;
+        }
+
+        .sub-title {
+            font-size: clamp(1.6rem, 4vh, 3.2rem);
+            font-weight: 500;
+            color: #1f1f3a;
+            opacity: 0.7;
+            letter-spacing: 0.06em;
+            margin-top: -0.2vh;
+        }
+
+        .page-cover .cover-emojii {
+            font-size: clamp(2.5rem, 7vh, 5rem);
+            margin-top: 0.2vh;
+            opacity: 0.8;
+        }
+
+        /* ============================================================ */
+        /* 秘籍页面通用 */
+        /* ============================================================ */
+        .page-guide .rule-box {
+            max-height: 56vh;
+        }
+
+        .page-guide .rule-box li {
+            font-size: 1.5em;
+            line-height: 1.5;
+            padding-left: 30px;
+        }
+
+        .page-guide .rule-box .section-label {
+            font-weight: 700;
+            color: #1a2a6c;
+            font-size: 1.05em;
+        }
+
+        .page-guide .rule-box .highlight-box {
+            background: rgba(255, 215, 0, 0.08);
+            border-left: 4px solid #ff4dff;
+            padding: 0.4vh 1.2vw;
+            border-radius: 8px;
+            margin: 0.2vh 0;
+            font-size: 0.95em;
+        }
+
+        .page-guide .rule-box .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.4vh 1.5vw;
+            margin-top: 0.2vh;
+        }
+
+        .page-guide .rule-box .two-col li {
+            padding-left: 24px;
+        }
+
+        /* ============================================================ */
+        /* 结束页 */
+        /* ============================================================ */
+        .page-end {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 0.8vh;
+        }
+
+        .page-end .end-title {
+            font-size: clamp(2.8rem, 9vh, 7rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .page-end .end-sub {
+            font-size: clamp(1.4rem, 3vh, 2.6rem);
+            color: #1f1f3a;
+            opacity: 0.7;
+            max-width: 80%;
+        }
+
+        .page-end .end-emojii {
+            font-size: clamp(2.5rem, 7vh, 5.5rem);
+        }
+
+        /* ============================================================ */
+        /* 破冰游戏页（原第一页） */
+        /* ============================================================ */
+        .page-icebreaker {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 0.5vh;
+        }
+
+        .page-icebreaker .ice-title {
+            font-size: clamp(3.5rem, 12vh, 9rem);
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 8px 40px rgba(255, 77, 255, 0.12);
+            line-height: 1.1;
+            padding: 0 2vw;
+        }
+
+        .page-icebreaker .ice-emojii {
+            font-size: clamp(2.8rem, 8vh, 6rem);
+            margin-top: -0.3vh;
+            opacity: 0.9;
+        }
+
+        .page-icebreaker .ice-hint {
+            font-size: clamp(0.9rem, 1.6vh, 1.3rem);
+            color: #2a2a4a;
+            opacity: 0.35;
+            margin-top: 0.6vh;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 0.8vh;
+            width: 50%;
+            letter-spacing: 0.4px;
+        }
+
+        /* ============================================================ */
+        /* 响应式 */
+        /* ============================================================ */
+        @media (max-width: 700px) {
+            .card-container {
+                width: 92vw;
+                height: 94vh;
+                padding: 1.2vh 1.8vw;
+                border-radius: 24px;
+            }
+
+            .draw-area {
+                flex-direction: column;
+                gap: 0.6vh;
+                padding: 1vh 2vw;
+                max-height: 22vh;
+            }
+
+            .btn-primary {
+                width: 80px;
+                min-width: 80px;
+                max-width: 80px;
+                padding: 0.4vh 0;
+            }
+
+            .rule-box {
+                max-height: 48vh;
+                padding: 1.2vh 2vw;
+            }
+
+            .rule-box li {
+                font-size: clamp(0.9rem, 1.6vh, 1.3rem);
+                padding-left: 22px;
+            }
+
+            .page-guide .rule-box .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .page-dots {
+                gap: 0.4vw;
+            }
+
+            .dot {
+                min-width: 8px;
+                min-height: 8px;
+                width: 0.8vw;
+                height: 0.8vw;
+            }
+
+            .dot.active {
+                min-width: 20px;
+                width: 2vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-container {
+                padding: 1vh 1.5vw;
+                border-radius: 16px;
+            }
+
+            .rule-box li {
+                font-size: clamp(0.75rem, 1.3vh, 1rem);
+                padding-left: 18px;
+            }
+
+            .page-title {
+                font-size: clamp(1.4rem, 3.2vh, 2.2rem);
+            }
+
+            .mega-title {
+                font-size: clamp(2rem, 7vh, 4rem);
+            }
+
+            .page-icebreaker .ice-title {
+                font-size: clamp(2rem, 7vh, 4rem);
+            }
+
+            .draw-area .draw-label {
+                font-size: clamp(0.85rem, 1.4vh, 1.1rem);
+            }
+
+            .btn-primary {
+                width: 70px;
+                min-width: 70px;
+                max-width: 70px;
+                font-size: clamp(0.7rem, 1.2vh, 0.9rem);
+            }
+        }
+
+        /* 横屏优化 */
+        @media (orientation: landscape) {
+            .card-container {
+                padding: 1.2vh 2.2vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container" id="cardContainer">
+
+        <!-- ============================================================ -->
+        <!-- 页1：封面 · 撕掉固有标签 -->
+        <!-- ============================================================ -->
+        <div class="page page-cover active" data-page="0">
+            <div class="mega-title">撕掉固有标签<br>解锁无限自我</div>
+            <div class="sub-title">不被他人定义，只向目标前行</div>
+            <div class="cover-emojii">🚀🌟</div>
+            <div style="font-size:clamp(0.8rem,1.4vh,1.1rem);color:#2a2a4a;opacity:0.3;margin-top:0.4vh;border-top:1px solid rgba(255,255,255,0.15);padding-top:0.6vh;width:40%;">点击 “下一页” 开启副本攻略</div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 页2：游戏设定 -->
+        <!-- ============================================================ -->
+        <div class="page page-guide" data-page="1">
+            <div class="page-title">🏔️ 游戏设定：理解规则与心态调整</div>
+            <div class="page-subhead">高三这场 “游戏” 有自己的规则，理解并调整好心态是第一步</div>
+            <div class="rule-box">
+                <ul>
+                    <li><span class="section-label">🎮 游戏名称：</span>地球 Online・高三冲刺副本</li>
+                    <li><span class="section-label">🧑‍🎓 你的角色：</span>历经新手村（高一高二）的玩家，装备初步升级，即将挑战年度大关</li>
+                    <li><span class="section-label">⚡ 副本特点：</span>时间限定（一年），强度波动，多人协作与竞争</li>
+                    <li><span class="section-label">👾 终极 Boss：</span>高考（2026 年 6 月）</li>
+                    <li><span class="section-label">🏆 通关奖励：</span>心仪大学 “入场券”、综合能力飞跃、一段难忘人生经历</li>
+                </ul>
+                <div class="highlight-box" style="margin-top:0.6vh;">
+                    <strong>🪶 学姐心得：</strong>
+                    <div class="two-col" style="margin-top:0.2vh;">
+                        <li><strong>认知调整：</strong>别把高三想成洪水猛兽，它是需要策略和持久战的副本。积极心态能帮你更好应对挑战。</li>
+                        <li><strong>必备心态：</strong>成长型思维（能力可提升）+ 专注自身（别纠结 NPC 的进度和评价）</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 页3：主线任务 -->
+        <!-- ============================================================ -->
+        <div class="page page-guide" data-page="2">
+            <div class="page-title">⚔️ 主线任务：学习攻关</div>
+            <div class="page-subhead">学习是高三最核心的主线任务，需要有策略地推进</div>
+            <div class="rule-box">
+                <ul>
+                    <li><span class="section-label">📚 学科攻略：</span>不同科目 “打法” 不同</li>
+                    <li style="padding-left:44px;font-size:1.2em;">文科（语文、英语、历史等）：重 “积累” 和 “语感”，利用碎片时间刷单词、古诗词、素材</li>
+                    <li style="padding-left:44px;font-size:1.2em;">理科（数学、物理、化学等）：重 “理解” 和 “刷题”，搞懂定理公式背后的逻辑，经典题错题反复做</li>
+                    <li><span class="section-label">🎯 “资源” 利用：</span>教师 NPC（多提问互动）+ 错题本（装备修复强化工具）</li>
+                    <li><span class="section-label">📝 “刷副本”（考试）：</span>周考月考是 “小怪” 攒经验；模考是 “大 Boss 预演”，用来模拟气氛、节奏，检验装备和技能</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 页4：技能树加点 -->
+        <!-- ============================================================ -->
+        <div class="page page-guide" data-page="3">
+            <div class="page-title">🍃 技能树加点：方法比努力更重要</div>
+            <div class="page-subhead">光埋头苦干可不行，得当个 “巧玩家”</div>
+            <div class="rule-box">
+                <ul>
+                    <li><span class="section-label">⏰ 时间管理：</span></li>
+                    <li style="padding-left:44px;font-size:1.2em;">长期计划：以月 / 周为单位规划 “经验值” 获取进度</li>
+                    <li style="padding-left:44px;font-size:1.2em;">短期计划：每日任务清单（To-do List），完成一项打一个勾</li>
+                    <li style="padding-left:44px;font-size:1.2em;">合理分配：精力最好的时间给最难的 “Boss”</li>
+                    <li><span class="section-label">🔄 复盘总结：</span>考后、周末花时间回顾：哪些 “技能” 没掌握？哪些 “操作” 失误了？下次如何改进？</li>
+                    <li><span class="section-label">🧠 高效学习法：</span></li>
+                    <li style="padding-left:44px;font-size:1.2em;">番茄工作法：学习 25 分钟，休息 5 分钟，保持专注</li>
+                    <li style="padding-left:44px;font-size:1.2em;">费曼学习法：把一个知识点讲给别人听，能讲明白说明你真懂了</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 页5：身心状态管理 -->
+        <!-- ============================================================ -->
+        <div class="page page-guide" data-page="4">
+            <div class="page-title">❤️ 身心状态管理：续航之本</div>
+            <div class="page-subhead">没有好的状态，再好的装备和技能也发挥不出来</div>
+            <div class="rule-box">
+                <ul>
+                    <li><span class="section-label">❤️‍🩹 生命值（健康）：</span></li>
+                    <li style="padding-left:44px;font-size:1.2em;">睡眠：别牺牲睡眠熬夜刷题！睡眠是回血和修复精神损耗的最佳方式</li>
+                    <li style="padding-left:44px;font-size:1.2em;">饮食：按时吃饭，营养均衡，适当补充坚果、水果等 “能量补给”</li>
+                    <li style="padding-left:44px;font-size:1.2em;">运动：每周动一动，跑跑步、跳跳绳、打打球，释放压力提升心情</li>
+                    <li><span class="section-label">🧘 魔力值 / 情绪值（心态）：</span></li>
+                    <li style="padding-left:44px;font-size:1.2em;">积极暗示：每天给自己加油打气：“我能行”、“今天又是赚经验值的一天”</li>
+                    <li style="padding-left:44px;font-size:1.2em;">微小成就感：完成一个小目标就奖励自己一下</li>
+                    <li style="padding-left:44px;font-size:1.2em;">情绪宣泄：写日记、找好朋友或家人聊聊，或者痛快哭一场</li>
+                    <li style="padding-left:44px;font-size:1.2em;">放松：偶尔听听音乐、看看视频（设定时间！）、发发呆</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 页6：终极BOSS与通关奖励 -->
+        <!-- ============================================================ -->
+        <div class="page page-guide" data-page="5">
+            <div class="page-title">🎉 终极 Boss 与通关奖励</div>
+            <div class="page-subhead">高考，不过是一场换了地方的做题</div>
+            <div class="rule-box">
+                <ul>
+                    <li><span class="section-label">⚔️ Boss 战策略（高考期间）：</span></li>
+                    <li style="padding-left:44px;font-size:1.2em;">保持手感：考前适当练题，保持状态，别做太难的新题</li>
+                    <li style="padding-left:44px;font-size:1.2em;">正常作息：饮食作息照旧，就是换个地方做题而已</li>
+                    <li style="padding-left:44px;font-size:1.2em;">专注每一场：考完一门丢一门，不对答案，不影响后续心态</li>
+                    <li><span class="section-label">🏁 通关之后：</span></li>
+                    <li style="padding-left:44px;font-size:1.2em;">无论结果如何，恭喜你，成功通关了高三这个高难度副本！</li>
+                    <li style="padding-left:44px;font-size:1.2em;">收获的不仅仅是分数，更是自律、抗压、解决问题等核心能力</li>
+                    <li style="padding-left:44px;font-size:1.2em;">尽情享受最长最无忧无虑的假期吧！全新的大学副本正在加载中…</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 页7：结束页（秘籍结束 → 过渡到破冰） -->
+        <!-- ============================================================ -->
+        <div class="page page-end" data-page="6">
+            <div class="end-emojii">🎯🌟</div>
+            <div class="end-title">高三副本通关秘籍<br>已送达</div>
+            <div class="end-sub">愿你在高三这一年，披荆斩棘，所向披靡！<br>现在，让我们先来一场破冰之旅吧！</div>
+            <div style="font-size:clamp(0.8rem,1.4vh,1.1rem);color:#2a2a4a;opacity:0.3;margin-top:0.6vh;border-top:1px solid rgba(255,255,255,0.15);padding-top:0.6vh;width:40%;">点击 “下一页” 开始破冰</div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 页8：很高兴认识你（原第一页） -->
+        <!-- ============================================================ -->
+        <div class="page page-icebreaker" data-page="7">
+            <div class="mega-title">很高兴认识你</div>
+            <div class="sub-title">👋🌟</div>
+            <div class="ice-hint">点击 “下一页” 开始破冰游戏</div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 页9：性格标签游戏（原第二页） -->
+        <!-- ============================================================ -->
+        <div class="page" data-page="8">
+            <div class="page-title">🎭 性格标签 · 即兴剧场</div>
+            <div class="page-subhead">轮流抽取 · 3分钟情景演绎</div>
+
+            <div class="rule-box" style="max-height:42vh;">
+                <h3>📋 游戏规则</h3>
+                <ul>
+                    <li><span class="highlight">抽人</span> 点击右侧按钮随机抽取同学上台。</li>
+                    <li><span class="highlight">抽标签</span> 从性格关键词中抽取：
+                        <span class="tag-grid">
+                            <span class="tag-item">乐观</span>
+                            <span class="tag-item">敏感</span>
+                            <span class="tag-item">佛系</span>
+                            <span class="tag-item">完美主义</span>
+                            <span class="tag-item">社恐</span>
+                        </span>
+                    </li>
+                    <li><strong>3分钟</strong> 编情景剧（肢体语言），演绎该性格的日常。</li>
+                    <li>其他同学猜是什么性格。 <span style="opacity:0.4;">（可邀请好友协助）</span></li>
+                </ul>
+            </div>
+
+            <div class="draw-area">
+                <a class="btn-primary" href="secrandom://roll_call/quick_draw">抽奖</a>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- 页10：学科术语游戏（原第三页） -->
+        <!-- ============================================================ -->
+        <div class="page" data-page="9">
+            <div class="page-title">⚡ 难度升级 · 学科术语</div>
+            <div class="page-subhead">三人一组 · 默契演绎 · 一字不差</div>
+
+            <div class="rule-box" style="max-height:42vh;">
+                <h3>📋 游戏规则</h3>
+                <ul>
+                    <li><span class="highlight">抽组</span> 点击右侧按钮随机抽取 <strong>3人一组</strong> 上台。</li>
+                    <li><span class="highlight">抽术语</span> 抽取学科术语：韦达定理、对面着笔、同源染色体 …</li>
+                    <li><strong>3分钟</strong> 编情景剧（肢体语言），整体或分工演绎，一个字一个字呈现。</li>
+                    <li>台下猜术语，<strong>一个字偏差都不行</strong>（严谨！）。</li>
+                    <li class="warning">⚠️ 不可以邀请好朋友或善于表演的同学协助，全靠随机搭档默契！</li>
+                </ul>
+            </div>
+
+            <div class="draw-area">
+                <a class="btn-primary" href="secrandom://roll_call/quick_draw">抽奖</a>
+            </div>
+        </div>
+        <!-- ============================================================ -->
+        <!-- 页11：感谢页 -->
+        <!-- ============================================================ -->
+        <div class="page page-end" data-page="10">
+            <div class="end-emojii">🙏✨</div>
+            <div class="end-title">感谢各位的参与   </div>
+            <div class="end-sub" style="font-size:clamp(1.8rem, 4vh, 3.2rem);">
+                勇敢站上舞台的你<br>
+                认真观看猜测的你<br>
+                让这个班级有了温度
+            </div>
+        </div>
+
+        <!-- 导航 -->
+        <div class="page-nav">
+            <div class="page-dots" id="dotsContainer">
+                <!-- 由 JS 生成 10 个点 -->
+            </div>
+            <div>
+                <button class="nav-btn" id="prevBtn" disabled>◀ 上一页</button>
+                <button class="nav-btn" id="nextBtn">下一页 ▶</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- 全屏 ----------
+            function requestFullscreen() {
+                const el = document.documentElement;
+                if (el.requestFullscreen) {
+                    el.requestFullscreen().catch(() => {});
+                } else if (el.webkitRequestFullscreen) {
+                    el.webkitRequestFullscreen();
+                } else if (el.msRequestFullscreen) {
+                    el.msRequestFullscreen();
+                }
+            }
+            document.addEventListener('click', function firstClick() {
+                requestFullscreen();
+                document.removeEventListener('click', firstClick);
+            }, { once: true });
+
+            // ---------- 生成 dots ----------
+            const totalPages = 11;
+            const dotsContainer = document.getElementById('dotsContainer');
+            for (let i = 0; i < totalPages; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'dot' + (i === 0 ? ' active' : '');
+                dot.dataset.page = i;
+                dot.addEventListener('click', function() {
+                    updatePage(parseInt(this.dataset.page));
+                });
+                dotsContainer.appendChild(dot);
+            }
+
+            // ---------- 翻页 ----------
+            const pages = document.querySelectorAll('.page');
+            const dots = document.querySelectorAll('.dot');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            let current = 0;
+
+            function updatePage(index) {
+                if (index < 0 || index >= totalPages) return;
+                pages.forEach((p, i) => p.classList.toggle('active', i === index));
+                dots.forEach((d, i) => d.classList.toggle('active', i === index));
+                prevBtn.disabled = (index === 0);
+                nextBtn.disabled = (index === totalPages - 1);
+                current = index;
+            }
+
+            prevBtn.addEventListener('click', function() {
+                if (current > 0) updatePage(current - 1);
+            });
+
+            nextBtn.addEventListener('click', function() {
+                if (current < totalPages - 1) updatePage(current + 1);
+            });
+
+            // 键盘左右键支持
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (current < totalPages - 1) updatePage(current + 1);
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (current > 0) updatePage(current - 1);
+                }
+            });
+
+            // ---------- 协议跳转 ----------
+            document.querySelectorAll('a[href^="secrandom://"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    console.log('🔗 跳转:', this.href);
+                });
+            });
+
+            // ---------- 补充全屏手势 ----------
+            document.querySelector('.card-container').addEventListener('click', function(e) {
+                if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                    requestFullscreen();
+                }
+            }, { passive: true });
+
+            console.log('✨ 高三副本 + 破冰班会 · 共10页');
+        })();
+    </script>
+</body>
+</html>
