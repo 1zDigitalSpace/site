@@ -1,192 +1,499 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="msvalidate.01" content="935899423EDA64570DB7C2E20B85C074" />
-  <title>数码空间</title>
-  <link rel="stylesheet" href="css/all.css">
-  <link rel="icon" type="image/x-icon"
-    href="https://static.codemao.cn/pickduck/B1ozkjePlx.png?hash=FnTnQHCRnsdADVJxOXPKU7QRe4GU">
-  <link rel="apple-touch-icon"
-    href="https://static.codemao.cn/pickduck/B1ozkjePlx.png?hash=FnTnQHCRnsdADVJxOXPKU7QRe4GU">
-  <meta name="apple-mobile-web-app-title" content="数码空间">
-  <link rel="bookmark" href="img/icon.webp">
-  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="img/icon.webp">
-  <meta name="description" content="包容 创新 发展的兰州一中综合创新性科技社团">
-  <meta name="theme-color" content="#1C1C1F">
-  <meta name="color-scheme" content="light dark">
-  <link rel="stylesheet" href="https://cdn3.codesign.qq.com/icons/X2bzpZvRWkZkAaV/latest/iconfont.css">
-  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js"></script>
-  <script>
-    var _hmt = _hmt || [];
-    (function () {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?0a0cca83682044c405966961a1ff1b9b";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>数码空间 DIGITAL SPACE · 兰州一中极客社团</title>
+<meta name="description" content="数码空间社 —— 兰州一中专注于数码科技、电子技术与信息编程的极客型学生社团。指尖触达硅基，目光穿透未来。" />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,800;1,400&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
 </head>
+<body>
 
-<body id="body">
-  <div class="nav">
-    <div class="nav-content">
-      <div class="nav-left">
-        <a href="javascript:scrollToTopWithAnimation()" class="site-logo">
-          <img src="https://static.codemao.cn/pickduck/Byks1olvex.webp?hash=FupuaA1gdPnGpRbXPNldKYbTcJV7" alt="logo"
-            class="site-logo-img">
-          <span class="site-name">数码空间</span>
-        </a>
+<!-- ═══════════ Preloader ═══════════ -->
+<div id="preloader" aria-hidden="true">
+  <div class="pre-inner">
+    <div class="pre-logo">DIGITAL<span>SPACE</span></div>
+    <div id="bootLines" class="boot-lines"></div>
+    <div class="pre-bar"><i id="preBarFill"></i></div>
+  </div>
+</div>
+
+<!-- ═══════════ Custom cursor ═══════════ -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ═══════════ Scroll progress ═══════════ -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ═══════════ Nav ═══════════ -->
+<nav class="nav" id="nav">
+  <a href="#home" class="nav-logo mono"><img src="assets/logo.png" alt="数码空间社 Logo" class="nav-logo-img" />DIGITAL_SPACE<span class="blink">_</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="#home" class="nav-link active">首页</a>
+    <a href="#about" class="nav-link">关于</a>
+    <a href="#works" class="nav-link">作品</a>
+    <a href="#history" class="nav-link">历程</a>
+    <a href="#join" class="nav-link nav-cta" data-join-modal>加入我们</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="打开菜单"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ═══════════ Hero ═══════════ -->
+<header class="hero" id="home">
+  <canvas id="bgCanvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h1 class="hero-title glitch" data-text="数码空间">数码空间</h1>
+      <p class="hero-sub mono reveal" style="--d:.15s">DIGITAL&nbsp;SPACE&nbsp;CLUB</p>
+      <p class="hero-typed mono"><span id="typedText"></span><span class="caret"></span></p>
+      <div class="hero-btns reveal" style="--d:.3s">
+        <a href="#slogan" class="btn magnetic"><span>探索社团</span><span>&darr;</span></a>
+        <a href="#join" class="btn solid magnetic" data-join-modal><span>加入我们</span><span>&rarr;</span></a>
       </div>
     </div>
-  </div>
-
-  <div class="first-stack need-padding">
-    <div class="left-Introduce">
-      <div class="title-group">
-        <span class="title">数码空间</span>
-        <span class="title">DIGITAL SPACE</span>
-      </div>
-      <div class="discription">
-        <span class="discription-text">包容 创新 发展的<span class="inline-word"></span><br>兰州一中综合创新性科技社团<span
-            class="inline-word"></span></span>
-      </div>
-      <div class="first-stack-links">
-        <a href="https://1zdigital.space" class="about-button" target="_blank">社团知识站</a>
-        <div style="width: 10px;"></div>
-        <a href="https://qm.qq.com/cgi-bin/qm/qr?k=8SuyzdjMdeFkqadi6fVxiHkDl4CLty4_&jump_from=webapi&authKey=CzQikE2dsX8r/V933DdRGaGKKtdiOJlwdwXW4sMrp03vUS4DN889CrqxzXHYF1y"
-          class="about-button" target="_blank">加入我们</a>
-      </div>
-
-    </div>
-    <a class="right-stack" target="_blank">
-      <img class="banner-img" src="https://static.codemao.cn/pickduck/r1gCdc1rwxg.png" alt="banner" title="banner">
-    </a>
-  </div>
-
-
-  <div class="about-section need-padding">
-    <div class="about-container">
-      <h2 class="about-title">关于数码空间社<br></h2>
-      <div class="about-content">
-        <p>数码空间社成立于 2021 年 8 月，由兰州一中 23 届同学创立，是一个专注于数码科技、电子技术与信息编程的极客型学生社团。</p>
-        <h3 class="about-subtitle">社团宗旨</h3>
-        <p>我们以"推广数码科技，培养学生的技术素养与创新能力"为宗旨，致力于为同学们搭建一个自由探索、动手实践和技术分享的平台。</p>
-        <h3 class="about-subtitle">创立初衷</h3>
-        <p>社团创立的初衷源于对数电/模电、编程开发及硬件改造等前沿技术的热爱，日常活动涵盖基础教学、编程实训、电子焊接改装、项目开发和技术交流等多个方面。</p>
-        <h3 class="about-subtitle">实践理念</h3>
-        <p>我们特别倡导"拆、装、造"的实践理念，鼓励成员从动手操作中学习成长。</p>
-        <h3 class="about-subtitle">竞赛成绩</h3>
-        <p>在竞赛方面，社团成员积极参与 CSP-J/S 等赛事并屡获佳绩，曾取得NOIP甘肃省级二等奖的优异成绩。社团作品兰州一中校园建模获得2026甘肃省科创大赛一等奖。社团许多成员曾在中学生数学竞赛、物理竞赛、化学竞赛、生物竞赛中取得优异成绩</p>
-        <h3 class="about-subtitle">加入我们</h3>
-        <p>期待新高一的你加入我们，在芯片与代码的世界里挥洒青春，共同开启通向未来的科技之门！</p>
-        <br>
-        <img src="https://static.codemao.cn/pickduck/HkcOrgrwge.jpg"
-          style="width: 80%;border-radius: 20px;padding: 0 auto 0 ; margin-left: 10%;" />
-      </div>
+    <div class="hero-logo reveal" style="--d:.2s">
+      <img src="assets/logo_advanced.png" alt="数码空间社 LOGO" class="hero-logo-img" />
     </div>
   </div>
+  <div class="scroll-hint mono"><span class="mouse"><i></i></span>SCROLL</div>
+</header>
 
-  <div class="works-section need-padding">
-    <div class="works-container">
-      <h2 class="works-title">社团作品</h2>
-      
-      <span class="work-item">
-        <img src="https://static.codemao.cn/pickduck/r1gCdc1rwxg.png" class="work-img">
-        <div class="work-info">
-          <h3 class="work-name">弘毅大礼堂抽奖系统</h3>
-          <p class="work-desc">来抽<br><br>
-          <a class="work-link" href="https://hello.1zdigital.space/hy" target="_blank">在线体验</a></p>
+<!-- ═══════════ Slogan 视频页 ═══════════ -->
+<section class="slogan" id="slogan">
+  <video class="slogan-video" id="sloganVideo" autoplay muted loop playsinline preload="auto">
+    <source src="https://kkk.intwing.com/PCbanner.mp4" type="video/mp4" />
+  </video>
+  <div class="slogan-mask"></div>
+  <div class="slogan-content">
+    <h2 class="slogan-text reveal">指尖触达硅基目光穿透未来</h2>
+    <p class="slogan-sub mono reveal" style="--d:.18s">From chip to peak</p>
+  </div>
+</section>
+
+<main>
+
+<!-- ═══════════ 关于我们 ═══════════ -->
+<section class="section" id="about">
+  <div class="sec-head reveal">
+    <p class="sec-kicker mono">// 01 &middot; WHO WE ARE</p>
+    <h2 class="sec-title">关于我们<span class="accent">.</span></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p class="about-lead">
+        2021 年 8 月，一群来自兰州一中 23 届的技术爱好者聚到一起，<strong>数码空间社</strong>就此诞生。
+      </p>
+      <p>历经六任社长薪火相传，社团已发展为横跨高中、大学的大型技术共同体，获评<span class="hl">&ldquo;学校优秀社团&rdquo;</span>。日常活动涵盖基础教学、编程实训、电子焊接改装、项目开发与技术交流，形成了完备的成长体系。</p>
+      <p>代表性成果包括：开发<span class="hl">&ldquo;数字兰州一中&rdquo;</span>三维交互项目；完成<span class="hl">&ldquo;洗洁精机箱&rdquo;</span>创意装机，将极客精神融入生活美学；社团展演中，承担幕后保障工作。</p>
+      <p class="about-outro">六年传承，热爱未减。数码空间社，让每一代技术爱好者在这里找到代码、电路与伙伴。</p>
+    </div>
+    <div class="about-photos reveal" style="--d:.15s">
+      <div class="photo-row">
+        <div class="photo-track">
+          <figure class="shot"><img src="assets/Image_1786160403145_246.jpg" alt="第 40 届甘肃省青少年科技创新大赛颁奖典礼合影" loading="lazy" decoding="async" /></figure>
+          <figure class="shot"><img src="assets/Image_1786160435627_723.jpg" alt="校园社团招新宣传现场" loading="lazy" decoding="async" /></figure>
+          <figure class="shot"><img src="assets/Image_1786410580709_958.jpg" alt="社团成员参观户外航天主题展览，火箭模型林立" loading="lazy" decoding="async" /></figure>
+          <figure class="shot"><img src="assets/Image_1786160455453_142.jpg" alt="社团展演现场，桌前立着“数码空间”标牌" loading="lazy" decoding="async" /></figure>
+          <figure class="shot"><img src="assets/Image_1786160474860_468.jpg" alt="社团成员在兰州一中校门口合影" loading="lazy" decoding="async" /></figure>
         </div>
-      </span>
-      
-      <span class="work-item right-img">
-        <img src="https://static.codemao.cn/pickduck/r1gCdc1rwxg.png" class="work-img">
-        <div class="work-info">
-          <h3 class="work-name">数字兰州一中</h3>
-          <p class="work-desc">来玩<br><br>
-          <a class="work-link" href="https://hello.1zdigital.space/digitallzyz" target="_blank">预览完整版</a>
-          <a class="work-link" href="https://hello.1zdigital.space/digitallzyz/simplified.html" target="_blank">预览精简版</a></p>
+      </div>
+      <div class="photo-row">
+        <div class="photo-track">
+          <figure class="shot"><img src="assets/Image_1786160408771_868.jpg" alt="参加科创大赛的社团成员合影" loading="lazy" decoding="async" /></figure>
+          <figure class="shot"><img src="assets/Image_1786410587883_851.jpg" alt="社团成员在教室里用笔记本电脑进行项目开发" loading="lazy" decoding="async" /></figure>
+          <figure class="shot"><img src="assets/Image_1786160439508_461.jpg" alt="“洗洁精机箱”创意装机作品" loading="lazy" decoding="async" /></figure>
+          <figure class="shot"><img src="assets/Image_1786160462959_817.jpg" alt="社团活动中的主板与硬件改装平台" loading="lazy" decoding="async" /></figure>
+          <figure class="shot"><img src="assets/reward.png" alt="兰州一中“优秀学生社团”奖状" loading="lazy" decoding="async" /></figure>
         </div>
-      </span>
-      
-      <span class="work-item">
-        <img src="https://cdn-community.bcmcdn.com/47/community/BMhqb64pTA0K6yNDV7uM3xsi3PjDqPYTANcY9XRM4FAz.ico?hash=FnhFmJ8zzLOVhTmnKUnLEoGN8aM1" class="work-img">
-        <div class="work-info">
-          <h3 class="work-name">智能坐姿监测</h3>
-          <p class="work-desc">来测<br><br>
-          <a class="work-link" href="https://github.com/MicroPotatoChips/poseture_monitor" target="_blank">项目主页</a>
-          <a class="work-link" href="#" target="_blank">软件下载</a></p>
-        </div>
-      </span>
-    </div>
-  </div>
-
-  <div class="friends-section need-padding">
-    <div class="friends-container">
-      <h2 class="about-title" style="margin-top: 20px;margin-bottom: 20px;">友情链接<br></h2>
-      <div class="friends-grid">
-        <a href="https://www.gslzyz.cn/" class="friend-card" target="_blank">
-          <img src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjI1MzQ2MTcxOTFfYjg2MDZhNmQ.jpeg" class="friend-avatar">
-          <h3 class="friend-name">兰州一中</h3>
-          <p class="friend-description">士不可以不弘毅<br>任重而道远</p>
-        </a>
-        <a href="https://1zdigital.space/" class="friend-card" target="_blank">
-          <img src="https://cravatar.com/avatar/0fc2c5f90ea8afbfb604182b74a423ce?d=mp&s=240"class="friend-avatar">
-          <h3 class="friend-name">呖呖李</h3>
-          <p class="friend-description">digital 宇宙正在加载中，欢迎来到这个数据驱动的世界。这里记录了“我”在地球的混入人类心得。</p>
-        </a>
-        <a href="https://qian.1zdigital.space/" class="friend-card" target="_blank">
-          <img src="https://static.codemao.cn/pickduck/HJTNP4yn6.jpg" class="friend-avatar">
-          <h3 class="friend-name">Dayanshifu</h3>
-          <p class="friend-description">亻尔女子</p>
-        </a>
-        <a href="https://hmz168.1zdigital.space" class="friend-card" target="_blank">
-          <img src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjI1MzUxMDI0MjFfNjUyYjBjNWE.jpeg" class="friend-avatar">
-          <h3 class="friend-name">HMZ</h3>
-          <p class="friend-description">好好学习，天天向上！</p>
-        </a>
-        <a href="https://etaris.moe/" class="friend-card" target="_blank">
-          <img src="https://blog.etaris.moe/photos/head.jpg" class="friend-avatar">
-          <h3 class="friend-name">ChenServer</h3>
-          <p class="friend-description">在熵增的尽头 ，打捞每一次日落</p>
-        </a>
-        <a href="https://hello.1zdigital.space/qian" class="friend-card" target="_blank">
-          <img src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjMzOTU5MDYyNDVfMDBhOGVhNWQ.jpeg" class="friend-avatar">
-          <h3 class="friend-name">千</h3>
-          <p class="friend-description">你好啊喵</p>
-        </a>
       </div>
     </div>
   </div>
-  <div class="footer-content need-padding" style="text-decoration:none;color:#0099ff51;font-size:small;text-align: center;">
-    <span class="info" style="margin:0 4px 2px 0">©<span id="2year">114514</span> <a style="text-decoration:none;color:#0099ff51"
-        href="https://hello.1zdigital.space/">数码空间</a></span>
-    <span class="info">
-      <img src=https://www.beian.gov.cn/img/ghs.png alt=公安图标 height=16 width=16 style="height:16px;vertical-align:middle;margin:0 4px 0 0;display:inline"/>
-      <a style="text-decoration:none;color:#0099ff51" href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004725;display:inline" target=_blank>甘公网安备62010202004725号</a></span>
-      <a style="text-decoration:none;color:#0099ff51" href="http://beian.miit.gov.cn" target=_blank                                      >陇ICP备2025020120号</a>
-    </span>
-    <script type="text/javascript">
-      function toChineseYear(year) {
-        var chineseNumbers = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
-        var yearStr = year.toString();
-        var result = '';
-        for (var i = 0; i < yearStr.length; i++) {
-          result += chineseNumbers[parseInt(yearStr.charAt(i))];
-        }
-        return result;
-      }
+</section>
 
-      var nowyear = new Date().getFullYear();
-      var a1 = toChineseYear(nowyear);
-      document.getElementById("2year").innerHTML = a1;</script>
+<!-- ═══════════ 社团作品 ═══════════ -->
+<section class="section" id="works">
+  <div class="sec-head reveal">
+    <p class="sec-kicker mono">// 02 &middot; OUR WORKS</p>
+    <h2 class="sec-title">社团作品<span class="accent">.</span></h2>
   </div>
+  <div class="card-grid four">
+    <div class="reveal">
+      <article class="card work-card" data-tilt>
+        <span class="card-idx mono">01</span>
+        <div class="work-media">
+          <img src="assets/work-digitallzyz.png" alt="“数字兰州一中”项目标志" loading="lazy" decoding="async" />
+          <span class="work-badge mono">2026 甘肃省科创大赛一等奖</span>
+        </div>
+        <div class="work-body">
+          <h3>数字兰州一中</h3>
+          <p>以三维建模还原兰州一中校园的 Web 交互作品，在浏览器里即可自由漫游校园的一砖一瓦。社团旗舰项目。</p>
+          <div class="card-tags mono"><span>#三维建模</span><span>#GLB</span><span>#Web交互</span></div>
+          <div class="work-links mono">
+            <a href="https://hello.1zdigital.space/digitallzyz" target="_blank" rel="noopener">预览完整版 &#8599;</a>
+            <a href="https://hello.1zdigital.space/digitallzyz/simplified.html" target="_blank" rel="noopener">预览精简版 &#8599;</a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="reveal" style="--d:.08s">
+      <article class="card work-card" data-tilt>
+        <span class="card-idx mono">02</span>
+        <div class="work-media">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
+        </div>
+        <div class="work-body">
+          <h3>弘毅大礼堂抽奖系统</h3>
+          <p>为学校弘毅大礼堂活动开发的现场抽奖系统，大屏滚动、即抽即中，把现场气氛推向高潮。</p>
+          <div class="card-tags mono"><span>#Web</span><span>#大屏互动</span><span>#活动现场</span></div>
+          <div class="work-links mono">
+            <a href="https://hello.1zdigital.space/hy" target="_blank" rel="noopener">在线体验 &#8599;</a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="reveal" style="--d:.16s">
+      <article class="card work-card" data-tilt>
+        <span class="card-idx mono">03</span>
+        <div class="work-media">
+          <img src="assets/work-posture.png" alt="“智能坐姿监测”应用图标" loading="lazy" decoding="async" />
+        </div>
+        <div class="work-body">
+          <h3>智能坐姿监测</h3>
+          <p>基于 MediaPipe 与 OpenCV 的桌面应用，用摄像头实时检测坐姿，长时间坐姿不端时语音提示，守护你的颈椎。</p>
+          <div class="card-tags mono"><span>#MediaPipe</span><span>#OpenCV</span><span>#PyQt6</span></div>
+          <div class="work-links mono">
+            <a href="https://github.com/MicroPotatoChips/poseture_monitor" target="_blank" rel="noopener">项目主页 &#8599;</a>
+            <a href="https://github.com/MicroPotatoChips/poseture_monitor/releases/download/v0.0.1/poseture_monitor.exe" target="_blank" rel="noopener">软件下载 &#8599;</a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="reveal" style="--d:.24s">
+      <article class="card work-card" data-tilt>
+        <span class="card-idx mono">04</span>
+        <div class="work-media">
+          <img class="cover" src="assets/Image_1786160439508_461.jpg" alt="“洗洁精机箱”创意装机作品" loading="lazy" decoding="async" />
+        </div>
+        <div class="work-body">
+          <h3>洗洁精机箱</h3>
+          <p>把洗洁精空瓶改造成电脑机箱的创意装机，整机费用不到 200 元 &mdash;&mdash; 极客精神，融入生活美学。</p>
+          <div class="card-tags mono"><span>#创意装机</span><span>#硬件改装</span><span>#不到200元</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 社团发展历程 ═══════════ -->
+<section class="section" id="history">
+  <div class="sec-head reveal">
+    <p class="sec-kicker mono">// 03 &middot; OUR JOURNEY</p>
+    <h2 class="sec-title">社团发展历程<span class="accent">.</span></h2>
+  </div>
+  <div class="timeline reveal" id="timeline">
+
+    <!-- 2021 社团成立 + 第一届 -->
+    <div class="t-item">
+      <div class="t-half t-top">
+        <div class="t-card">
+        <div class="avatars-row">
+          <img src="https://cdn-community.bcmcdn.com/47/community/b4z7SROHLqjOs1L0AKjP2R3GijYkpaDS2HFIh5gu7Lta.jpg?hash=Fnwn_K8mjRFWqkx0d4NGEZYs-Tc3"class="avatar"/>
+          <img src="https://cdn-community.bcmcdn.com/47/community/NSgQnqpH3srs99DOHC67cWt2aF6WbrcuJLN9B4PSxpQu.jpg?hash=FrlKiUhtHYsskFgDfEZ051aW0x7_"class="avatar"/>
+        </div>
+          <h3>创始人</h3>
+          <p>李尚芝 张益来<br>&emsp;</p>
+        </div>
+      </div>
+      <div class="t-node"><span class="t-dot"></span><span class="t-year mono">2021.08</span></div>
+      <div class="t-half t-bottom"></div>
+    </div>
+
+    <!-- 2022 第二届 -->
+    <div class="t-item" style="--d:.06s">
+      <div class="t-half t-top"></div>
+      <div class="t-node"><span class="t-dot"></span><span class="t-year mono">2022.08</span></div>
+      <div class="t-half t-bottom">
+        <div class="t-card">
+          
+        <div class="avatars-row">
+          <img src="https://cdn-community.bcmcdn.com/47/community/ucqZiwjzRGCKPUusgEctgpfSBhlCskfq8glDn9Pg9YpX.jpg?hash=FrcCgZMi_8fKJzpl5CogB958UTbJ"class="avatar"/>
+          <img src="https://cdn-community.bcmcdn.com/47/community/YAVqtbwTnt5PLqP8qh4QMewPhSXIZQIK4xxD3iT4iknD.jpg?hash=FtCRi-NBJV0-LEbHozuPaZp_I9Qf"class="avatar"/>
+        </div>
+          <h3>第二届</h3>
+          <p><strong>社长：</strong>邸彦儒<br><strong>副社长：</strong>张玮伦<br></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2023 第三届 -->
+    <div class="t-item" style="--d:.12s">
+      <div class="t-half t-top">
+        <div class="t-card">
+        <div class="avatars-row">
+          <img src="https://cdn-community.bcmcdn.com/47/community/NN6sML4DxdY0tSEAG1G99FgS1euqd97JxiZBC97iriAV.jpg?hash=FixxJyKkJ4JP3xrOVSV-NUI2oulx"class="avatar"/>
+          <img src="https://cdn-community.bcmcdn.com/47/community/VlFU8aUTEXzCCSrPs1nKnLM1MUGnrzcKo8rMzCtBHj68.jpg?hash=FjF8fxe7R9sYr-t9d1uZXwDbIOFz"class="avatar"/>
+        </div>
+          <h3>第三届</h3>
+          <p><strong>社长：</strong>刘昱敦<br><strong>副社长：</strong>李宗翰<br></p>
+        </div>
+      </div>
+      <div class="t-node"><span class="t-dot"></span><span class="t-year mono">2023.08</span></div>
+      <div class="t-half t-bottom"></div>
+    </div>
+
+    <!-- 2024 第四届 -->
+    <div class="t-item" style="--d:.18s">
+      <div class="t-half t-top"></div>
+      <div class="t-node"><span class="t-dot"></span><span class="t-year mono">2024.08</span></div>
+      <div class="t-half t-bottom">
+        <div class="t-card">
+        <div class="avatars-row">
+          <img src="https://cdn-community.bcmcdn.com/47/community/QRD5fylD5DY4IM4Z4lzcT8BEcjGK9KzqD8IV6ado4qYZ.jpg?hash=Fp8MdWaL3lrLfftVi_EAz5HqaNRz"class="avatar"/>
+          <img src="https://cdn-community.bcmcdn.com/47/community/r4ZIZ7VYAJ3v2NAAwIWe5dN8pIjD46sme55u2nDvTsmI.jpg?hash=FgAPSOjGNAZA9WPpgBeHiwNeAlgn"class="avatar"/>
+        </div>
+          <h3>第四届</h3>
+          <p><strong>社长：</strong>吴思锐<br><strong>副社长：</strong>李鹏飞<br></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2025 第五届 -->
+    <div class="t-item" style="--d:.24s">
+      <div class="t-half t-top">
+        <div class="t-card">
+        <div class="avatars-row">
+          <img src="https://cdn-community.bcmcdn.com/47/community/68fb4DBxPJ9gJQRjwGNJX2mpt0Xy8GbvuAHAQ2dbejNg.jpg?hash=Fk5jKmeXWb-ncntpsIGezNX1FT6r"class="avatar"/>
+          <img src="https://cdn-community.bcmcdn.com/47/community/fGEeUediMAGDjFTNhY8eCy3G0UVbmSAGVzI664uf2brp.jpg?hash=Fv8CSEdMXqoJV9dQ7O1CiivXQGxh"class="avatar"/>
+          <img src="https://cdn-community.bcmcdn.com/47/community/HQoGDcrYQRacYpO4vXXYPizeKme7appClRlvtJONO33X.jpg?hash=FpUS7P8m1UTGLv--h4UhBrVsfq_5"class="avatar"/>
+        </div>
+          <h3>第五届</h3>
+          <p><strong>社长：</strong>颜学谦<br><strong>副社长：</strong>肖嘉铭、喇涵锐<br></p>
+        </div>
+      </div>
+      <div class="t-node"><span class="t-dot"></span><span class="t-year mono">2025.08</span></div>
+      <div class="t-half t-bottom"></div>
+    </div>
+
+    <!-- 2026 第六届 -->
+    <div class="t-item highlight" style="--d:.3s">
+      <div class="t-half t-top"></div>
+      <div class="t-node"><span class="t-dot pulse"></span><span class="t-year mono">2026.08</span></div>
+      <div class="t-half t-bottom">
+        <div class="t-card">
+        <div class="avatars-row">
+          <img src="https://cdn-community.bcmcdn.com/47/community/PUa5nt5umPZsAy8hFQ7vnBsAxApxvc146xpkewiCjJko.jpg?hash=FpCCMqkwiy72uwSqP2iPB5wnWXik"class="avatar"/>
+          <img src="https://cdn-community.bcmcdn.com/47/community/tAy0lfxTFsoxyhbGI75VAwKy59kim39gItYGWSbgf7x7.jpg?hash=FpNuwkcBs8DorphBM-TIqcaWnsp-"class="avatar"/>
+          <img src="https://cdn-community.bcmcdn.com/47/community/YmMdyXVXb46URsaQ0fVK01AspL6KFPTPDWdw1cz0BWnQ.jpg?hash=Fqo89q-g16e8N_QnOl5O5xza392o"class="avatar"/>
+        </div>
+          <h3>第六届</h3>
+          <p><strong>社长：</strong>韩旻洲<br><strong>副社长：</strong>汪芷萱、杨乐诚<br></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 历年荣誉 -->
+    <div class="t-item" style="--d:.36s">
+      <div class="t-half t-top">
+        <div class="t-card">
+          <h3>
+            未完待续……
+          </h3>
+          <p style="font-size: 12.3px;">成员积极参与CSP-J/S赛事并屡获佳绩，曾获NOIP省级二等奖；许多成员在学科竞赛中取得优异成绩；社团作品在甘肃省科创大赛中取得省级一等奖。</p>
+        </div>
+      </div>
+      <div class="t-node"><span class="t-dot"></span><span class="t-year mono"></span></div>
+      <div class="t-half t-bottom"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ 社团氛围 ═══════════ -->
+<section class="section" id="vibe">
+  <div class="sec-head reveal">
+    <p class="sec-kicker mono">// 04 &middot; OUR VIBE</p>
+    <h2 class="sec-title">我们还有&hellip;&hellip;<span class="accent">火热的社团氛围</span></h2>
+  </div>
+  <div class="vibe-stage reveal">
+    <figure class="vibe-fig vibe-main">
+      <img src="assets/group.png" alt="「一中点评」社团群活跃度排行榜第一名：数码空间" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="vibe-fig vibe-sat" style="--l:14%; --t:5%; --r:-4deg; --fd:0s; --w:230px">
+      <img src="assets/2.png" alt="群聊日常：上传个好看的二次元美少女图片" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="vibe-fig vibe-sat" style="--l:11%; --t:36%; --r:3deg; --fd:1.4s; --w:215px">
+      <img src="assets/5.png" alt="群聊日常：四人接力复读“神了”" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="vibe-fig vibe-sat" style="--l:13%; --b:6%; --r:-2.5deg; --fd:0.7s; --w:230px">
+      <img src="assets/3.png" alt="群聊日常：爽飞了，我草" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="vibe-fig vibe-sat" style="--rt:12%; --t:8%; --r:3.5deg; --fd:0.4s; --w:250px">
+      <img src="assets/1.jpg" alt="社团成员线下聚餐合影" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="vibe-fig vibe-sat" style="--rt:11%; --t:42%; --r:-3deg; --fd:1.8s; --w:215px">
+      <img src="assets/4.png" alt="群聊日常：一长串“最”字忠告，暑假马上结束了" loading="lazy" decoding="async" />
+    </figure>
+    <figure class="vibe-fig vibe-sat" style="--rt:9%; --b:4%; --r:2.5deg; --fd:1s; --w:250px">
+      <img src="assets/6.jpg" alt="社团成员在兰州一中校门口合影" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════ 加入我们 ═══════════ -->
+<section class="section" id="join">
+  <div class="sec-head reveal">
+    <p class="sec-kicker mono">// 05 &middot; JOIN US</p>
+    <h2 class="sec-title">加入我们<span class="accent">.</span></h2>
+  </div>
+  <div class="join-grid">
+    <div class="join-left">
+      <p class="join-lead reveal">
+        无论你是零基础的好奇者，还是已经写过代码、摸过电烙铁的同好 &mdash;&mdash; 数码空间都为你留了一个位置。
+      </p>
+      <ul class="join-perks reveal" style="--d:.1s">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <div><strong>系统的入门路径</strong><span>从零基础到能独立完成小项目，学长学姐全程带路。</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <div><strong>真实的项目经历</strong><span>校园建模、网站开发、硬件改装，作品集从这里开始。</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <div><strong>竞赛与荣誉机会</strong><span>CSP-J/S、科创大赛，和队友一起站上领奖台。</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <div><strong>一群同频的伙伴</strong><span>在这里，聊技术永远有人接得住梗。</span></div>
+        </li>
+      </ul>
+      <div class="join-chips mono reveal" style="--d:.18s">
+        <span>零基础友好</span><span>每周活动</span><span>项目驱动</span><span>大佬带飞</span>
+      </div>
+      <div class="join-btns reveal" style="--d:.26s">
+        <a class="btn solid magnetic" href="#join" data-join-modal><span>加入我们</span><span>&rarr;</span></a>
+        <a class="btn magnetic" href="#home"><span>回到顶部</span><span>&uarr;</span></a>
+      </div>
+    </div>
+    <div class="terminal reveal" style="--d:.12s">
+      <div class="term-bar">
+        <span class="term-dot" style="background:#ff5f57"></span>
+        <span class="term-dot" style="background:#febc2e"></span>
+        <span class="term-dot" style="background:#28c840"></span>
+        <span class="term-title mono">guest@digital-space: ~</span>
+      </div>
+      <div class="term-body" id="termBody"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 友情链接 ═══════════ -->
+<section class="section" id="friends">
+  <div class="sec-head reveal">
+    <p class="sec-kicker mono">// 06 &middot; FRIEND LINKS</p>
+    <h2 class="sec-title">友情链接<span class="accent">.</span></h2>
+  </div>
+  <div class="card-grid three">
+    <div class="reveal">
+      <a class="card friend-card" href="https://www.gslzyz.cn/" target="_blank" rel="noopener">
+        <img class="friend-avatar" src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjI1MzQ2MTcxOTFfYjg2MDZhNmQ.jpeg" alt="兰州一中" loading="lazy" decoding="async" />
+        <div class="friend-meta">
+          <h3>兰州一中</h3>
+          <p>士不可以不弘毅<br />任重而道远</p>
+        </div>
+      </a>
+    </div>
+    <div class="reveal" style="--d:.08s">
+      <a class="card friend-card" href="https://1zdigital.space/" target="_blank" rel="noopener">
+        <img class="friend-avatar" src="https://cravatar.com/avatar/0fc2c5f90ea8afbfb604182b74a423ce?d=mp&amp;s=240" alt="呖呖李" loading="lazy" decoding="async" />
+        <div class="friend-meta">
+          <h3>呖呖李</h3>
+          <p>digital 宇宙正在加载中，欢迎来到这个数据驱动的世界。这里记录了&ldquo;我&rdquo;在地球的混入人类心得。</p>
+        </div>
+      </a>
+    </div>
+    <div class="reveal" style="--d:.16s">
+      <a class="card friend-card" href="https://qian.1zdigital.space/" target="_blank" rel="noopener">
+        <img class="friend-avatar" src="https://static.codemao.cn/pickduck/HJTNP4yn6.jpg" alt="Dayanshifu" loading="lazy" decoding="async" />
+        <div class="friend-meta">
+          <h3>Dayanshifu</h3>
+          <p>亻尔女子</p>
+        </div>
+      </a>
+    </div>
+    <div class="reveal" style="--d:.24s">
+      <a class="card friend-card" href="https://hmz168.1zdigital.space" target="_blank" rel="noopener">
+        <img class="friend-avatar" src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjI1MzUxMDI0MjFfNjUyYjBjNWE.jpeg" alt="HMZ" loading="lazy" decoding="async" />
+        <div class="friend-meta">
+          <h3>HMZ</h3>
+          <p>好好学习，天天向上！</p>
+        </div>
+      </a>
+    </div>
+    <div class="reveal" style="--d:.32s">
+      <a class="card friend-card" href="https://etaris.moe/" target="_blank" rel="noopener">
+        <img class="friend-avatar" src="https://blog.etaris.moe/photos/head.jpg" alt="ChenServer" loading="lazy" decoding="async" />
+        <div class="friend-meta">
+          <h3>ChenServer</h3>
+          <p>在熵增的尽头，打捞每一次日落</p>
+        </div>
+      </a>
+    </div>
+    <div class="reveal" style="--d:.4s">
+      <a class="card friend-card" href="https://hello.1zdigital.space/qian" target="_blank" rel="noopener">
+        <img class="friend-avatar" src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjMzOTU5MDYyNDVfMDBhOGVhNWQ.jpeg" alt="千" loading="lazy" decoding="async" />
+        <div class="friend-meta">
+          <h3>千</h3>
+          <p>你好啊喵</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════ Footer ═══════════ -->
+<footer class="footer">
+  <p class="mono f-logo">DIGITAL_SPACE<span class="blink">_</span></p>
+  <p class="f-copy mono">&copy; 2026 <a href="https://hello.1zdigital.space/" target="_blank" rel="noopener">数码空间 </a></p>
+  <p class="f-copy mono" style="margin-top:4px;"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">陇ICP备2025020120号-1</a><br><a href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004725" target="_blank" rel="noreferrer"><img src="https://cdn-community.bcmcdn.com/47/community/obsIYzBE9hTEP2e2ltyWkwxD99pkA9otRkhBBcIyTN9E.png?hash=Fp40nnu64ycnwO4XMdcLL2_hGlXi" alt="公安备案图标" style="height:16px;vertical-align:middle;margin-right:4px">
+甘公网安备62010202004725号</a>
+</footer>
+
+<button id="backTop" class="back-top mono" aria-label="回到顶部">&#9650; TOP</button>
+
+<!-- ═══════════ 加入我们弹窗 ═══════════ -->
+<div class="join-modal" id="joinModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="joinModalTitle">
+  <div class="jm-card">
+    <button class="jm-close" id="joinModalClose" aria-label="关闭">&times;</button>
+    <p class="jm-kicker mono">// JOIN US</p>
+    <h3 class="jm-title" id="joinModalTitle">加入 QQ 群，就是入社了<span class="accent">.</span></h3>
+    <p class="jm-desc">数码空间没有繁琐的报名流程 &mdash;&mdash; 进入QQ群，你就是社团的正式成员了。</p>
+    <a class="btn solid jm-qq" href="https://qm.qq.com/cgi-bin/qm/qr?k=JMj80m7dsAEo8lwT0n-RDhKHxYypKMqc&jump_from=webapi&authKey=bZwKBtropt53P38JsjtGK9t8ekgid6dlJ+hEnPkq8zaq4OI+PpYsx0GEqeEzH8s/" target="_blank" rel="noopener"><span>点击入群</span><span>&#8599;</span></a>
+    <div class="jm-alt">
+      <img src="assets/qrcode.jpg" alt="数码空间社 QQ 群二维码" class="jm-qr" />
+      <div class="jm-num">
+        <span class="jm-num-label mono">群号</span>
+        <span class="jm-num-value mono">972717698</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 照片灯箱 ═══════════ -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <figure class="lb-figure">
+    <img id="lbImg" src="" alt="" />
+    <figcaption id="lbCap" class="mono"></figcaption>
+  </figure>
+</div>
+
+<script src="main.js"></script>
 </body>
-
-<script src="js/simpleParallax.min.js"></script>
-
 </html>
