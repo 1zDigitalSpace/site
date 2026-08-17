@@ -1,0 +1,375 @@
+var _____WB$wombat$assign$function_____=function(name){return (globalThis._wb_wombat && globalThis._wb_wombat.local_init && globalThis._wb_wombat.local_init(name))||globalThis[name];};if(!globalThis.__WB_pmw){globalThis.__WB_pmw=function(obj){this.__WB_source=obj;return this;}}{
+let window = _____WB$wombat$assign$function_____("window");
+let self = _____WB$wombat$assign$function_____("self");
+let document = _____WB$wombat$assign$function_____("document");
+let location = _____WB$wombat$assign$function_____("location");
+let top = _____WB$wombat$assign$function_____("top");
+let parent = _____WB$wombat$assign$function_____("parent");
+let frames = _____WB$wombat$assign$function_____("frames");
+let opener = _____WB$wombat$assign$function_____("opener");
+/*! Dogbox 0.0.2 */
+(function () {
+    var dogbox, opt = {delay: 200, minRatio: 0.5, maxRatio: 5, titleHeight: 20, scaleStep: 0.1},
+        _oR = 1,
+        _maxR = opt.maxRatio,
+        _minR = opt.minRatio,
+        moduleName = 'dogbox',
+        body = document.body,
+        tpl = (clazz, type) => {
+            let elem = document.createElement(type || 'div')
+            elem.classList.add('dogbox-' + clazz)
+            return elem
+        },
+        mask = tpl('mask'),
+        closeBtn = tpl('close-btn'),
+        box = tpl('box'),
+        content = tpl('content'),
+        title = tpl('title');
+    
+    function render(obj) {
+        content = tpl('content');
+        title = tpl('title');
+        
+        box = tpl('box');
+        box.style.display = 'none';
+        
+        mask = tpl('mask');
+        mask.style.display = 'none';
+        
+        
+        dogbox.ratio = 1;
+        
+        var inner = obj._boxInner;
+        
+        content.style.overflow = 'hidden';
+        content.style.opacity = 0;
+        
+        dogbox.cow = 0;
+        dogbox.coh = 0;
+        
+        if (typeof opt.targetWash === 'function') {
+            obj = opt.targetWash(obj);
+            if (!obj) return;
+        }
+        
+        if (obj.nodeName.toUpperCase() === 'IMG') {
+            dogbox.cow = obj.naturalWidth;
+            dogbox.coh = obj.naturalHeight;
+            content.appendChild(inner);
+            
+            // 标题
+            if (obj.getAttribute('title')) {
+                title.textContent = obj.getAttribute('title')
+            }
+        }
+        else if(obj.nodeName.toUpperCase() === 'SVG') {
+            content.appendChild(inner);
+            dogbox.cow = parseFloat(inner.viewBox.baseVal.width);
+            dogbox.coh = parseFloat(inner.viewBox.baseVal.height);
+        }
+        box.appendChild(content);
+        //content.appendTo(box);
+        
+        [mask, closeBtn].forEach(elem => {
+            elem.off('click')
+            elem.on('click', close)
+        })
+        
+        box.appendChild(title);
+        
+        body.appendChild(mask);
+        body.appendChild(closeBtn);
+        body.appendChild(box);
+        
+        
+        // 处理 box 宽高位置
+        dogbox.cow = dogbox.cow || content.scrollWidth;
+        dogbox.coh = dogbox.coh || content.scrollHeight;
+        dogbox.offsetX = 0;
+        dogbox.offsetY = 0;
+        // 处理 resize 事件
+        resize(true);
+        
+        window.addEventListener('resize', resize.bind(!1, !1))
+        
+        
+        // 绑定鼠标滚轮缩放
+        box.on('wheel', function (e) {
+            var deltaY = e.deltaY || e.wheelDelta, changed = false;
+            var newRatio = dogbox.ratio;
+            if (deltaY > 0) {
+                newRatio -= opt.scaleStep;
+                newRatio = parseFloat(Math.max(newRatio, _minR).toFixed(1));
+                changed = newRatio != dogbox.ratio;
+            }
+            else if (deltaY < 0) {
+                newRatio += opt.scaleStep;
+                newRatio = parseFloat(Math.min(newRatio, _maxR).toFixed(1));
+                changed = newRatio != dogbox.ratio;
+            }
+            if (changed) {
+                dogbox.ratio = newRatio;
+                resize(!1, !0);
+            }
+            return false;
+        });
+        
+        var pm = null, pr = null, rFlag = false;
+        var mouseMoveHandler;
+        var touchMoveHandler;
+        var mouseDownHandler = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (e.type === 'touchstart' && pm && pm.type === 'touchstart' 
+                && e.touches.length == 1
+                && pm.touches.length == 1) {
+                // 移动端双击事件判断
+                let timespan = e.timeStamp - pm.timeStamp,
+                distance = Math.max(Math.abs(e.pageX - pm.pageX), Math.abs(e.pageY - pm.pageY));
+                
+                if (timespan < 200) {
+                    Doghole.Events.trigger(box, 'dblclick')
+                    return !1
+                }
+            }
+            
+            pm = e;
+            
+            mouseMoveHandler = function (f) {
+                f.preventDefault();
+                f.stopPropagation();
+                dogbox.offsetX += f.clientX - pm.clientX;
+                dogbox.offsetY += f.clientY - pm.clientY;
+                resize();
+                pm = f;
+                return false;
+            }
+            touchMoveHandler = function (f) {
+                //f.preventDefault();
+                //f.stopPropagation();
+                if (f.touches.length == 1) {
+                    // move
+                    dogbox.offsetX += f.changedTouches[0].clientX - pm.changedTouches[0].clientX;
+                    dogbox.offsetY += f.changedTouches[0].clientY - pm.changedTouches[0].clientY;
+                    resize();
+                    pm = f;
+                }
+                else if (f.touches.length >= 2) {
+                    var centerX = 0;
+                    var centerY = 0;
+                    for (var i = 0; i < f.touches.length; i++) {
+                        centerX += f.touches[i].clientX;
+                        centerY += f.touches[i].clientY;
+                    }
+                    centerX /= f.touches.length;
+                    centerY /= f.touches.length;
+                    
+                    // 计算触摸点到中心位置的距离的平均值
+                    var totalDistance = 0;
+                    for (var i = 0; i < f.touches.length; i++) {
+                        var distanceX = f.touches[i].clientX - centerX;
+                        var distanceY = f.touches[i].clientY - centerY;
+                        totalDistance += Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+                    }
+                    var distance = totalDistance / f.touches.length;
+                    try {
+                    if (pr) {
+                        var changed = !1, newRatio = dogbox.ratio;
+                        var changedDistance = Math.abs(distance -  pr.distance)
+                        if (changedDistance > 1) 
+                        {
+                            
+                            if (distance > pr.distance) {
+                                title.textContent = 'zoom out'
+                                newRatio += opt.scaleStep;
+                                newRatio = parseFloat(Math.min(newRatio, _maxR).toFixed(1));
+                                changed = newRatio != dogbox.ratio;
+                            }
+                            else if (distance < pr.distance) {
+                                title.textContent = 'zoom in'
+                                newRatio -= opt.scaleStep;
+                                newRatio = parseFloat(Math.max(newRatio, _minR).toFixed(1));
+                                changed = newRatio != dogbox.ratio;
+                            }
+                            if (changed) {
+                                dogbox.ratio = newRatio;
+                            }
+                        }
+                        dogbox.offsetX += centerX - pr.centerX;
+                        dogbox.offsetY += centerY - pr.centerY;
+                        resize();
+                    }
+                    }catch(e){title.textContent = e}
+                    pr = {centerX: centerX, centerY: centerY, distance: distance}
+                }
+                //return false;
+            }
+            
+            box.on('mousemove', mouseMoveHandler);
+            box.on('touchmove', touchMoveHandler);
+        }
+        
+        box.on('mousedown touchstart', mouseDownHandler);
+        box.on('mouseup touchend', function (e) {
+            box.off('mousemove');
+            if (e.touches && e.touches.length <= 1) {
+                box.off('touchmove');
+            }
+        });
+        box.on('dblclick', function () {
+            dogbox.ratio = _oR;
+            dogbox.offsetX = 0;
+            dogbox.offsetY = 0;
+            resize(false, true);
+        });
+        
+        let dogboxEscHandler;
+        dogboxEscHandler = function (e) {
+            if (e.keyCode == 27) {
+                close();
+                window.removeEventListener('keydown', dogboxEscHandler)
+            }
+        }
+        window.addEventListener('keydown', dogboxEscHandler)
+        
+        content.style.overflow = 'visible'
+        content.style.opacity = 1
+        
+        dogbox = Doghole.Utils.extend(dogbox, {
+            mask: mask,
+            box: box,
+            closeBtn: closeBtn,
+            content: content
+        });
+        
+        Doghole.Animate.stop(mask)
+        Doghole.Animate.stop(box)
+        mask.style.opacity = box.style.opacity = 0
+        mask.style.display = box.style.display = 'block'
+        Doghole.Animate.fadeIn(mask, opt.delay)
+        Doghole.Animate.fadeIn(box, opt.delay)
+        
+        if (typeof opt.rendered === 'function') {
+            opt.rendered(dogbox);
+        }
+    }
+    
+    function resize(init, delay) {
+        // 重新计算居中位置
+        if (init && (window.innerWidth < dogbox.cow || window.innerHeight < dogbox.coh + opt.titleHeight)) {
+            if (window.innerWidth < dogbox.cow) {
+                dogbox.ratio = (window.innerWidth - 20) / dogbox.cow;
+                _maxR = dogbox.ratio * opt.maxRatio;
+                _minR = dogbox.ratio * opt.minRatio;
+                _oR = dogbox.ratio;
+            }
+            if (window.innerHeight < dogbox.coh * dogbox.ratio + opt.titleHeight) {
+                dogbox.ratio = (window.innerHeight - opt.titleHeight - 20) / dogbox.coh / dogbox.ratio;
+                _maxR = dogbox.ratio * opt.maxRatio;
+                _minR = dogbox.ratio * opt.minRatio;
+                _oR = dogbox.ratio;
+            }
+        }
+        
+        dogbox.left = (window.innerWidth - dogbox.cow * dogbox.ratio) / 2 + dogbox.offsetX,
+        dogbox.top = (window.innerHeight - dogbox.coh * dogbox.ratio - opt.titleHeight) / 2 + dogbox.offsetY;
+        dogbox.width = dogbox.cow * dogbox.ratio;
+        dogbox.height = dogbox.coh * dogbox.ratio + opt.titleHeight;
+        
+        Doghole.Animate.stop(box)
+        if (delay)
+            Doghole.Animate.animate(box, {
+                left: dogbox.left,
+                top: dogbox.top,
+                width: dogbox.width,
+                height: dogbox.height
+            }, opt.delay)
+        else {
+            box.style.left = dogbox.left + 'px'
+            box.style.top = dogbox.top + 'px'
+            box.style.width = dogbox.width + 'px'
+            box.style.height = dogbox.height + 'px'
+        }
+    }
+    
+    function close() {
+        if (typeof opt.beforeClose === 'function') {
+            opt.beforeClose(dogbox);
+        }
+        box.off();
+        mask.off();
+        Doghole.Animate.fadeOut(box, opt.delay / 2, null, () => {
+            box.remove()
+            closeBtn.remove()
+        })
+        Doghole.Animate.fadeOut(mask, opt.delay, null, () => mask.remove())
+        
+        
+        if (typeof opt.closed === 'function') {
+            opt.closed(dogbox);
+        }
+    }
+    
+    function bindClick(obj) {
+        obj.style.cursor = 'pointer';
+        obj.on('click', () => {
+            render(obj);
+            return false;
+        })
+    }
+    
+    function preProcess(obj) {
+        return new Promise((resolve, reject) => {
+            if (obj.nodeName.toUpperCase() === 'IMG') {
+                
+                inner = document.createElement('img')
+                inner.setAttribute('src', obj.getAttribute('src'))
+                inner.setAttribute('width', '100%')
+                
+                inner.style.width = '100%';
+                inner.style.height = '100%'
+            }
+            else if(obj.nodeName.toUpperCase() === 'SVG') {
+                inner = document.createElement('div')
+                inner.innerHTML = obj.outerHTML;
+                inner = inner.firstElementChild;
+                inner.style.maxWidth = 'none'
+            }
+            else {
+                reject(false);
+            }
+            obj._boxInner = inner;
+            resolve(obj);
+        })
+    }
+    
+    Element.prototype.dogbox = dogbox = function(options) {
+        opt = Doghole.Utils.extend(opt, options);
+        let v;
+        if (typeof options.targetWash === 'function') {
+            v = options.targetWash(this);
+            if (!v) return true;
+        }
+        preProcess(v).then(v => bindClick(v));
+    }
+    
+    
+}());
+}
+
+/*
+     FILE ARCHIVED ON 12:07:59 Dec 27, 2024 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 15:28:42 Aug 17, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  capture_cache.get: 0.329
+  load_resource: 324.032
+  PetaboxLoader3.resolve: 274.612
+  PetaboxLoader3.datanode: 20.868
+*/

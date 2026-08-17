@@ -1,0 +1,132 @@
+.post-date {
+    display: block;
+    margin: 0 0 18px;
+    padding: 0;
+    color: var(--curr-text-tint);
+    text-align: left;
+    font-family: var(--base-font-family)
+}
+
+.post {
+    position: relative;
+    color: var(--curr-text-normal);
+}
+.post:not(:first-child) {
+    margin-top: 5em
+}
+.post.index-page:hover .post-content {
+    transition: .1s all;
+}
+.post.index-page.has-back-img::after {
+    content: '';
+    backdrop-filter: blur(3px);
+    position: absolute;
+    z-index: -1;
+    background: var(--curr-background-grad);
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.post.index-page .back-img {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    box-shadow: inset 0px 0px 6px 6px var(--curr-background);
+    width: 100%;
+    height: 100%;
+    zoom: 7;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.post-lock{
+  min-height: 82px;
+  will-change: background-position;
+}
+.post-lock a, .post-lock .post-content,.post-lock .post-meta,.post-lock .post-date, .post-lock .post-nav,
+.post-lock .post-title>span{
+  color: var(--curr-text-tint);
+}
+@media print, screen and (max-width: 478px){
+    .post {
+       padding: 0 20px
+    }
+}
+.post-content .more {
+	text-align: center;
+	margin-bottom: 0;
+}
+.post .statistic {
+    text-align: right;
+    font-family: var(--base-font-family)
+}
+.post.post-lock .statistic {
+    color: var(--curr-text-tint);
+}
+.post .statistic, .post .statistic>* {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    margin-bottom: 0;
+}
+.post .statistic>p:not(:first-of-type) {
+    margin-top:0
+}
+.post-meta>div:not(:last-child) {
+    padding-bottom: 4px;
+}
+.post-meta .tag, .post-meta .cate,
+.archives a.widget-tag,
+.archives a.widget-cate
+{
+	display: inline-block;
+    margin: 2px 2px 2px 0;
+    padding: 2px 8px;
+    font-size: var(--common-text-size);
+    font-weight: 400;
+    line-height: 1.6;
+    border-radius: 2px;
+}
+.archives a.widget-cate>span, .archives a.widget-tag>span {
+    /* background: white; */
+    /* border-radius: 33px; */
+    font-size: xx-small;
+}
+.post-meta .cate, .archives .widget-cate {
+    background-color: var(--curr-border-color)
+}
+.post-meta a:hover, .archives a.widget-cate:hover {
+    background-color: var(--curr-background)
+}
+.post-nav {
+    color: #999;
+    padding: 10px 0 0 0;
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+}
+.post-nav>div {
+    display: inline-block;
+    max-width: 49%
+}
+li[id^='fn-']>* {
+	display: inline;margin:0
+}
+
+/*
+     FILE ARCHIVED ON 02:34:25 Apr 07, 2025 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 15:28:37 Aug 17, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  capture_cache.get: 0.664
+  load_resource: 94.195
+  PetaboxLoader3.resolve: 36.279
+  PetaboxLoader3.datanode: 33.013
+*/

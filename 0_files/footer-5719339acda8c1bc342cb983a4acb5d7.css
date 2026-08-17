@@ -1,0 +1,147 @@
+footer {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    padding: 1.8em 0 0;
+    color: #999;
+    line-height: 1.5;
+    font-family: var(--base-font-family);
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+}
+footer * {
+    background-repeat: no-repeat;
+}
+footer .bleaching {
+    display: inline-block;
+    vertical-align: middle;
+    width: 52px;
+    height: 20px;
+    background-image: url(/web/20250407023425im_/https://qwq.me/blog/bleaching/images/bleaching-f771cf8111199069e405a9f08a32a724.svg);
+    background-size: 52px 20px;
+}
+footer .dog-house {
+	display: inline-block;
+	background-image: url(/web/20250407023425im_/https://qwq.me/blog/bleaching/images/doghouse-de363fc2e75f6219f3c4c53d6e3f9da6.svg);
+    background-size: 65px 16px;
+}
+
+footer .dog-house, .dog-house::after {
+    vertical-align: middle;
+    margin-top: -2px;
+    width: 65px;
+    height: 16px;
+}
+.dog-house::after {
+  --slice-0: inset(50% 50% 50% 50%);
+  --slice-1: inset(80% -2px 0 0);
+  --slice-2: inset(50% -2px 30% 0);
+  --slice-3: inset(10% -2px 85% 0);
+  --slice-4: inset(40% -2px 43% 0);
+  --slice-5: inset(80% -2px 5% 0);
+  content: '';
+  display: block;
+  position: relative;
+  top: 2px;
+  overflow: hidden;
+  background-size: 65px 16px;
+  background-image: url(/web/20250407023425im_/https://qwq.me/blog/bleaching/images/doghouse-2-0d3be3b8edc136b5061cf448500bc4fa.svg) ;
+  clip-path: var(--slice-0);
+}
+.dog-house:hover::after {
+  animation: 1s doghouse-bleaching;
+  animation-timing-function: steps(2, end);
+}
+@keyframes doghouse-bleaching {
+  0% { clip-path: var(--slice-1); transform: translate(-2px, -1px); }
+  10% { clip-path: var(--slice-3); transform: translate(1px, 1px); }
+  20% { clip-path: var(--slice-1); transform: translate(-1px, 1px); }
+  30% { clip-path: var(--slice-3); transform: translate(0px, .5px); }
+  40% { clip-path: var(--slice-2); transform: translate(-.5px, 0px); }
+  50% { clip-path: var(--slice-3); transform: translate(.5px, 0px); }
+  60% { clip-path: var(--slice-4); transform: translate(.5px, 1px); }
+  70% { clip-path: var(--slice-2); transform: translate(-1px, 1px); }
+  80% { clip-path: var(--slice-5); transform: translate(2px, -1px); }
+  90% { clip-path: var(--slice-1); transform: translate(-1px, 0px); }
+  100% { clip-path: var(--slice-1); transform: translate(0); }
+}
+footer sup {
+    zoom: 73%
+}
+footer>div>span {
+	color: var(--bright-active)
+}
+.doghouse {
+    margin: auto 0;
+    display: flex;
+    flex-direction: column
+}
+.doghouse .badges {
+    display: flex
+}
+.dark .dh-imgback {
+    opacity: 0.8
+}
+@media(prefers-color-scheme: dark) {
+    .auto .dh-imgback {
+        opacity: 0.8
+    }
+}
+.doghouse span+span {
+    margin-left: 4px
+}
+footer .doghouse .killberos {
+    width: 44px;
+    height: 29px;
+    background-image: url(/web/20250407023425im_/https://qwq.me/blog/bleaching/images/KILLBEROS-2a19f3a19a2089d87a43f0f35a2880ef.svg);
+    background-size: 44px 28px;
+}
+footer .doghouse .csrr {
+    width: 29px;
+    height: 29px;
+    background-image: url(/web/20250407023425im_/https://qwq.me/blog/bleaching/images/rating-csrr-b6a823038b79aaa0ff8ea352b599f909.svg);
+    background-size: 29px 28px;
+}
+footer .doghouse .anti-simp {
+    width: 31px;
+    height: 32px;
+    background-image: url(/web/20250407023425im_/https://qwq.me/blog/bleaching/images/the-anti-simp-committee-0793ccfef425cfdae498e7f64d7fd2f6.svg);
+    background-size: 31px 31px;
+}
+img.travellings-color {
+  /*animation: color-cycle 5s infinite;*/
+}
+@keyframes color-cycle {
+  0% {
+    filter: hue-rotate(0) saturate(1) brightness(1) sepia(0) contrast(1);
+  }
+  25% {
+    filter: hue-rotate(45deg) saturate(1) brightness(1.25) sepia(0) contrast(1);
+  }
+  50%{
+    filter: hue-rotate(-10deg) saturate(1.9) brightness(1.5) sepia(0) contrast(1.1);
+  }
+  75% {
+    filter: hue-rotate(45deg) saturate(0.9) brightness(1) sepia(.2) contrast(1);
+  }
+  100% {
+    filter: hue-rotate(0) saturate(1) brightness(1) sepia(0) contrast(1);
+  }
+}
+/*
+     FILE ARCHIVED ON 02:34:25 Apr 07, 2025 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 15:28:37 Aug 17, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  capture_cache.get: 0.286
+  load_resource: 306.852
+  PetaboxLoader3.resolve: 278.038
+  PetaboxLoader3.datanode: 8.631
+*/

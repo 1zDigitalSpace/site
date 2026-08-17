@@ -1,192 +1,1904 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<!-- saved from url=(0094)https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking -->
+<html lang="zh" class="auto" style="--wm-toolbar-height: 67px;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./0_files/athena.js.下载" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app220.us.archive.org';v.server_ms=2013;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="./0_files/bundle-playback.js.下载" charset="utf-8"></script>
+<script type="text/javascript" src="./0_files/wombat.js.下载" charset="utf-8"></script>
+<script>window.RufflePlayer=window.RufflePlayer||{};window.RufflePlayer.config={"autoplay":"on","unmuteOverlay":"hidden","showSwfDownload":true};</script>
+<script type="text/javascript" src="./0_files/ruffle.js.下载"></script>
+<script type="text/javascript">
+    __wm.init("https://web.archive.org/web");
+  __wm.wombat("https://qwq.me/n/zkteco-attendance-machine-cracking","20250125194031","https://web.archive.org/","web","https://web-static.archive.org/_static/",
+	      "1737834031");
+</script>
+<link rel="stylesheet" type="text/css" href="./0_files/banner-styles.css">
+<link rel="stylesheet" type="text/css" href="./0_files/iconochive.css">
+<!-- End Wayback Rewrite JS Include -->
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="msvalidate.01" content="935899423EDA64570DB7C2E20B85C074" />
-  <title>数码空间</title>
-  <link rel="stylesheet" href="css/all.css">
-  <link rel="icon" type="image/x-icon"
-    href="https://static.codemao.cn/pickduck/B1ozkjePlx.png?hash=FnTnQHCRnsdADVJxOXPKU7QRe4GU">
-  <link rel="apple-touch-icon"
-    href="https://static.codemao.cn/pickduck/B1ozkjePlx.png?hash=FnTnQHCRnsdADVJxOXPKU7QRe4GU">
-  <meta name="apple-mobile-web-app-title" content="数码空间">
-  <link rel="bookmark" href="img/icon.webp">
-  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="img/icon.webp">
-  <meta name="description" content="包容 创新 发展的兰州一中综合创新性科技社团">
-  <meta name="theme-color" content="#1C1C1F">
-  <meta name="color-scheme" content="light dark">
-  <link rel="stylesheet" href="https://cdn3.codesign.qq.com/icons/X2bzpZvRWkZkAaV/latest/iconfont.css">
-  <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.min.js"></script>
-  <script>
-    var _hmt = _hmt || [];
-    (function () {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?0a0cca83682044c405966961a1ff1b9b";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-</head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+    
+    
+    <meta name="description" content="对中控系列考勤机的一些研究，包括 Telnet、超管 8888 密码、打卡次序、SDK 介绍、考勤数据库触发器、实现自动打卡等">
+    
+    
+    <meta name="keywords" content="中控考勤机,zkteco,考勤机破解,中控,中控考勤机telnet,telnet,root,8888,超管,超级管理员,自动打卡,修改考勤机时间">
+    
+    <meta http-equiv="Window-target" content="_top">
+    <meta name="base" content="/">
+    <title>中控考勤机破解杂记 - Doghouse</title>
+    <link rel="shortcut icon" href="https://web.archive.org/web/20250125194031im_/https://qwq.me/favicon-2e55f0451afaa7a95c710b4a1c9ca96d.ico">
+    <link rel="canonical" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking">
+    <link rel="sitemap" type="application/xml" title="Doghouse 的站点地图" href="https://web.archive.org/sitemap.xml">
+    <link rel="alternate" type="application/atom+xml" title="Doghouse 的 Atom 订阅" href="https://web.archive.org/web/20250125194031/https://qwq.me/feed.xml">
+    <link rel="stylesheet" href="./0_files/index-4db09f7394f40b43eaea8ffa536cf0c9.css">
+    <link rel="stylesheet" href="./0_files/has-fddab582d2391c92270bc727df779672.css">
+    <link rel="stylesheet" href="./0_files/post-list-76f518e3939239daecd0ca66c60f8682.css">
+    <link rel="stylesheet" href="./0_files/footer-5719339acda8c1bc342cb983a4acb5d7.css">
+    <link rel="prefetch" href="https://web.archive.org/web/20250125194031/https://qwq.me/blog/bleaching/css/prism/navy-747a0340474e78c9c1293c7605cfd952.css" as="style" onload="this.rel=&#39;stylesheet&#39;">
+    <link rel="stylesheet" href="./0_files/katex.min-c9f7e21f3011f52c6b9a93b6aeb92edb.css" as="style" onload="this.rel=&#39;stylesheet&#39;">
+    <link rel="prefetch" href="https://web.archive.org/web/20250125194031/https://qwq.me/blog/bleaching/css/dogbox-b0daa58faf27b90cbaf1daf4bc647ef8.css" as="style" onload="this.rel=&#39;stylesheet&#39;">
+    <link rel="preconnect" href="https://web.archive.org/web/20250125194031/https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://web.archive.org/web/20250125194031/https://npm.elemecdn.com/">
+    <link rel="lazy-js" for="katex" href="https://web.archive.org/blog/plugins/katex/0.15.2/katex.min-b1a8a50d76f3bd8d824ac86825b6ae5b.js">
+    <link rel="lazy-js" for="prism" href="https://web.archive.org/blog/bleaching/js/prism-f90b23355660e757115ade38ebdecbb7.js">
+    <link rel="lazy-js" for="prism" href="https://web.archive.org/blog/plugins/clipboard/clipboard.min-3f3688138a1b9fc4ef669ce9056b6674.js">
+    <link rel="lazy-js" for="mermaid" href="https://web.archive.org/blog/plugins/mermaid/9/mermaid.min-07196839702f1e8281a9b3fdbd9f43b3.js">
+    <script src="./0_files/doghouse-e598c0276f70dbe6eb1f429491e57168.js.下载"></script>
+    <script defer="" src="./0_files/doghouse-scrollLock-359bceb0d01fea8a11ebcce4d599c037.js.下载"></script>
+    <script defer="" src="./0_files/dogbox-1604af70e4ecb601c543ef8b8d323b6c.js.下载"></script>
+    <script defer="" src="./0_files/index-7d468a655e70647fcc0f56a73bd68f91.js.下载"></script>
+<link rel="stylesheet" href="./0_files/comment-1c0471a85cab8dc6c16a3e9a6bf9f32b.css"></head>
 
-<body id="body">
-  <div class="nav">
-    <div class="nav-content">
-      <div class="nav-left">
-        <a href="javascript:scrollToTopWithAnimation()" class="site-logo">
-          <img src="https://static.codemao.cn/pickduck/Byks1olvex.webp?hash=FupuaA1gdPnGpRbXPNldKYbTcJV7" alt="logo"
-            class="site-logo-img">
-          <span class="site-name">数码空间</span>
-        </a>
-      </div>
-    </div>
+<body><!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script>__wm.rw(0);</script>
+<div id="wm-ipp-base" lang="en" style="display: block; direction: ltr; height: 67px;" toolbar-mode="auto"><template shadowrootmode="closed"><div id="wm-ipp" style="position:fixed;left:0;top:0;right:0;" class="">
+<div id="donato" style="position: relative; width: 100%; height: 0px; visibility: hidden;">
+  <div id="donato-base" style="height: 217px;">
+    <iframe id="donato-if" src="https://archive.org/includes/donate.php?as_page=1&amp;platform=wb&amp;referer=https%3A//web.archive.org/web/20250125194031/https%3A//qwq.me/n/zkteco-attendance-machine-cracking" scrolling="no" frameborder="0" style="width:100%; height:100%">
+    </iframe>
   </div>
-
-  <div class="first-stack need-padding">
-    <div class="left-Introduce">
-      <div class="title-group">
-        <span class="title">数码空间</span>
-        <span class="title">DIGITAL SPACE</span>
-      </div>
-      <div class="discription">
-        <span class="discription-text">包容 创新 发展的<span class="inline-word"></span><br>兰州一中综合创新性科技社团<span
-            class="inline-word"></span></span>
-      </div>
-      <div class="first-stack-links">
-        <a href="https://1zdigital.space" class="about-button" target="_blank">社团知识站</a>
-        <div style="width: 10px;"></div>
-        <a href="https://qm.qq.com/cgi-bin/qm/qr?k=8SuyzdjMdeFkqadi6fVxiHkDl4CLty4_&jump_from=webapi&authKey=CzQikE2dsX8r/V933DdRGaGKKtdiOJlwdwXW4sMrp03vUS4DN889CrqxzXHYF1y"
-          class="about-button" target="_blank">加入我们</a>
-      </div>
-
+</div><div id="wm-ipp-inside">
+  <div id="wm-toolbar" style="position:relative;display:flex;flex-flow:row nowrap;justify-content:space-between;" nav="async">
+    <div id="wm-logo" style="/*width:110px;*/padding-top:12px;">
+      <a href="https://web.archive.org/web/" title="Wayback Machine home page"><img src="https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-200.png" srcset="https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-100.png, https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-150.png 1.5x, https://web-static.archive.org/_static/images/toolbar/wayback-toolbar-logo-200.png 2x" alt="Wayback Machine" style="width:100px" border="0"></a>
     </div>
-    <a class="right-stack" target="_blank">
-      <img class="banner-img" src="https://static.codemao.cn/pickduck/r1gCdc1rwxg.png" alt="banner" title="banner">
-    </a>
-  </div>
-
-
-  <div class="about-section need-padding">
-    <div class="about-container">
-      <h2 class="about-title">关于数码空间社<br></h2>
-      <div class="about-content">
-        <p>数码空间社成立于 2021 年 8 月，由兰州一中 23 届同学创立，是一个专注于数码科技、电子技术与信息编程的极客型学生社团。</p>
-        <h3 class="about-subtitle">社团宗旨</h3>
-        <p>我们以"推广数码科技，培养学生的技术素养与创新能力"为宗旨，致力于为同学们搭建一个自由探索、动手实践和技术分享的平台。</p>
-        <h3 class="about-subtitle">创立初衷</h3>
-        <p>社团创立的初衷源于对数电/模电、编程开发及硬件改造等前沿技术的热爱，日常活动涵盖基础教学、编程实训、电子焊接改装、项目开发和技术交流等多个方面。</p>
-        <h3 class="about-subtitle">实践理念</h3>
-        <p>我们特别倡导"拆、装、造"的实践理念，鼓励成员从动手操作中学习成长。</p>
-        <h3 class="about-subtitle">竞赛成绩</h3>
-        <p>在竞赛方面，社团成员积极参与 CSP-J/S 等赛事并屡获佳绩，曾取得NOIP甘肃省级二等奖的优异成绩。社团作品兰州一中校园建模获得2026甘肃省科创大赛一等奖。社团许多成员曾在中学生数学竞赛、物理竞赛、化学竞赛、生物竞赛中取得优异成绩</p>
-        <h3 class="about-subtitle">加入我们</h3>
-        <p>期待新高一的你加入我们，在芯片与代码的世界里挥洒青春，共同开启通向未来的科技之门！</p>
-        <br>
-        <img src="https://static.codemao.cn/pickduck/HkcOrgrwge.jpg"
-          style="width: 80%;border-radius: 20px;padding: 0 auto 0 ; margin-left: 10%;" />
-      </div>
-    </div>
-  </div>
-
-  <div class="works-section need-padding">
-    <div class="works-container">
-      <h2 class="works-title">社团作品</h2>
-      
-      <span class="work-item">
-        <img src="https://static.codemao.cn/pickduck/r1gCdc1rwxg.png" class="work-img">
-        <div class="work-info">
-          <h3 class="work-name">弘毅大礼堂抽奖系统</h3>
-          <p class="work-desc">来抽<br><br>
-          <a class="work-link" href="https://hello.1zdigital.space/hy" target="_blank">在线体验</a></p>
+    <div class="c" style="display:flex;flex-flow:column nowrap;justify-content:space-between;flex:1;">
+      <form class="u" style="display:flex;flex-direction:row;flex-wrap:nowrap;" target="_top" method="get" action="https://web.archive.org/web/submit" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="https://qwq.me/n/zkteco-attendance-machine-cracking" onfocus="this.focus();this.select();" style="flex:1;" autocomplete="off"><input type="hidden" name="type" value="replay"><input type="hidden" name="date" value="20250125194031"><input type="submit" value="Go">
+      </form>
+      <div style="display:flex;flex-flow:row nowrap;align-items:flex-end;">
+                <div class="s" id="wm-nav-captures" style="flex:1;">
+                    <a class="t" href="https://web.archive.org/web/20250125194031*/https://qwq.me/n/zkteco-attendance-machine-cracking" title="See a list of every capture for this URL">7 captures</a>
+          <div class="r" title="Timespan for captures of this URL">29 Feb 2024 - 13 Apr 2026</div>
+          </div>
+        <div class="k">
+          <a href="https://web.archive.org/web/20140701000000/https://qwq.me/n/zkteco-attendance-machine-cracking" id="wm-graph-anchor">
+            <div id="wm-ipp-sparkline" title="Explore captures for this URL" style="position: relative">
+              <canvas id="wm-sparkline-canvas" width="775" height="27" border="0"></canvas>
+            <div class="yt" style="display: none; width: 25px; height: 27px; left: 450px;"></div><div class="mt" style="display: none; width: 2px; height: 27px; left: 463px;"></div></div>
+          </a>
         </div>
-      </span>
-      
-      <span class="work-item right-img">
-        <img src="https://static.codemao.cn/pickduck/r1gCdc1rwxg.png" class="work-img">
-        <div class="work-info">
-          <h3 class="work-name">数字兰州一中</h3>
-          <p class="work-desc">来玩<br><br>
-          <a class="work-link" href="https://hello.1zdigital.space/digitallzyz" target="_blank">预览完整版</a>
-          <a class="work-link" href="https://hello.1zdigital.space/digitallzyz/simplified.html" target="_blank">预览精简版</a></p>
-        </div>
-      </span>
-      
-      <span class="work-item">
-        <img src="https://cdn-community.bcmcdn.com/47/community/BMhqb64pTA0K6yNDV7uM3xsi3PjDqPYTANcY9XRM4FAz.ico?hash=FnhFmJ8zzLOVhTmnKUnLEoGN8aM1" class="work-img">
-        <div class="work-info">
-          <h3 class="work-name">智能坐姿监测</h3>
-          <p class="work-desc">来测<br><br>
-          <a class="work-link" href="https://github.com/MicroPotatoChips/poseture_monitor" target="_blank">项目主页</a>
-          <a class="work-link" href="#" target="_blank">软件下载</a></p>
-        </div>
-      </span>
+      </div>
     </div>
-  </div>
-
-  <div class="friends-section need-padding">
-    <div class="friends-container">
-      <h2 class="about-title" style="margin-top: 20px;margin-bottom: 20px;">友情链接<br></h2>
-      <div class="friends-grid">
-        <a href="https://www.gslzyz.cn/" class="friend-card" target="_blank">
-          <img src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjI1MzQ2MTcxOTFfYjg2MDZhNmQ.jpeg" class="friend-avatar">
-          <h3 class="friend-name">兰州一中</h3>
-          <p class="friend-description">士不可以不弘毅<br>任重而道远</p>
+    <div class="n">
+      <table>
+        <tbody>
+          <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+          <tr class="m">
+            <td class="b" nowrap="nowrap">Dec</td>
+            <td class="c" id="displayMonthEl" title="You are here: 19:40:31 Jan 25, 2025">Jan</td>
+            <td class="f" nowrap="nowrap">Feb</td>
+          </tr>
+          <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+          <tr class="d">
+            <td class="b" nowrap="nowrap"><span class="ta"></span></td>
+            <td class="c" id="displayDayEl" style="width:34px;font-size:22px;white-space:nowrap;" title="You are here: 19:40:31 Jan 25, 2025">25</td>
+            <td class="f" nowrap="nowrap"><span class="ta"></span></td>
+          </tr>
+          <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+          <tr class="y">
+            <td class="b" nowrap="nowrap">2024</td>
+            <td class="c" id="displayYearEl" title="You are here: 19:40:31 Jan 25, 2025">2025</td>
+            <td class="f" nowrap="nowrap">2026</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="r" style="display:flex;flex-flow:column nowrap;align-items:flex-end;justify-content:space-between;">
+      <div id="wm-btns" style="text-align:right;height:23px;">
+                <span class="xxs">
+          <div id="wm-save-snapshot-success">success</div>
+          <div id="wm-save-snapshot-fail">fail</div>
+          <a id="wm-save-snapshot-open" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" title="Share via My Web Archive" style="display: none;">
+            <span class="iconochive-web"></span>
+          </a>
+          <a href="https://archive.org/account/login.php" title="Sign In" id="wm-sign-in" style="display: inline-block;">
+            <span class="iconochive-person"></span>
+          </a>
+          <span id="wm-save-snapshot-in-progress" class="iconochive-web" style="display: none;"></span>
+        </span>
+                <a class="xxs" href="https://help.archive.org/help/category/the-wayback-machine/" title="Get some help using the Wayback Machine" style="top:-6px;"><span class="iconochive-question" style="color:rgb(87,186,244);font-size:160%;"></span></a>
+        <a id="wm-tb-close" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#close" style="top:-2px;" title="Close the toolbar"><span class="iconochive-remove-circle" style="color:#888888;font-size:240%;"></span></a>
+      </div>
+      <div id="wm-share" class="xxs">
+        <a href="https://web.archive.org/web/20250125194031/http://web.archive.org/screenshot/https://qwq.me/n/zkteco-attendance-machine-cracking" id="wm-screenshot" title="screenshot" style="visibility: hidden;">
+          <span class="wm-icon-screen-shot"></span>
         </a>
-        <a href="https://1zdigital.space/" class="friend-card" target="_blank">
-          <img src="https://cravatar.com/avatar/0fc2c5f90ea8afbfb604182b74a423ce?d=mp&s=240"class="friend-avatar">
-          <h3 class="friend-name">呖呖李</h3>
-          <p class="friend-description">digital 宇宙正在加载中，欢迎来到这个数据驱动的世界。这里记录了“我”在地球的混入人类心得。</p>
+        <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" id="wm-video" title="video">
+          <span class="iconochive-movies"></span>
         </a>
-        <a href="https://qian.1zdigital.space/" class="friend-card" target="_blank">
-          <img src="https://static.codemao.cn/pickduck/HJTNP4yn6.jpg" class="friend-avatar">
-          <h3 class="friend-name">Dayanshifu</h3>
-          <p class="friend-description">亻尔女子</p>
-        </a>
-        <a href="https://hmz168.1zdigital.space" class="friend-card" target="_blank">
-          <img src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjI1MzUxMDI0MjFfNjUyYjBjNWE.jpeg" class="friend-avatar">
-          <h3 class="friend-name">HMZ</h3>
-          <p class="friend-description">好好学习，天天向上！</p>
-        </a>
-        <a href="https://etaris.moe/" class="friend-card" target="_blank">
-          <img src="https://blog.etaris.moe/photos/head.jpg" class="friend-avatar">
-          <h3 class="friend-name">ChenServer</h3>
-          <p class="friend-description">在熵增的尽头 ，打捞每一次日落</p>
-        </a>
-        <a href="https://hello.1zdigital.space/qian" class="friend-card" target="_blank">
-          <img src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjMzOTU5MDYyNDVfMDBhOGVhNWQ.jpeg" class="friend-avatar">
-          <h3 class="friend-name">千</h3>
-          <p class="friend-description">你好啊喵</p>
-        </a>
+        <a id="wm-share-facebook" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" data-url="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking" title="Share on Facebook" style="margin-right:5px;" target="_blank"><span class="iconochive-facebook" style="color:#3b5998;font-size:160%;"></span></a>
+        <a id="wm-share-twitter" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" data-url="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking" title="Share on Twitter" style="margin-right:5px;" target="_blank"><span class="iconochive-twitter" style="color:#1dcaff;font-size:160%;"></span></a>
+      </div>
+      <div style="padding-right:2px;text-align:right;white-space:nowrap;">
+        <a id="wm-expand" class="wm-btn wm-closed" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#expand"><span id="wm-expand-icon" class="iconochive-down-solid"></span> <span class="xxs" style="font-size:80%;">About this capture</span></a>
       </div>
     </div>
   </div>
-  <div class="footer-content need-padding" style="text-decoration:none;color:#0099ff51;font-size:small;text-align: center;">
-    <span class="info" style="margin:0 4px 2px 0">©<span id="2year">114514</span> <a style="text-decoration:none;color:#0099ff51"
-        href="https://hello.1zdigital.space/">数码空间</a></span>
-    <span class="info">
-      <img src=https://www.beian.gov.cn/img/ghs.png alt=公安图标 height=16 width=16 style="height:16px;vertical-align:middle;margin:0 4px 0 0;display:inline"/>
-      <a style="text-decoration:none;color:#0099ff51" href="https://beian.mps.gov.cn/#/query/webSearch?code=62010202004725;display:inline" target=_blank>甘公网安备62010202004725号</a></span>
-      <a style="text-decoration:none;color:#0099ff51" href="http://beian.miit.gov.cn" target=_blank                                      >陇ICP备2025020120号</a>
-    </span>
-    <script type="text/javascript">
-      function toChineseYear(year) {
-        var chineseNumbers = ['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
-        var yearStr = year.toString();
-        var result = '';
-        for (var i = 0; i < yearStr.length; i++) {
-          result += chineseNumbers[parseInt(yearStr.charAt(i))];
+    <div id="wm-capinfo" style="border-top:1px solid #777;display:none; overflow: hidden">
+        <div id="wm-capinfo-notice" source="api"></div>
+                <div id="wm-capinfo-collected-by">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center;padding:2px 0;">COLLECTED BY</div>
+    <div style="padding:3px;position:relative" id="wm-collected-by-content">
+      <div style="display:inline-block;vertical-align:top;width:49%;">
+			<span class="c-logo" style="background-image:url(https://archive.org/services/img/commoncrawl)"></span>
+		<div>Collection: <a style="color:#33f;" href="https://archive.org/details/commoncrawl" target="_new"><span class="wm-title">Common Crawl</span></a></div>
+		<div style="max-height:75px;overflow:hidden;position:relative;">
+	  <div style="position:absolute;top:0;left:0;width:100%;height:75px;background:linear-gradient(to bottom,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90%,rgba(255,255,255,255) 100%);"></div>
+	  Web crawl data from Common Crawl.
+	</div>
+	      </div>
+    </div>
+    </div>
+    <div id="wm-capinfo-timestamps">
+    <div style="background-color:#666;color:#fff;font-weight:bold;text-align:center;padding:2px 0;" title="Timestamps for the elements of this page">TIMESTAMPS</div>
+    <div>
+      <div id="wm-capresources" style="margin:0 5px 5px 5px;max-height:250px;overflow-y:scroll !important"></div>
+      <div id="wm-capresources-loading" style="text-align:left;margin:0 20px 5px 5px;display:none"><img src="https://web-static.archive.org/_static/images/loading.gif" alt="loading"></div>
+    </div>
+    </div>
+  </div></div></div><link rel="stylesheet" type="text/css" href="./0_files/banner-styles.css"><link rel="stylesheet" type="text/css" href="./0_files/iconochive.css"><div class="wb-autocomplete-suggestions " style="left: 15px; top: 3844px; width: 443px;"></div></template>
+</div><div id="wm-ipp-print">The Wayback Machine - https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking</div>
+<script type="text/javascript">//<![CDATA[
+__wm.bt(775,27,25,2,"web","https://qwq.me/n/zkteco-attendance-machine-cracking","20250125194031",1996,"https://web-static.archive.org/_static/",["https://web-static.archive.org/_static/css/banner-styles.css?v=1utQkbB3","https://web-static.archive.org/_static/css/iconochive.css?v=3PDvdIFv"], false);
+  __wm.rw(1);
+//]]></script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+ 
+    <div class="side-click-mask"></div>
+    <header>
+    <div class="header">
+        <div class="logo-and-site-name">
+            <a href="https://web.archive.org/web/20250125194031/https://qwq.me/" class="doghouse-logo" title="回到首页"></a>
+            <div class="site-name-and-desc">
+                <a class="site-name" href="https://web.archive.org/web/20250125194031/https://qwq.me/" title="回到首页">Doghouse</a>
+                <p class="description">Tread through my fragile heart gently.</p>
+            </div>
+        </div>
+        
+        <ul class="header-nav">
+            <li><i class="theme-icon"></i></li>
+            <li>
+                <a class="nav-icon icon-subway" href="https://web.archive.org/web/20250125194031/https://www.travellings.cn/go.html" title="开往 - 友链接力" target="_blank"></a>
+                <a class="nav-link" href="https://web.archive.org/web/20250125194031/https://www.travellings.cn/go.html" title="开往 - 友链接力" target="_blank">开往</a>
+            </li>
+            <li>
+                <a class="nav-icon icon-tweet" href="https://web.archive.org/web/20250125194031/https://qwq.me/tweet" title="DogTweet"></a>
+                <a class="nav-link" href="https://web.archive.org/web/20250125194031/https://qwq.me/tweet" title="DogTweet">说说</a>
+            </li>
+            <li>
+                <a class="nav-icon icon-wiki" href="https://web.archive.org/web/20250125194031/https://qwq.me/wiki" title="DoguWiki"></a>
+                <a class="nav-link" href="https://web.archive.org/web/20250125194031/https://qwq.me/wiki" title="DoguWiki">Wiki</a>
+            </li>
+            <li>
+                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/archives.html" class="nav-icon icon-archives" title="归档"></a>
+                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/archives.html" class="nav-link" title="归档">归档</a></li>
+            <li>
+                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/about.html" class="nav-icon icon-about" title="关于"></a>
+                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/about.html" class="nav-link" title="关于">关于</a>
+            </li>
+            <li class="burger">
+                <div class="x"></div>
+                <div class="y"></div>
+                <div class="z"></div>
+            </li>
+        </ul>
+    </div>
+    <p class="back-to-top"><a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" title="Back to top">Back to top</a></p>
+</header>
+    <div class="move-block">
+        <div class="main-and-side">
+            <main>
+                <article class="post post-page" post-id="19">
+                    <header>
+                        <date class="post-date">April 27, 2020</date>
+                        <h2 class="post-title">
+                            <a title="返回文章分页" href="https://web.archive.org/web/20250125194031/https://qwq.me/posts/gotoPage/19">
+                                中控考勤机破解杂记
+                            </a>
+                            
+                            
+                        </h2>
+                    </header>
+                    <div class="post-content"><div class="danger fancyquote">
+<p><strong>本文仅做信息安全学习记录讨论，请勿用于非法用途。由此造成的一切问题由操作者自行承担。不提供任何远程指导，也不收费，任何需要交流的请在评论区直接评论。</strong><br>
+评论区有一些有用的信息。</p>
+</div>
+<ul>
+<li>2022-08-08<br>
+修改行文逻辑和章节，新增新版超管密码算法，见 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95%202">密码算法 2</a> 章节</li>
+<li>2024-02-26<br>
+应网友要求，丰富 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x04%20%E8%A7%A6%E5%8F%91%E5%99%A8">0x04 触发器</a>章节，并修改行文逻辑。狗日的，累死我了，立个 flag：以后再也不更新这篇文章了🤕</li>
+</ul>
+<h2>0x00 引言</h2>
+<p>这篇文章其实是 2018 年我第一次参加工作的时候折腾出来的结果，包括触发器。但彼时我忙着处理感情上的烂账，没有时间做整理。直到后来有时间了以后，才堪堪做总结记录。现在公司改用钉钉打卡了，本文对我也已经不适用，只能在互联网上留下一点记录，供有缘人自己折腾。鉴于我的网站百度是不收录的，有缘人们可是真有缘了。</p>
+<p>中控考勤机基本上被研究烂了，所以与其说是破解，不如说是扩展。不过玩这些的应该大多都是人事？意味着去扩展的人应该还是少数。</p>
+<ul>
+<li>默认远程 telnet 用户名 <code>root</code>，可能的密码：
+<ul>
+<li><code>solokey</code>（被工厂初始化后的密码）；</li>
+<li><code>pd*@&amp;jz%+</code>（2008年左右的密码，感谢评论指出）；</li>
+<li><code>q4<code>,B~-&gt;q4</code>,B~-&gt;_%+|]g</code>（<a href="https://web.archive.org/web/20250125194031/https://www.52pojie.cn/thread-1558334-1-1.html">网络资料</a>）。</li>
+</ul>
+</li>
+<li>隐藏的超管用户<code>8888</code>，和与时间有关的动态密码；</li>
+<li>通过 TCP 4370 (默认) 端口读取用户信息，包含管理员明文密码；</li>
+<li>其他：80 端口，旧版彩屏机提供的后台网页，功能很少，设计很烂，现已不常见。本文不表。</li>
+</ul>
+<p><strong>修改打卡时间的思路</strong>：</p>
+<ol>
+<li>修改时间补卡。可以通过超管 8888（见 0x02 章节）或者 SDK（见 0x05 章节）修改时间，然后补卡。前提是考勤表是类似于课程表那种，或打卡信息按照考勤机打卡时间顺序升序，而非真实先后顺序升序排序打卡时间（见 0x03 章节）；</li>
+<li>获取并修改 ZKDB.db 文件
+<ul>
+<li>ZKDB.db 类型为 SQLite3 格式文件（见 0x01 章节）；</li>
+<li>如果你有了 telnet 权限，参考 0x01 使用 tftp 命令将文件传输至电脑即可；</li>
+<li>如果你无法进入 telnet，可以通过超管 8888（见 0x02 章节）或者 SDK（见 0x05 章节）将自己设为管理员后进入后台，并确认考勤机版本较新，这样可以在后台通过 U 盘将考勤机数据备份出来，其中就有 <code>ZKDB.db</code>，修改完成后将备份还原到考勤机上；</li>
+<li>参考 0x04 章节对 ZKDB.db 新增触发器，每日打卡时自动调整时间；</li>
+</ul>
+<ol start="3">
+<li>社会工程学搞定人事（见<del>《我和人事小姐姐的故事》</del>）。</li>
+</ol>
+</li>
+</ol>
+<h2>0x01 考勤机 Telnet 后台</h2>
+<p><code>pd*@&amp;jz%+</code>这个密码我还没有在任何考勤机上见过。需要注意的是，在默认设置下，考勤机的 IP 地址是 192.168.0.201。如果在无权限进入管理界面时接入内网，需要确认内网 IP 段是 192.168.0.* 、DHCP 开启、默认 IP 未修改且未被占用、通讯密码和机器号默认未修改。</p>
+<p><strong>2022-08-06 修改：</strong></p>
+<p>评论区有人指出新版考勤机已经不适用 telnet 密码。我买了个考勤机来试了试，同型号的有的支持 solokey，有的不支持，猜测新版固件已经更改。有老哥获取了 passwd 文件放在评论区，密码是加了盐的 MD5，我自己在 CMD5 没有查到相应结果，有条件的大神可以拿来爆破下。但根据新版超管的密码算法，我感觉应该跟序列号有关，爆破可能不通用。</p>
+<h3>数据库类型</h3>
+<p>SQLite3，这点可以从 /mnt/mtdblock/data/ 下的 sqlite3 相关文件看出来。</p>
+<pre><code># ls -l /mnt/mtdblock/data
+total 1316
+-rwxrwxrwx    1 root     root        381952 Apr 26 09:12 ZKDB.db
+-rwxrwxr-x    1 1002     1002         22528 Apr 16 08:26 ZKSystem.db
+-rwxrwxr-x    1 1002     1002          2294 May 26  2016 sql-generater.sh
+-rwxrwxr-x    1 1002     1002        103337 May 26  2016 sqlite3_mips
+...
+</code></pre>
+<p>其中 <code>ZKDB.db</code> 就是考勤数据库文件， <code>ZKSystem.db</code> 是系统配置数据库文件，<code>sqlite3_mips</code> 是操作 SQLite3 数据库的 ELF 文件，可以知道该考勤机系统架构是 MIPS ，从 sql-generater.sh 文件内容来看，还有 ARM 架构。</p>
+<h3>tftp / ftpput / ftpget</h3>
+<p>考勤机上安装了 Busybox, 支持 tftp，可以通过它来传输文件。在 Windows 上开启 tftp 客户端/服务器，你需要 <a href="https://web.archive.org/web/20250125194031/http://tftpd32.jounin.net/">TFTP</a>. 当然也有 ftpget 和 ftpput 可供选择。</p>
+<p>到这就意味着你基本上可以修改打卡机上的任意文件和数据，包括考勤记录，用户照片，考勤机背景图片，甚至是打卡成功提示音。</p>
+<h2>0x02 超管 8888</h2>
+<p>工号 8888 是中控考勤机的一个特殊用户，当人工录入的工号没有覆盖掉 8888 这个工号时，该工号可以作为考勤机忘记密码时的后门账户，输入特定密码进入管理后台进行维护。按照正常途径，你要获取这个密码，是需要向中控官方提交加盖公司公章的承诺书后，中控官方才会告诉你。</p>
+<p><span style="color:var(--curr-active);font-weight:bold">注意：8888 的密码和 TELNET 密码不是同一个密码，不通用。</span></p>
+<h3>密码算法 1</h3>
+<p>适用于旧版的彩屏考勤机，假设当前时间为16:43，则动态密码为(9999-1643)<sup>2</sup>=69822736。</p>
+<p>这个版本的密码网上到处都是，但新版已经不适用了。通过分析 MIPS 版本<sup id="fnref-1"><a class="footnote-ref" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#fn-1">1</a></sup>的 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/upload/20211128_17410827.zip" title="MIPS 版 libverify.so">libverify.so</a>，获得如下可能的新算法。</p>
+<h3>密码算法 2</h3>
+<p>首先，通过简单验证输入的 PIN 是否为超管 PIN 8888，如果是，则进入超管账号的验证流程。进入后，机器获取名为「BreakNormal」<sup id="fnref-2"><a class="footnote-ref" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#fn-2">2</a></sup>的配置，如果配置存在且不为 0，则采用前文的<strong>密码算法1</strong>进行验证，反之进入如下的新版流程：</p>
+<ol>
+<li>通过 ngx_crc32_short 和中控的自选算法，计算出机器序列号的校验值，并用 999999 - 校验值，得到数 A，由于该算法得到的校验值结果恒小于 900000，故 A 必为 6 位。此处假设得到的 A = 995764；</li>
+<li>提供某个长度小于等于 8 位的密码，该密码满足：
+<ul>
+<li>密码的最后一位 = 前面所有位的和 + 5 的结果的最后一位，比如密码前所有位为 1234567，则 1 + 2 + ... + 7 = 28，28 + 5 = 33，最后一位是 3，所以最后密码为 12345673</li>
+</ul>
+</li>
+<li>取密码前所有位数 B，此处 B = 123456；如果不满 6 位的，在前面补 0；</li>
+<li>将 A 从高位到低位两两分组，得到 A1A2A3（如 A = 995764 时，A1 = 99，A2 = 57，A3 = 64，下同），对应的 B 划分得到 B1B2B3，用 A3 - B1，A2 - B2，A1 - B3，得到新的三组数 C1C2C3，将其按顺序合并得到新数 C = 269169；如果 C1/C2/C3 小于 100 的，加上 100 再拼接；</li>
+<li>将当前日期时间戳（秒数）通过自选算法计算得到时间戳校验值 D；</li>
+<li>若 144 &lt; C - D &lt; 8641，则视为合法的动态密码。</li>
+</ol>
+<p>实测的时候发现一个问题：第 6 步的 C - D 的值，按照分析结果需要落在  (144, 8641) 区间内，但实测结果是其他区间。我机器上尝试出来的下界是 3023，上界暂未测出来。</p>
+<blockquote>
+<p>下面是我编写的密码生成算法的测试，第一个框输入序列号，第二个框输入 offset，点生成密码即可。第三个框输入 yyyyMMdd 格式的日期，适用于：修改系统时间为非当日时间后，再次尝试进入后台。offset 可能需要你自己尝试。我用 5000 在我自己的机器上是没有问题的。-999999 这样的大负数也没问题。</p>
+</blockquote>
+<style>.zk-input,.zk-textarea{margin-bottom:10px;font-size:14px;display:block;width:100%;text-indent:10px;height:38px;margin-bottom:20px;line-height:1.3;border:1px solid var(--curr-border-color);border-radius:2px}.zk-btn:hover{opacity:.8;filter:alpha(opacity=90);color:#fff}.zk-btn{line-height:38px;border:1px solid var(--curr-border-color);transition:all .1s ease-in;padding:0 18px;background-color:#000;color:#fff;white-space:nowrap;text-align:center;font-size:14px;border-radius:3px;cursor:pointer}</style>
+<div style="padding: 20px;width:61.8%;margin:0 auto">
+    <input class="zk-input" type="text" value="4564104100050" placeholder="机器码" name="serialNumber">
+    <input class="zk-input" type="number" value="-999999" placeholder="偏移" name="offset">
+    <input class="zk-input" type="text" value="" placeholder="yyyyMMdd格式，留空则取现在日期" name="date">
+    <button class="zk-btn" style="width:calc(100% + 7px)" id="zk-generate-pass">12558703</button>
+</div>
+<script src="./0_files/zkteco.js.下载"></script>
+<script>
+let
+passBtn = document.querySelector('#zk-generate-pass'),
+serialNumberEl = document.querySelector('[name="serialNumber"]'),
+offsetEl = document.querySelector('[name="offset"]'),
+dateEl = document.querySelector('[name="date"]');
+passBtn.addEventListener('click', function () {
+    passBtn.textContent = getPassword(serialNumberEl.value,
+        parseInt(offsetEl.value), dateEl.value);
+})
+</script>
+<center>这里不是图片，是可以真实操作的</center>
+<p>如果结果是 <code>NaN</code>，或者得到的密码位数不为 8 位，或者输入后密码错误，请更换 offset 的值再尝试。<strong>评论区已经有<a href="https://web.archive.org/web/20250125194031/https://qwq.me/comments/go/274">老哥</a>尝试成功，他的考勤机序列号还是带字母的，也可以用</strong>。</p>
+<p>这个密码有几个特性：</p>
+<ol>
+<li>由于用于计算的时间戳去除了时分秒的影响，故密码在同一天内都有效；</li>
+<li>offset 的取值不同时，得到的密码不同，但大部分都是有效的密码，意味着当日内的合法密码不止一组。</li>
+</ol>
+<p>需要注意的是：时间戳的时间是<strong>本地时间</strong>，为了模拟本地时间戳，我用 js 生成时间戳（UTC 时间）后减去了 28800（我这里是 GMT+8，和 UTC 的偏移就是 28800 秒）。如果你需要将 js 版本改写成其他语言版本，请务必注意你所用的语言的时间特性。</p>
+<h2>0x03 使用 ZKTime 5.0/SDK 获取管理权限</h2>
+<p>中控考勤机开放 RS232/485、TCP 或 USB 端口供官方的 SDK 对考勤机进行管理，当然也包括使用 SDK 的中控提供的官方考勤管理软件 ZKTime 5.0，你可以在中控官网找到 ZKTime 5.0 的下载链接。</p>
+<p>和 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x01%20%E8%80%83%E5%8B%A4%E6%9C%BA%20Telnet%20%E5%90%8E%E5%8F%B0">0x01 考勤机 Telnet 后台</a>描述的一样，如果在无权限进入管理界面时接入内网，需要确认内网 IP 段是 192.168.0.* 、DHCP 开启、默认 IP 未修改且未被占用、通讯密码和机器号默认未修改。</p>
+<blockquote>
+<p>一般来说机器号默认为 1，通讯密码默认为 0。通讯密码的范围为 0~999999，如果你使用默认密码连接失败了，你可以尝试编写程序，调用 SDK 进行密码遍历爆破。</p>
+</blockquote>
+<p>默认情况下，使用 SDK 连接考勤机不需要任何验证。由于 SDK 提供的 dll 可以供二次开发使用，你可以使用多种编程语言对 SDK 进行二开，只需要调用相应 dll 内的相应方法即可，其 SDK 说明可在各大资源站下载。</p>
+<p>鉴于 Github 上中控考勤机 SDK 的项目已经足够多，此处不做代码展开，只讲几个有意思的 API。</p>
+<h3>ReadAllUserID</h3>
+<blockquote>
+<p>读取所有的用户信息到PC内存中，包括用户编号，密码，姓名，卡号等，指纹模板除外。在该函数执行完成后，可调用函数 GetUserInfo、SSR_GetUserInfo 取出用户信息。</p>
+</blockquote>
+<pre><code class="language-cpp">bool ReadAllUserID (long dwMachineNumber) 
+</code></pre>
+<p>注意到该 API 的描述，可以读取所有<strong>用户的信息，包括密码</strong>，也就是说管理员及其密码也在内，这就允许你获取进入后台的权限。需要注意的是，该 API 的作用是<strong>预读取</strong>，要获取每条用户信息，则需要调用下面的另一个 API 获取。</p>
+<h3>SSR_GetAllUserInfo</h3>
+<blockquote>
+<p>取得所有用户信息。在该函数执行之前，可用 ReadAllUserID 读取到所有用户信息到内存，SSR_GetAllUserInfo 每执行一次，指向用户信息指针移到下一记录，当读完所有用户信息后，函数返回False</p>
+</blockquote>
+<pre><code class="language-cpp">bool SSR_GetAllUserInfo  ( 
+  long dwMachineNumber,  // [in]  机器号
+  BSTR *  dwEnrollNumber,// [out] 用户号
+  BSTR *  Name,          // [out] 用户姓名，最长为16字节，偶尔需要自己做隔断
+  BSTR *  Password,      // [out] 用户密码
+  long *  Privilege,     // [out] 用户权限，0 普通用户，1 登记员，2 管理员，3 超级管理员 
+  bool *  Enabled        // [out] 用户启用标志 
+ )
+</code></pre>
+<p>使用 while 循环调用该函数，即可在 ReadAllUserID 调用以后，获得用户的信息，包括<strong>密码</strong>。</p>
+<p><strong>以上两个方法对应 ZKTime 5.0 的：从设备下载人员信息功能。</strong></p>
+<h3>SSR_SetUserInfo</h3>
+<blockquote>
+<p>设置指定用户的用户信息，若机器内没用该用户，则会创建该用户</p>
+</blockquote>
+<pre><code class="language-cpp">bool SSR_SetUserInfo ( 
+  long dwMachineNumber,  // [in] 机器号
+  BSTR dwEnrollNumber,   // [in] 用户号
+  BSTR Name,             // [in] 用户姓名，最长为16字节
+  BSTR Password,         // [in] 用户密码
+  long Privilege,        // [in] 用户权限，0 普通用户，1 登记员，2 管理员，3 超级管理员 
+  bool Enabled           // [in] 用户启用标志 
+ )
+</code></pre>
+<p>如果你想简单粗暴新建管理员，或者将自己改为管理员，这个 API 是个不错的选择。</p>
+<p><strong>该方法对应 ZKTime 5.0 的：上传人员信息到设备功能。你可以在在 ZKTime 5.0 上将人员信息下载后，修改你的身份为管理员，而后上传人员信息后，通过你的工号进入后台。</strong></p>
+<h3>SetDeviceTime2</h3>
+<blockquote>
+<p>设置机器时间（可指定时间）</p>
+</blockquote>
+<pre><code class="language-cpp">bool SetDeviceTime2 ( long  dwMachineNumber,  
+  long  dwYear,  
+  long  dwMonth,  
+  long  dwDay,  
+  long  dwHour,  
+  long  dwMinute,  
+  long  dwSecond  
+ )  
+</code></pre>
+<p>这个 API 和获取密码没什么关系，但允许你通过 SDK 修改考勤机当前时间。对于新版考勤机而言，由于导出记录是根据时间升序排列的（见<a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x05%20%E8%80%83%E5%8B%A4%E8%AE%B0%E5%BD%95%E5%AF%BC%E5%87%BA%20Excel%20%E8%A1%A8%E6%97%B6%E7%9A%84%E6%8E%92%E5%BA%8F">0x05 考勤记录导出 Excel 表时的排序</a>），修改时间再补打卡不会被看出来，所以可以用这种方式简单地补打卡。</p>
+<p><strong>该方法对应 ZKTime 5.0 的：同步设备时间功能。不同的是其同步的是电脑的当前时间，如果你要通过 ZKTime 5.0 修改设备时间，请先将电脑时间改成你需要修改的时间后再同步。</strong></p>
+<h2>0x04 触发器</h2>
+<blockquote>
+<p>相应的 inspiration 可参见评论区讨论。<br>
+2024-02-24 应网友要求，重新整理本章节。<br>
+<strong>注意</strong>：作为本文最长、内容最丰富的章节，本章节操作存在很大风险，仅供信息安全学习记录讨论，请勿用于非法用途。由此造成的一切问题由操作者自行承担。</p>
+</blockquote>
+<p>这个比较巧妙，不需要借助任何额外插件，一次修改终身受用。但需要你能修改 ZKDB.db 文件。这个巧妙的方式就是 <code>触发器</code>。</p>
+<p><img src="./0_files/20240225_165449613_tDl4RkhinY0j.avif" alt="巧妙" title="巧妙" loading="lazy"></p>
+<h3>0x04 &lt;&lt; 1 获取 ZKDB.db 文件</h3>
+<p>ZKDB.db 是考勤机上的 SQLite3 格式的数据库文件，其中存储了：员工信息、员工打卡记录等与考勤有关的信息。你可以通过两种方式得到 ZKDB.db 文件：</p>
+<h4>通过 telnet + tftp 获取 ZKDB.db 文件（不建议）</h4>
+<p>参照 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B1%BB%E5%9E%8B">数据库类型</a> 和 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#tftp%20/%20ftpput%20/%20ftpget">tftp / ftpput / ftpget</a> 章节，连接到考勤机后台并在相应目录下获取 ZKDB.db 文件并传到电脑。</p>
+<p>该种方式有如下缺点：</p>
+<ul>
+<li>鉴于目前考勤机 telnet 密码越来越难以获取，默认密码仅存在于部分老旧考勤机上，几乎很难通过 telnet 连接考勤机；</li>
+<li>即便我们走运登录上了 telnet，能通过 tftp 获取 ZKDB.db，在后续修改完成后，也无法通过 tftp 上传覆盖。因为在考勤机运行时，ZKDB.db 是属于被占用的状态的；此时你只能通过 telnet 运行 <code>sqlite3_mips</code> 程序来运行新增触发器的语句，但这对于非专业人士来说是危险的，可能导致考勤机故障。</li>
+</ul>
+<p>故不建议使用该种方式。</p>
+<h4>通过 U 盘和管理后台获取备份文件（建议）</h4>
+<p>你可以通过两种常见的方式来进入考勤机后台：</p>
+<ol>
+<li>参照 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x02%20%E8%B6%85%E7%AE%A1%208888">0x02 超管 8888</a> 章节，通过工号为 8888 的隐藏超管用户进入后台。该方法不要求考勤机联网；</li>
+<li>参照 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x03%20%E4%BD%BF%E7%94%A8%20ZKTime%205.0/SDK%20%E8%8E%B7%E5%8F%96%E7%AE%A1%E7%90%86%E6%9D%83%E9%99%90">0x03 使用 ZKTime 5.0/SDK 获取管理权限</a> 章节的几个 API，获取管理员密码，或将自己设置成管理员，而后通过管理员工号验证进入后台。该方法要求你能通过局域网访问考勤机。</li>
+</ol>
+<p><img src="./0_files/20240225_165908548_UHOgDjs9jfvl.avif" alt="Insert USB Intro" title="Insert USB Intro" loading="lazy"></p>
+<p>进入后台后，在考勤机上插上你的 U 盘，此时考勤机右上角状态栏处应显示 USB 已插入的图标。在数据管理 → 备份数据 → U 盘备份处，选择备份内容为「业务数据、配置数据」，选择「开始备份」，等待进度条完成。</p>
+<p><img src="./0_files/20240225_165927780_pATLpHrrP8ZR.avif" alt="备份步骤" title="备份步骤" loading="lazy"></p>
+<p>具体操作界面和步骤可能因你考勤机型号而异。若你遇到问题，请移步中控考勤机官网查找和下载操作说明文档，按照更详细的指引解决。</p>
+<p>传输完毕后，退出后台，拔除 U 盘并将其插入电脑，此时应该可以在电脑上 U 盘根目录：backupdata 文件夹下找到 backupdata.dat 文件。</p>
+<p>下载和安装 <a href="https://web.archive.org/web/20250125194031/https://7-zip.org/">7-zip</a>，直接在 backupdata.dat 上右键——7-zip——打开压缩包：</p>
+<p><img src="./0_files/20240225_170023157_kVfd76b7Snjn.webp" alt="打开压缩包" title="打开压缩包" loading="lazy"></p>
+<p>一直双击打开，你将可以找到 ZKDB.db 文件。将其拖动到外部文件夹备用。</p>
+<h3>0x04 &lt;&lt; 2 打开和编辑 ZKDB.db 文件</h3>
+<p>使用支持打开 SQLite 文件的软件来打开 ZKDB.db 文件。可供选择的有：<a href="https://web.archive.org/web/20250125194031/https://sqlitestudio.pl/">SQLiteStudio</a>(免费)、<a href="https://web.archive.org/web/20250125194031/https://sqlitebrowser.org/">DB Browser for SQLite</a>(免费) 或 <a href="https://web.archive.org/web/20250125194031/https://www.navicat.com/cht/products/navicat-for-sqlite">Navicat for SQLite</a>(收费，14 天试用)。此处选择 SQLiteStudio。</p>
+<p>假设你已经下载并安装了 SQLiteStudio，则使用其打开 ZKDB.db 文件。首先，请先<strong>按照如下步骤找到你的工号并修改密码</strong>：</p>
+<p><img src="./0_files/20240225_173737341_QcSWyOsrVpn.avif" alt="在 USER_INFO 表中找到本人记录并修改密码" title="在 USER_INFO 表中找到本人记录并修改密码" loading="lazy"></p>
+<p>本篇说明中，示例的本人工号，即 User_PIN 为 9. 本文将用 9 作为示例。具体到你操作时，请记得替换为你本人的工号。</p>
+<p>在进入编辑触发器的章节之前，假设你没有任何有关于 SQLite 的知识，那么我们需要按照如下的步骤热身。</p>
+<h3>0x04 &lt;&lt; 3 热身：模拟打卡</h3>
+<p>使用 SQLiteStudio 载入 ZKDB.db 文件，按照下面的步骤，在 ATT_LOG 表中新增一条记录：</p>
+<p><img src="./0_files/20240225_170331355_lhCZTEg2oLEa.webp" alt="在 ATT_LOG 表中新增一条数据" title="在 ATT_LOG 表中新增一条数据" loading="lazy"></p>
+<p><img src="./0_files/20240225_170431316_HZhWptAu1XXw.webp" alt="ATT_LOG 表第一次插入数据完成" title="ATT_LOG 表第一次插入数据完成" loading="lazy"></p>
+<p>没错！所谓的「打卡」，就是往<code>ATT_LOG</code>表内插入一条新的数据行。其中关键字段记录了本次打卡的信息。上面的操作已经为你新增了一条于 2024-02-24 08:46:32 的上班打卡记录。你也可以通过以下的<strong>SQL 编辑器</strong>方式新增一条下班打卡记录：</p>
+<p><img src="./0_files/20240225_170507657_YF8yiCCRAOvx.webp" alt="在 ATT_LOG 使用 SQL 编辑器新增一条数据" title="在 ATT_LOG 使用 SQL 编辑器新增一条数据" loading="lazy"></p>
+<p>代码：</p>
+<pre><code class="language-sql">INSERT INTO ATT_LOG
+    (User_PIN, Verify_Type, Verify_Time, 
+     Status, Work_Code_ID, Sensor_NO, Att_Flag,
+     CREATE_ID, MODIFY_TIME, SEND_FLAG)
+VALUES
+    (9, 1, '2024-02-24T19:07:30', 255, 0, NULL, NULL, NULL, NULL, 0);
+</code></pre>
+<p>而后你可以通过以下的方式查看刚刚<code>INSERT</code>（插入）的两条「打卡」记录：</p>
+<p><img src="./0_files/20240225_170845832_tiDfI3bkPRFW.webp" alt="ATT_LOG 第一次插入数据结果视图" title="ATT_LOG 第一次插入数据结果视图" loading="lazy"></p>
+<p><span style="color:var(--curr-active);font-weight:bold">请记住本次打卡的两条记录的 ID，此处为：3296 和 3297，分别对应上班打卡和下班打卡，但届时请替换为你自己的查询结果。这在后续热身内会用到。</span></p>
+<p>恭喜你，现在你已经知道打卡操作对于数据表而言是个怎样的流程了。请在心里默念三遍：<strong>打卡就是<code>INSERT</code>、打卡就是<code>INSERT</code>、打卡就是<code>INSERT</code></strong>。</p>
+<h3>0x04 &lt;&lt; 4 热身：查询打卡记录</h3>
+<p>现在你已经有了 2 条打卡记录。现在你希望查询你于 2024-02-24 的打卡记录。同样打开<strong>SQL 编辑器</strong>，不同的是我们本次输入下面的代码并执行：</p>
+<pre><code class="language-sql">SELECT * FROM ATT_LOG
+-- 从打卡记录表中查询所有
+WHERE
+-- 查询条件
+    Verify_Time LIKE '2024-02-24T%' -- 打卡时间长得像 2024-02-24T...
+AND
+-- 并且
+    User_PIN = 9; -- 打卡记录的用户工号为 9
+</code></pre>
+<p><img src="./0_files/20240225_171206061_U6k47cgBafZV.webp" alt="ATT_LOG 第一次查询结果" title="ATT_LOG 第一次查询结果" loading="lazy"></p>
+<p>可以看到你查询出了两条记录，正是你于 2024-02-24 的打卡记录。<code>SELECT</code> 语句用于<strong>查询</strong>符合<strong>指定条件</strong>的记录。很好，你已经学会如何查询打卡记录了。后续我们将在具体的触发器讲解中再次用到<code>SELECT</code>语句，来查询我们指定的员工。但在此之前，请尝试以下进阶的查询，以加深你对<code>SELECT</code>语句的理解。</p>
+<h3>0x04 &lt;&lt; 5 热身：进阶查询</h3>
+<p>以下是几个不同的查询，你可以自己在<strong>SQL 编辑器</strong>内尝试运行。请注意将部分示例值改成你自己对应的值，例如：在用到工号（User_PIN）时，记得把值为 9 的 User_PIN 改成你自己的 User_PIN。</p>
+<h4>针对时间字段的范围查询</h4>
+<p>从 ATT_LOG 表中，查询介于 2024-02-19(含) 至 2024-02-23(含) 之间的工号为 9 的打卡记录：</p>
+<pre><code class="language-sql">SELECT
+    *
+FROM
+    ATT_LOG
+WHERE
+    Verify_Time &gt;= '2024-02-19' AND Verify_Time &lt; '2024-02-24'
+    -- 思考：为什么此处的上界和下界是这样
+AND
+    User_PIN = 9; -- 请改成你自己的工号
+</code></pre>
+<h4>带条件的指定字段的查询</h4>
+<p>从 USER_INFO 表中，查询用户信息表中密码为 '4370' 的用户的工号：</p>
+<pre><code class="language-sql">SELECT
+    User_PIN
+FROM
+    USER_INFO
+WHERE
+    Password = 4370;
+</code></pre>
+<h4>使用 COUNT 函数做统计</h4>
+<p>从 ATT_LOG 表中，查询工号为 9 的用户在 2024-02-24 打了几次卡：</p>
+<pre><code class="language-sql">SELECT
+    COUNT(ID)
+FROM
+    ATT_LOG
+WHERE
+    Verify_Time LIKE '2024-02-24T%'
+    -- 将其改为 '1999-12-31T%'，结果有何不同？为什么？
+AND
+    User_PIN = 9; -- 请改成你自己的工号
+</code></pre>
+<h4>直接查询</h4>
+<p>不从任何表中，而是直接查询一个给定的字符串 'abcdefg' 作为查询结果：</p>
+<pre><code class="language-sql">SELECT 'abcdefg';
+</code></pre>
+<h4>字符串拼接操作符 ||</h4>
+<p>拼接字符串：</p>
+<pre><code class="language-sql">SELECT 'abcd' || 'efg';
+</code></pre>
+<h3>0x04 &lt;&lt; 6 热身：进阶函数查询</h3>
+<h4>认识 substr 函数：</h4>
+<p>substr(字符串, 起始 INDEX, 截取长度) 用于裁剪给定的字符串。其中 INDEX 下标从 1 开始。请依次尝试以下的<code>SELECT</code>语句，看看结果有何不同。一次复制一条进行尝试：</p>
+<pre><code class="language-sql">-- 从 INDEX 1 开始，向后截取长度为 2 的字符串(含 INDEX 1)
+SELECT substr('abcdefg', 1, 2);
+-- 从 INDEX 2 开始，向后截取长度为 3 的字符串(含 INDEX 2)
+SELECT substr('abcdefg', 2, 3);
+-- 从 INDEX 3 开始，向前截取长度为 2 的字符串(不含 INDEX 3)
+SELECT substr('abcdefg', 3, -2);
+-- 从 INDEX 2 开始，向后截取字符串，直至字符串末尾(含 INDEX 2)
+SELECT substr('abcdefg', 2);
+-- 从 INDEX -2，即字符串倒数第 2 位开始，向后截取字符串，直至字符串末尾(含 INDEX -2)
+SELECT substr('abcdefg', -2);
+</code></pre>
+<h4>认识 random 函数和 abs 函数：</h4>
+<p>random() 函数用于随机生成范围为 <span class="katex">[-2^{63}, 2^{63}-1]</span> 的数字。abs(数字) 函数用于取对应数字的绝对值。</p>
+<p>请分别尝试以下的<code>SELECT</code>语句，看看结果有何不同。注意：同一条<code>SELECT</code>语句，你可以多运行几次看看。</p>
+<pre><code class="language-sql">-- 随机获取范围为 [-2^63, 2^63-1] 之间的整数
+SELECT random();
+-- 随机获取范围为 [-9, 9] 之间的整数
+SELECT random() % 10;
+-- 随机取范围为 [0, 9] 之间的整数
+SELECT abs(random() % 10);
+-- 随机取范围为 [1, 9] 之间的整数
+SELECT abs(random() % 9) + 1;
+</code></pre>
+<p>关于随机数范围选取，此处不赘述。</p>
+<h4>认识 julianday 函数</h4>
+<p>julianday(时间字符串) 用于将给定的符合条件的时间字符串转换为对应的浮点数，类似于转换为时间戳。不同的是 UNIX 时间戳代表对应时间从 1970-01-01 00:00:00 至今的秒数，而 julianday 代表对应时间从公元前 4714 年 11 月 24 日正午算起的天数。</p>
+<p>将时间字符串转换为 julianday 的原因是：有时候我们需要对日期进行加减。虽然你也可以用其他方式来实现日期加减，但用数学的方式讲解日期加减更符合我的偏好。</p>
+<p>尝试运行下面的<code>SELECT</code>语句：</p>
+<pre><code class="language-sql">SELECT julianday('2024-02-24T08:30:00');
+</code></pre>
+<h4>认识 strftime 函数，以及时间加减</h4>
+<p>strftime(格式, 值) 函数用于将给定的符合条件的值（包括 julianday）转换为对应格式的时间字符串。</p>
+<p>依次尝试运行下面的<code>SELECT</code>语句，请注意每条语句最后生成的时间有何不同：</p>
+<pre><code class="language-sql">SELECT strftime('%Y-%m-%dT%H:%M:%S', julianday('2024-02-24T08:30:00'));
+SELECT strftime('%Y-%m-%dT%H:%M:%S', julianday('2024-02-24T08:30:00') + 30.0 / 24 / 60);
+SELECT strftime('%Y-%m-%dT%H:%M:%S', julianday('2024-02-24T08:30:00') - 30.0 / 24 / 60 / 60);
+</code></pre>
+<p>可以看到，三次生成的结果分别为：</p>
+<table>
+<thead>
+<tr><th>语句</th><th>结果</th><th>与1相差</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>2024-02-24T08:30:00</td><td>-</td></tr>
+<tr><td>2</td><td>2024-02-24T09:00:00</td><td>30分钟</td></tr>
+<tr><td>3</td><td>2024-02-24T08:29:30</td><td>-30秒</td></tr>
+</tbody>
+</table>
+<p>将时间转换为 julianday 后，可以对其进行加减，得到对应变化的时间。由于 julianday 产生的浮点数代表的是天数，当你要加减小时、分钟和秒时，必须将其转换为以天为单位。此处 30 分钟转换为天数即为 30.0 / 24小时 / 60分钟，而 30 秒转换为天数即为 30.0 / 24小时 / 60分钟 / 60秒。</p>
+<p><strong>注意：参与计算的时分秒必须为浮点数，如<code>30.0</code>，而非<code>30</code>，否则其将被当成一个整型参与计算，最终结果会是 0。你可以自己将上面的语句 2 和语句 3 中的 30.0 改为 30 后运行，看看是否能得到预期结果。</strong></p>
+<h4>随机生成符合条件的时间</h4>
+<p>将上面介绍的诸多函数结合起来，让我们试着随机生成符合：范围在 [2024-02-24T08:00:00, 2024-02-24T08:30:00] 内的、格式为 yyyy-MM-ddTHH:mm:ss 的时间吧。</p>
+<pre><code class="language-sql">SELECT strftime('%Y-%m-%dT%H:%M:%S',
+    julianday('2024-02-24T08:00:00') -- 基准时间：当日 8 点
+        + abs(random() % 30) * 1.0 / 24 / 60        -- 随机 + 0~29 分钟
+        + abs(random() % 60) * 1.0 / 24 / 60 / 60); -- 随机 + 0~59 秒
+</code></pre>
+<p>多运行几次上面的语句，记得生成随机整数后乘上 1.0 将其转换为浮点数。是不是每次都生成了符合条件的随机时间？</p>
+<p>😍很好！你已经学会根据相应的条件，简单查询数据表记录、指定字段，甚至学会用<code>COUNT</code>函数来统计满足查询条件的记录数、用<code>substr</code>、<code>random</code>、<code>abs</code>、<code>julianday</code>和<code>strftime</code>函数来实现复杂的功能了！离你后续深入理解触发器又更近了一步。</p>
+<h3>0x04 &lt;&lt; 7 热身：修改打卡记录</h3>
+<p>现在你已经在 2024-02-24「打卡」了两次：早晨和傍晚各一次。<strong>不幸的是</strong>，你们公司规定早上 8:30 以后打卡属于迟到，所以你于 2024-02-24 早上 08:46:32 打的卡已经宣告你迟到了。这时候我们需要更新对应的那条打卡记录为迟到前，也就是 2024-02-24T08:30:00 以前。</p>
+<p>同样打开<strong>SQL 编辑器</strong>，不同的是我们本次输入下面的代码并执行：</p>
+<pre><code class="language-sql">UPDATE
+    ATT_LOG
+SET
+    Verify_Time = '2024-02-24T08:29:59'
+WHERE
+    ID = 3296;
+-- 还记得 3296 吗？那是你在 0x05 &lt;&lt; 3 中插入的第一条打卡记录的 ID
+-- 此处请替换成你自己热身操作时的 ID
+</code></pre>
+<p><img src="./0_files/20240225_171628966_ZWUzuFasuZR.webp" alt="ATT_LOG 第一次 UPDATE 操作" title="ATT_LOG 第一次 UPDATE 操作" loading="lazy"></p>
+<p>参照 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x04%20%3C%3C%204%20%E7%83%AD%E8%BA%AB%EF%BC%9A%E6%9F%A5%E8%AF%A2%E6%89%93%E5%8D%A1%E8%AE%B0%E5%BD%95">0x04 &lt;&lt; 4 热身：查询打卡记录</a> 相同步骤，再次打开新的<strong>SQL 编辑器</strong>进行查询：</p>
+<p><img src="./0_files/20240225_171711029_3yUymrL6CJTQ.webp" alt="ATT_LOG 第二次查询结果" title="ATT_LOG 第二次查询结果" loading="lazy"></p>
+<p>可以发现，你的上班「打卡」记录已经变成迟到前了！现在你已经学会了如何通过<code>UPDATE</code>语句，精准修改指定 ID 的打卡记录了。只是，总不能每次你都将上班时间改成 08:29:59 吧？你可不是 Timing 侠。有没有一条语句，每次<code>UPDATE</code>都能随机生成时间，又能确保其生成的时间总在 08:30 以前呢？</p>
+<h4>修改打卡时间为满足条件的随机时间</h4>
+<p>让我们回顾<a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#%E9%9A%8F%E6%9C%BA%E7%94%9F%E6%88%90%E7%AC%A6%E5%90%88%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%97%B6%E9%97%B4">随机生成符合条件的时间</a>这一小节，在其中，我们介绍了如何使用<code>random</code>、<code>abs</code>、<code>julianday</code>和<code>strftime</code>来组合生成随机符合条件的时间。我们也可以将其用来修改符合条件的打卡时间：</p>
+<pre><code class="language-sql">UPDATE
+    ATT_LOG
+SET
+    Verify_Time = strftime('%Y-%m-%dT%H:%M:%S',
+    julianday(substr(Verify_Time, 1, 10) || 'T08:00:00')  -- 基准时间：当日 8 点
+        + abs(random() % 30) * 1.0 / 24 / 60        -- 随机 + 0~29 分钟
+        + abs(random() % 60) * 1.0 / 24 / 60 / 60)  -- 随机 + 0~59 秒
+WHERE
+    ID = 3296;
+-- 还记得 3296 吗？那是你在 0x05 &lt;&lt; 3 中插入的第一条打卡记录的 ID
+-- 此处请替换成你自己热身操作时的 ID
+</code></pre>
+<p>注意到 julianday 函数内，我们放入的是如下的语句：</p>
+<pre><code class="language-sql">substr(Verify_Time, 1, 10) || 'T08:00:00'
+</code></pre>
+<p>还记得 substr 函数和 || 运算符吗？前者负责获取子字符串，后者负责拼接字符串。在上面的例子里，ID = 3296 的记录的 Verify_Time 为 '2024-02-24T08:29:59'，从 INDEX 1 开始长度为 10 的子串即为 '2024-02-24'，拼接上 'T08:00:00' 就可以得到 '2024-02-24T08:00:00'。在后续编写触发器时，我们需要更新的日期一定是动态的，这就要求我们通过这种裁剪字符串 + 重新拼接字符串的方式来确保更新的是动态时间。</p>
+<p>🤗很好！你已经学会了如何通过函数组合来修改你的打卡时间了。在进入编写触发器小节之前，让我们来学习如何删除记录。</p>
+<h3>0x04 &lt;&lt; 8 热身：删除打卡记录</h3>
+<p>同样打开<strong>SQL 编辑器</strong>，不同的是我们本次输入下面的代码并执行：</p>
+<pre><code class="language-sql">DELETE FROM
+    ATT_LOG
+WHERE
+    Verify_Time LIKE '2024-02-24%'
+AND
+    User_PIN = 9; -- 请改成你自己的工号
+</code></pre>
+<p>再按照 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x04%20%3C%3C%204%20%E7%83%AD%E8%BA%AB%EF%BC%9A%E6%9F%A5%E8%AF%A2%E6%89%93%E5%8D%A1%E8%AE%B0%E5%BD%95">0x04 &lt;&lt; 4 热身：查询打卡记录</a> 中的操作，试着重新查询记录，你会发现原本我们在前面小节中新增的打卡记录已经不见了。没错，<strong><code>DELETE</code>语句用来删除满足指定条件的记录</strong>。</p>
+<p>你也可以在对应表的「数据」选项卡中，在网格视图中选中指定行，点击红色的「删除选定行」按钮来删除记录。</p>
+<p><strong>请注意限定查询条件，不恰当的查询条件可能导致预料外的记录被删除</strong>。如果数据不慎被删除，只需从 backupdata.dat 中重新取出一份 ZKDB.db 即可。</p>
+<p>😎现在，你已经学会了<code>INSERT</code>、<code>SELECT</code>、<code>UPDATE</code>和<code>DELETE</code>语句，<del>你已经是一个合格的程序员了</del>。接下来我们将进入本章的关键小节：编写触发器。</p>
+<h3>0x04 &lt;&lt; 9 编写触发器</h3>
+<p>按照下面的步骤，我们开始新增触发器：</p>
+<p><img src="./0_files/20240226_141401525_AbhnaPK8GveN.webp" alt="在 ATT_LOG 表中新增触发器 - 1" title="在 ATT_LOG 表中新增触发器 - 1" loading="lazy"></p>
+<p><img src="./0_files/20240226_141719654_2wIr1b2KkOVj.webp" alt="在 ATT_LOG 表中新增触发器 - 2" title="在 ATT_LOG 表中新增触发器 - 2" loading="lazy"></p>
+<p>其中，<strong>前提条件</strong>和<strong>代码</strong>分别如下：</p>
+<p>前提条件：</p>
+<pre><code class="language-sql">(SELECT
+    Password
+ FROM
+    USER_INFO
+ WHERE
+    User_PIN = NEW.User_PIN) = '4370'
+AND
+((SELECT COUNT(ID)
+  FROM ATT_LOG
+  WHERE
+    User_PIN = NEW.User_PIN AND
+    Verify_Time LIKE substr(NEW.Verify_Time, 1, 10)||'%') = 1)
+</code></pre>
+<p>代码：</p>
+<pre><code class="language-sql">UPDATE ATT_LOG
+SET
+    Verify_Time =
+    strftime('%Y-%m-%dT%H:%M:%S',
+        julianday(
+            substr(NEW.Verify_Time, 1, 10) || 'T08:00:00')
+        + abs(random() % 30) * 1.0 / 24 / 60
+        + abs(random() % 60) * 1.0 / 24 / 60 / 60)
+    WHERE ID = NEW.ID;
+</code></pre>
+<p>我们来逐一讲解该触发器的具体含义。</p>
+<h4>当、动作、表和作用域</h4>
+<p>当：AFTER，动作：INSERT，表：ATT_LOG，作用域：FOR EACH ROW。连起来读一下：AFTER INSERT ATT_LOG，FOR EACH ROW... 是的，和字面意思一样，该触发器的作用是：当插入 ATT_LOG 表之后，对每一对象行，如果满足前提条件的，则执行相应代码。</p>
+<p>由于我们关注的是考勤记录表，此处的表自然是 ATT_LOG，而我们关注的考勤人动作是打卡，还记得吗，<strong>打卡就是<code>INSERT</code></strong>，所以我们关注的动作是 INSERT。而至于是 AFTER 还是 BEFORE，由于在本例中，我们需要在 INSERT 完成后判断是当日第几次打卡，所以我们选择 AFTER。你也可以选择 BEFORE，不过如果是这样的话，对应的触发器代码就要变更，也不利于按照时间顺序讲解，故此处我们还是选择 AFTER。</p>
+<h4>NEW 关键字</h4>
+<p>注意到上面的前提条件和代码中，出现了 <code>NEW</code>.User_PIN、<code>NEW</code>.Verify_Time 和 <code>NEW</code>.ID，此处<code>NEW</code>关键字的意思，即是代表着上面<code>INSERT</code>动作和作用域<code>FOR EACH ROW</code>中，插入的每一条新行的记录。譬如假设你执行了一条如下的语句：</p>
+<pre><code class="language-sql">INSERT INTO ATT_LOG
+(User_PIN, Verify_Time) VALUES (9, '2024-02-24T08:46:50');
+</code></pre>
+<p>当该 INSERT 操作被触发器捕获后，<code>NEW</code>.User_PIN 就是 9，<code>NEW</code>.Verify_Time 就是 2024-02-24T08:46:50。</p>
+<h4>前提条件</h4>
+<pre><code class="language-sql">(SELECT
+    Password
+ FROM
+    USER_INFO
+ WHERE
+    User_PIN = NEW.User_PIN) = '4370'
+AND
+((SELECT COUNT(ID)
+  FROM ATT_LOG
+  WHERE
+    User_PIN = NEW.User_PIN AND
+    Verify_Time LIKE substr(NEW.Verify_Time, 1, 10)||'%') = 1)
+</code></pre>
+<p>我们来逐一拆解前提条件，看看这个条件做了什么：首先该条件由 <code>AND</code> 关键字拼接了两个条件，我们来看第一个条件：</p>
+<pre><code class="language-sql">(SELECT
+    Password
+ FROM
+    USER_INFO
+ WHERE
+    User_PIN = NEW.User_PIN) = '4370'
+</code></pre>
+<p>我们已经知道了 <code>NEW</code>.User_PIN 代表着刚刚插入并被触发器捕获的那条记录的工号，则括号内<code>SELECT</code>语句的作用就是从 USER_INFO 表中，根据工号查询刚刚打卡的用户的用户密码。加上括号并 = '4370' 则是判断查询结果是否等于 4370.</p>
+<p>第二个条件：</p>
+<pre><code class="language-sql">((SELECT COUNT(ID)
+  FROM ATT_LOG
+  WHERE
+    User_PIN = NEW.User_PIN AND
+    Verify_Time LIKE substr(NEW.Verify_Time, 1, 10)||'%') = 1)
+</code></pre>
+<p>首先看<code>SELECT</code>语句：</p>
+<pre><code class="language-sql">SELECT COUNT(ID)
+  FROM ATT_LOG
+  WHERE
+    User_PIN = NEW.User_PIN AND
+    Verify_Time LIKE substr(NEW.Verify_Time, 1, 10)||'%'
+</code></pre>
+<p>还记得<code>COUNT</code>函数的作用吗？其用于统计满足查询条件的记录数。故该语句的作用是：在 ATT_LOG 表中，统计出工号为<code>NEW</code>.User_PIN 的打卡人于<code>NEW</code>.Verify_Time 日期的打卡次数。加上括号并 = 1 则是判断当日打卡次数是否等于 1.</p>
+<p>综上所述，该前提条件为：判断打卡人的密码是否为 4370，且是否为当日第 1 次打卡。</p>
+<h4>代码（动作）</h4>
+<pre><code class="language-sql">UPDATE ATT_LOG
+SET
+    Verify_Time =
+    strftime('%Y-%m-%dT%H:%M:%S',
+        julianday(
+            substr(NEW.Verify_Time, 1, 10) || 'T08:00:00')
+        + abs(random() % 30) * 1.0 / 24 / 60
+        + abs(random() % 60) * 1.0 / 24 / 60 / 60)
+    WHERE ID = NEW.ID;
+</code></pre>
+<p>参照 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x04%20%3C%3C%207%20%E7%83%AD%E8%BA%AB%EF%BC%9A%E4%BF%AE%E6%94%B9%E6%89%93%E5%8D%A1%E8%AE%B0%E5%BD%95">0x04 &lt;&lt; 7 热身：修改打卡记录</a>中的<a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#%E4%BF%AE%E6%94%B9%E6%89%93%E5%8D%A1%E6%97%B6%E9%97%B4%E4%B8%BA%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%97%B6%E9%97%B4">修改打卡时间为满足条件的随机时间</a>，我们可以很容易地知道该代码（动作）的作用：修改刚刚的打卡记录，使打卡时间变更为符合条件的随机时间。</p>
+<p>现在你已经知道如何新增一个自动修改上班时间的触发器，并且知道其中各个代码的含义了。你可以按照上面的流程，自己实现一个修改下班时间的触发器。整体的流程图如下：</p>
+<img class="plantuml" format="svg" referrerpolicy="same-origin" src="./0_files/SoWkIImgAStDuG8pkAoUTKv-shlGcalNxkdsfK_xjpzkQ7msVTlBwLkikQnUB5_sj7_YqvahzBaoqpIUhczxlg3noOvT9iRc1feb6Qbv6izchDVaKb00IUwT_6pwKeXXpzOiV3PrWxv-dhu-H5cUhI586LWXKClJ2SjUx9__j6C3YY4WOFLa_xfdKtO23NlQsVjYtOQdUwU-QD_yP4VNy_wrG15hiBBKdE9K" loading="lazy">
+
+<img class="plantuml dark" format="svg" referrerpolicy="same-origin" src="./0_files/SoWkIImgAStDuG8pkAoUTKv-shlGcalNxkdsfK_xjpzkQ7msVTlBwLkikQnUB5_sj7_YqvahzBaoqpIUhczxlg3noOvT9iRc1feb6Qbv6izchDVaKb00IUwT_6pwKeXXpzOiV3PrWxv-dhu-H5cUhI586LWXKClJ2SjUx9__j6C3YY4WOFLa_xfdKtO23NlQsVjYtOQdUwU-QD_yP4VNy_wrG15hiB(1)" loading="lazy">
+
+<p><strong>请注意</strong>：该流程图中判断是否迟到和是否早退的逻辑，在上面的小节和触发器代码中并未实现。如有需要，你可以自己修改你触发器的前提条件，来实现该逻辑。</p>
+<p>完成触发器的编写后，你可以在<strong>SQL 编辑器中</strong>，参照 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x04%20%3C%3C%203%20%E7%83%AD%E8%BA%AB%EF%BC%9A%E6%A8%A1%E6%8B%9F%E6%89%93%E5%8D%A1">0x04 &lt;&lt; 3 热身：模拟打卡</a>来进行模拟打卡，以测试触发器是否被成功触发。</p>
+<h3>0x04 &lt;&lt; A 还原备份文件</h3>
+<p>如果你最终在电脑上完成了触发器的测试，由于这个探索时间是漫长的，过程中原考勤机上已经有其他人的打卡记录了，这时你需要重新从考勤机导出 backupdata.dat，解压出 ZKDB.db，在新备份内编辑保存好触发器以后，把 ZKDB.db 放回 backupdata.dat 里面，再将该备份还原至考勤机。否则在你折腾的这段时间内的所有打卡记录都将丢失。</p>
+<p><strong>在替换前，强烈建议你将 backupdata.dat 备份到电脑上，以免你把考勤机弄坏。</strong></p>
+<p>按照之前的方法，通过 7-zip 打开 backupdata.dat 找到 ZKDB.db，将添加完触发器的 ZKDB.db 文件拖入 7-zip 打开的窗口中，完成替换。</p>
+<p>与从考勤机上备份数据到 U 盘类似，插上 U 盘再次进入后台，不同的是这次我们选择还原数据而非备份数据。完毕后，考勤机将重启，而后你可以测试在打卡机上打卡，并导出打卡结果查看，看看最终打卡记录是否满足条件。</p>
+<h3>0x04 &lt;&lt; B 其他</h3>
+<p><strong>Q: 为什么将密码改为 '4370'，而非直接使用 User_PIN 字段来判断?</strong></p>
+<p>A: 注意到一开始<code>USER_INFO</code>表内的 ID 和 User_PIN 的对应关系，大部分用户的 ID 和 User_PIN 都是一致的，但姓名为“丁总”的记录，ID 和 User_PIN 不一致。这是由于之前存在一 ID=2, User_PIN=2 的用户，因为离职被管理员删除，而后才添加了“丁总”这一用户，导致 User_PIN 被释放后重新使用：</p>
+<p><img src="./0_files/20240225_174022794_ihmYOHNf8b1w.webp" alt="User_PIN 释放再启用" title="User_PIN 释放再启用" loading="lazy"></p>
+<p>想象一下，如果你使用 User_PIN 字段的值来判断触发器是否对指定人员生效，当你离职后，你的信息被管理员删除，而后被释放的原本属于你的 User_PIN 被其他新增的人员使用，那么原本对你生效的触发器将对新增人员生效，这应该不是你希望看到的结果。😨</p>
+<p><strong>Q: 根据上面的图，<code>USER_INFO</code>表内的 ID 字段应是唯一的，为什么不用 ID 字段，而是使用 Password 字段来判断生效人员?</strong></p>
+<p>A: 可以使用 ID 字段，且用 ID 字段的确是唯一的，不会重复。但是想象一个场景：如果某天你不希望使用触发器了，当你用 Password 字段来进行判断时，你只需要将你的密码改掉/改成别的值，触发器就会对你失效了。你可以通过 ZKTime 5.0 软件、SDK 或者直接在考勤机前，改掉密码，你甚至可以直接请求人事帮你重设密码。</p>
+<p>而如果你使用 ID 字段，试问：除了通过 U 盘再次导出 ZKDB.db、修改并重新导入外，你有什么其他的方法使触发器对你失效吗？答案是没有。这并不比使用密码方便。</p>
+<p><strong>Q: 触发器内，用于判断生效的密码一定要是数字型的密码吗？可以使用 abc 之类的英文字母做密码吗？</strong></p>
+<p>A: 可以。但是考虑到考勤机上只能输入数字，当你认为你没有在考勤机上输入密码的需求，也不需要通过考勤机快速新增其他生效人员的时候，你可以使用英文字母一类的字符串当做密码。由于其他人无法通过考勤机的数字键盘输入英文字母，不可能与你通过修改 ZKDB.db 文件修改的密码相撞，该种方法甚至比使用数字型的密码要更安全。</p>
+<p>但请注意：当你需要使触发器不再对你生效，而后又要重新使能生效的话，反映在具体操作上应该是：1. 将密码修改/清空；2. 重新启用对应密码。</p>
+<p>这时候若你触发器内的规则使用的密码是英文字母的话，你只能通过 U 盘重新导出/修改你的密码为英文字母/保存/重新导入考勤机，或是通过 SDK 来设置带英文字母的密码。相比于使用数字型密码，该种方式较为不便，使用前请斟酌。</p>
+<p><strong>Q: 触发器还能实现什么复杂需求？</strong></p>
+<p>A: 参考评论区和 LLL 的沟通记录，他本人实现了：当日最早打卡的同事打卡时，自动帮他本人打卡。但受限于本人精力，无法再详细展开。由于你已经有了 ZKDB.db 文件，你可以自己进行脱机操作和尝试，来实现更为复杂的功能。</p>
+<p><strong>Q: 我已经测试完成了触发器，在将修改完毕的备份文件导入考勤机前，我应该注意什么？</strong></p>
+<p>A: 一是注意完成触发器编辑后，重新拷一份备份出来做触发器修改，免得在你这段时间内的打卡记录丢失。二是查阅 <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#0x05%20%E8%80%83%E5%8B%A4%E8%AE%B0%E5%BD%95%E5%AF%BC%E5%87%BA%20Excel%20%E8%A1%A8%E6%97%B6%E7%9A%84%E6%8E%92%E5%BA%8F">0x05 考勤记录导出 Excel 表时的排序</a>章节，注意你的考勤机的数据导出结果是否是混杂排序。如果非混杂排序，而是自动按照时间排序的话，本文示例的触发器就已能够满足你的需求。如果是混杂排序的话，你可能需要修改你的触发器代码，比如：在当日的第一个打卡的同事第一次打卡后，自动插入你自己的打卡记录，且你和该同事的打卡时间仅相差十几秒。你可以参照评论区 LLL 的说法来加深理解，并实现出该触发器代码。</p>
+<p><strong>Q: 文中关于 SQL 操作的说明对我来说依然太粗浅/复杂，我该如何详细/简单学习 SQL 语法？</strong></p>
+<p>A: 受限于本人精力和篇幅，我无法更详尽地讲解 SQL 语法，也无法手把手地教授，况且每个人对于触发器的需求可能都不一样。你可能需要网络检索 SQLite 的入门和教程，了解基本的<code>INSERT</code>、<code>UPDATE</code>、<code>SELECT</code>语句的语法，甚至是触发器的语法和原理来完成这件事。过程中，ChatGPT 是个不错的导师，如果你有条件，可以用 ChatGPT 来辅助你理解和完成 SQLite 和触发器。但请注意，ChatGPT 也可能出错，比如评论区 LLL 在使用 ChatGPT 时，ChatGPT 给出了一个并不存在的函数<code>unixepoch</code>，你需要仔细审查 ChatGPT 给出的结果。你也可以详细翻阅评论区，获取启发。</p>
+<h2>0x05 考勤记录导出 Excel 表时的排序</h2>
+<p>大部分新版本导出的记录是类似于课程表一样的格式，不存在所谓的排序问题。其他版本导出的 sheet1 是工号 + 打卡时间，sheet2 是工号 + 姓名，需要使用 Excel 的<code>VLOOKUP</code>函数来进行表透视，但为了方便理解，此处直接采用姓名 + 打卡时间来讲解旧版格式。</p>
+<p>低版本考勤机是按照插入表的先后顺序排列的。举个简单的例子，小田于 2020 年 4 月 23 和 25 号正常打卡，但是 24 号他忘了打卡。于是 25 号这天他进入管理后台，将考勤机系统时间改成 24 号，打了两次卡后再改回 25 号。按理来说，我们期望导出的记录是这样的：</p>
+<table>
+<thead>
+<tr><th>姓名</th><th>打卡时间</th></tr>
+</thead>
+<tbody>
+<tr><td>小田</td><td>2020-04-23 08:29:23</td></tr>
+<tr><td>小田</td><td>2020-04-23 18:33:19</td></tr>
+<tr><td><strong>小田</strong></td><td><strong>2020-04-24 08:30:12</strong></td></tr>
+<tr><td><strong>小田</strong></td><td><strong>2020-04-24 18:30:59</strong></td></tr>
+<tr><td>小田</td><td>2020-04-25 08:45:37</td></tr>
+<tr><td>小田</td><td>2020-04-25 19:04:25</td></tr>
+</tbody>
+</table>
+<p>但如果小田公司用的是低版本考勤机，那么当他按照上面流程操作后，导出的记录是这样的：</p>
+<table>
+<thead>
+<tr><th>姓名</th><th>打卡时间</th></tr>
+</thead>
+<tbody>
+<tr><td>小田</td><td>2020-04-23 08:29:23</td></tr>
+<tr><td>小田</td><td>2020-04-23 18:33:19</td></tr>
+<tr><td>小田</td><td>2020-04-25 08:45:37</td></tr>
+<tr><td>小田</td><td>2020-04-25 19:04:25</td></tr>
+<tr><td><strong>小田</strong></td><td><strong>2020-04-24 08:30:12</strong></td></tr>
+<tr><td><strong>小田</strong></td><td><strong>2020-04-24 18:30:59</strong></td></tr>
+</tbody>
+</table>
+<p>也就是说，旧版考勤机上，是按照实际打卡的先后顺序排序，而非打卡时考勤机的时间顺序。实际上，在旧版考勤机上，导出的记录是多人混杂的，实际情况会更加复杂：</p>
+<table>
+<thead>
+<tr><th>姓名</th><th>打卡时间</th></tr>
+</thead>
+<tbody>
+<tr><td>小田</td><td>2020-04-25 08:45:37</td></tr>
+<tr><td>刘英</td><td>2020-04-25 08:46:23</td></tr>
+<tr><td>永强</td><td>2020-04-25 08:47:51</td></tr>
+<tr><td>刘英</td><td>2020-04-25 18:58:47</td></tr>
+<tr><td>小田</td><td>2020-04-25 19:04:25</td></tr>
+<tr><td>永强</td><td>2020-04-25 19:23:09</td></tr>
+<tr><td>小田</td><td>2020-04-24 08:30:12</td></tr>
+<tr><td>小田</td><td>2020-04-24 18:30:59</td></tr>
+</tbody>
+</table>
+<p>如果人事小姐姐眼尖，那应该是会被发现的。<strong>请务必注意这一点</strong>。</p>
+<h2>0x06 基于 Telnet 客户端的打卡机联动考勤管理系统</h2>
+<p>这个基本上像个小项目一样的东西了。原理很简单，自己写业务层的增删改查就可以。为什么不选择用 SDK？因为用 SDK 不能选择查询范围，可能你读一次记录要半天，把考勤机上岗之初到现在的所有记录全都读出来了。</p>
+<p>问题是这里并没有现成的数据库连接，所以我们选择用 Telnet 命令的方式。</p>
+<h3>CURD via Telnet</h3>
+<p>注意到 0x01 中提到的 sqlite3_mips，其实就是一个 SQLite3 应用，可以通过命令行进行 CURD。则用程序写一个与之相适应的 Telnet 客户端，通过输入命令和输出数据，配合正则表达式格式化输出即可。</p>
+<p>至于查询条件，请自行根据需求拼装成 SQL 语句，输入 Telnet 客户端即可。</p>
+<p>需要额外注意的是：在我这个版本的考勤机 telnet 中，会显示 <a href="https://web.archive.org/web/20250125194031/https://mudhalla.net/tintin/info/ansicolor/">ANSI COLOR</a>，所以格式化数据的时候，需要去除 ANSI COLOR. 鉴于我编写的 TelnetClientEx 太长，就不贴出来了（2022-08-06：实际上代码已经完全丢失了）。</p>
+<p>Java 版本使用示例：</p>
+<pre><code class="language-java">private TelnetClientEx getTelnet() {
+    TelnetClientEx telnet = new TelnetClientEx();
+    telnet.setColored(false);
+    telnet.setCharset("UTF-8");
+    telnet.connect(CacheContext.getParamValue("attMachineAddr", "192.168.0.201"), Integer.parseInt(CacheContext.getParamValue("attMachinePort", "23")));
+    telnet.login(CacheContext.getParamValue("attMachineUser", "root"), CacheContext.getParamValue("attMachinePassword", "solokey"));
+    return telnet;
+}
+
+/**
+ * 根据 ID 获取 1 条考勤记录
+ * @param id
+ * @return AttLog(nullable)
+ */
+public AttLog getOne(Integer id) {
+    if(id == null) {
+        return null;
+    }
+    TelnetClientEx telnet = getTelnet();
+    try {
+        // 发送命令
+        telnet.command("cd /mnt/mtdblock/data/");
+        telnet.setEndPattern("&gt; ");
+        telnet.command("./sqlite3_mips ZKDB.db");
+        String sqlBody = 
+                "SELECT ATT_LOG.*, USER_INFO.Name FROM ATT_LOG LEFT JOIN USER_INFO ON USER_INFO.User_PIN = ATT_LOG.User_PIN WHERE ATT_LOG.id=" + id + ";";
+        String selectResult = telnet.command(sqlBody);
+        Pattern p = Pattern.compile("^(.*?)\\|(.*?)\\|.*?\\|(.*?)\\|.*?\\|.*?\\|.*?\\|.*?\\|.*?\\|.*?\\|.*?\\|(.*?)$", Pattern.MULTILINE);
+        if(selectResult != null ) {
+            Matcher m = p.matcher(selectResult);
+            if(m.find()) {
+                Integer userPin = Integer.valueOf(m.group(2));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                //simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+                Timestamp timestamp = null;
+                try {
+                    timestamp = new Timestamp(simpleDateFormat.parse(m.group(3)).getTime());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                String name = m.group(4);
+                return new AttLog()
+                    .setId(id)
+                    .setUserPin(userPin)
+                    .setVerifyTime(timestamp)
+                    .setName(name);
+            }
         }
-        return result;
-      }
+        return null;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    } finally {
+        telnet.setEndPattern("# ");
+        telnet.command(".q");
+        telnet.logout();
+    }
+}
+</code></pre>
+<h3>使用事务批量操作数据</h3>
+<p>这里的操作包括增删改，要知道打卡机 MCU 性能可能没那么好，如果要一次性增删改大量数据而一条一条来的话，可能很耗时，甚至导致考勤机卡死。</p>
+<p>推荐的解决方案是采用事务：</p>
+<pre><code class="language-sql">BEGIN;
+    INSERT INTO ...;
+    UPDATE ...;
+    ...
+COMMIT;
+</code></pre>
+<p>对应的 Java 代码：</p>
+<pre><code class="language-java">public boolean transaction(List&lt;String&gt; commands) {
+    if (commands == null || commands.size() == 0) {
+        return true;
+    }
+    TelnetClientEx telnet = getTelnet();
+    try {
+        telnet.command("cd /mnt/mtdblock/data/");
+        telnet.setEndPattern("&gt; ");
+        telnet.command("./sqlite3_mips ZKDB.db");
+        telnet.command("BEGIN;");
+        for(String command : commands) {
+            telnet.command(command);
+        }
+        telnet.command("COMMIT;");
+        return true;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    } finally {
+        telnet.setEndPattern("# ");
+        telnet.command(".q");
+        telnet.logout();
+    }
+}
+</code></pre>
+<p>这样既快速，又能在遇到错误的时候回滚。</p>
+<p>总之你可以 Telnet，基本上什么花样都可以玩了，我甚至写了个一键补打卡，可以把选定日期的缺勤、迟到、早退全改成全勤。</p>
+<h2>0x07 一键补打卡</h2>
+<p>思路是这样，首先确定迟到线和早退线，即上下班时间。确定中位线，即中午 12 点，以判断是上午还是下午。<br>
+然后查询指定日期内指定工号（姓名）被考勤人的记录，以天为单位做统计，可能会有以下几种情况：</p>
+<ul>
+<li>当天考勤 0 次</li>
+<li>当天考勤 1 次</li>
+<li>当天考勤 2 次及以上</li>
+</ul>
+<p>考勤 0 次的，判定为缺勤，需要做的就是<strong>新增</strong> 2 条记录，一条位于迟到线之前，另一条位于早退线之后。<br>
+考勤 1 次的，首先判断是上午还是下午。是上午的判断是否位于迟到线之前，如果否，则将其<strong>修改</strong>为迟到线前，并<strong>新增</strong> 1 条记录位于早退线之后。是下午的同理。<br>
+考勤 2 次及以上的，取当日最早和最晚的 2 条记录。对于最早记录，判断是否在迟到线前，如果否，将其<strong>修改</strong>为迟到前；对于最晚记录，判断是否在早退后，如果否，将其<strong>修改</strong>为早退后。</p>
+<blockquote>
+<p>PS：当然，我更建议你按时上下班。<br>
+PPS：我和人事小姐姐真有故事😉。</p>
+</blockquote>
+<hr>
+<p>参考资料：<a href="https://web.archive.org/web/20250125194031/https://lcx.cc/post/3568/">《户外物理设备入侵之：入侵并“调教”中控指纹语音考勤系统(打卡机)》</a> - Nuclear'Atk</p>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn-1">
+<p>你可以使用 JEB Decompiler 来进行 MIPS 程序的分析。</p>
+<a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#fnref-1" class="footnote-backref">↩</a>
+</li>
+<li id="fn-2">
+<p>如果你参照 0x04 章节获取了 ZKDB.db，你会发现备份文件内部同目录下有一个名为 ZKConfig.cfg 的文件。对于支持新版超管密码算法的机子，里面就存放着 BreakNormal 的配置。你可以通过修改该配置来切换新旧密码算法。</p>
+<a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#fnref-2" class="footnote-backref">↩</a>
+</li>
+</ol>
+</div>
+</div>
+                    
+                    
+                        <div class="post-meta">
+                            <div>
+                                
+                                    <a class="cate" rel="cate" href="https://web.archive.org/web/20250125194031/https://qwq.me/category/default">
+                                        默认分类
+                                    </a>
+                                
+                                    <a class="cate" rel="cate" href="https://web.archive.org/web/20250125194031/https://qwq.me/category/mess">
+                                        瞎搞
+                                    </a>
+                                
+                                    <a class="cate" rel="cate" href="https://web.archive.org/web/20250125194031/https://qwq.me/category/corporate-slave">
+                                        社畜
+                                    </a>
+                                
+                                
+                                    <a class="tag macaron-tag-0" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/coding">
+                                        #Coding
+                                    </a>
+                                
+                                    <a class="tag macaron-tag-1" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/cracking">
+                                        #Cracking
+                                    </a>
+                                
+                            </div>
+                        </div>
+                        <div class="post-nav">
+                            <div class="post-prev">
+                                <b>Prev:</b>
+                                
+                                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/if-you-know-the-end">If you know the end</a>
+                            </div>
+                            <div class="post-next">
+                                <b>Next:</b>
+                                
+                                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/p/68">盗亦有道</a>
+                            </div>
+                        </div>
+                    
+                </article>
+                <div class="comment-area" post-id="19">
+                    <hr class="comment-hr">
+                    <div id="comment-page" class="comment-page">
 
-      var nowyear = new Date().getFullYear();
-      var a1 = toChineseYear(nowyear);
-      document.getElementById("2year").innerHTML = a1;</script>
-  </div>
-</body>
+<div class="comment-list">
+    
+    <ol class="page-navigator comment" data-pagination-prefix="/n/zkteco-attendance-machine-cracking/">
+        
+            
+            
+                <li class="current">
+                    <a class="comment-page-num" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking/1">1</a>
+                </li>
+            
+                <li>
+                    <a class="comment-page-num" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking/2">2</a>
+                </li>
+            
+            
+                <li>
+                    <span>...</span>
+                </li>
+                <li>
+                    <a class="comment-page-num" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking/9">9</a>
+                </li>
+            
+        
+    </ol>
 
-<script src="js/simpleParallax.min.js"></script>
+    <ol class="comment-list">
+        
+            
+                
+    <li id="li-comment-179" class="comment">
+        <a name="comment-179"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/Xo1STWnoqU9bV3DHcPpmdUe" alt="So..">
+            <div class="author-name">
+                
+                <b>So..</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="179">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2020-11-02 12:10:08">
+                    4 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>telnet密码到底怎么获取呢。<br>
+Welcome to Linux (ZMM220B) for MIPS<br>
+only for use and sale in China<br>
+Kernel 3.0.8 on an MIPS</p>
+</div>
+        <div class="comment-children">
+            
+                <ol class="comment-list">
+    <li id="li-comment-180" class="comment">
+        <a name="comment-180"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/vYg7fV1teDVEmUVZQV9kVVS6" alt="Doghole">
+            <div class="author-name">
+                <b>
+                    <a href="https://web.archive.org/web/20250125194031/http://smileat.me/" rel="external nofollow">Doghole</a>
+                </b>
+                
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="180">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2020-11-03 14:48:10">
+                    4 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>@So.. 按理来说应该就是 solokey 或 pd*@&amp;jz%+ 如果不对的话，就不知道了</p>
+</div>
+        
+    </li>
+</ol>
+            
+                <ol class="comment-list">
+    <li id="li-comment-181" class="comment">
+        <a name="comment-181"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/vYg7fV1teDVEmUVZQV9kVVS6" alt="Doghole">
+            <div class="author-name">
+                
+                <b>Doghole</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="181">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2020-11-03 14:49:32">
+                    4 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>@So.. 如果 telnet 行不通，可以参考 0x05，用 SDK 连接考勤机</p>
+</div>
+        <div class="comment-children">
+            
+                <ol class="comment-list">
+    <li id="li-comment-182" class="comment">
+        <a name="comment-182"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/Xo1STWnoqU9bV3DHcPpmdUe" alt="So..">
+            <div class="author-name">
+                
+                <b>So..</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="182">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2020-11-04 13:05:27">
+                    4 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>@Doghole 这两个密码都不对。SDK在github没看到合适的。方便分享一下sdk或者关键词。</p>
+</div>
+        <div class="comment-children">
+            
+                <ol class="comment-list">
+    <li id="li-comment-183" class="comment">
+        <a name="comment-183"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/vYg7fV1teDVEmUVZQV9kVVS6" alt="Doghole">
+            <div class="author-name">
+                <b>
+                    <a href="https://web.archive.org/web/20250125194031/http://smileat.me/" rel="external nofollow">Doghole</a>
+                </b>
+                
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="183">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2020-11-05 12:35:50">
+                    4 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>@So.. Try this one: http://www.uzzf.com/soft/460683.html</p>
+</div>
+        
+    </li>
+</ol>
+            
+        </div>
+    </li>
+</ol>
+            
+        </div>
+    </li>
+</ol>
+            
+        </div>
+    </li>
 
-</html>
+            
+                
+    <li id="li-comment-184" class="comment">
+        <a name="comment-184"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/UpLDssopYHUEfrW9Lse1wp0TXX" alt="dh">
+            <div class="author-name">
+                
+                <b>dh</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="184">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2020-12-07 20:03:18">
+                    4 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>telnet的2个密码都不对，8888的密码也不对，sdk可以用，但是不能改考勤机上的数据库。。。</p>
+</div>
+        <div class="comment-children">
+            
+                <ol class="comment-list">
+    <li id="li-comment-185" class="comment">
+        <a name="comment-185"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/vYg7fV1teDVEmUVZQV9kVVS6" alt="Doghole">
+            <div class="author-name">
+                <b>
+                    <a href="https://web.archive.org/web/20250125194031/http://smileat.me/" rel="external nofollow">Doghole</a>
+                </b>
+                
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="185">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2020-12-07 20:20:21">
+                    4 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>如果改不了的话，那就用 SDK 改打卡机的时间然后再补打卡。<br>
+或者用 SDK 读你们管理员的密码再进打卡机后台改时间再补打卡，不过风险比前者更高。</p>
+<p>进后台的好处是，部分考勤机能将 ZKDB.db 这个文件导出到U盘上（在后台的功能是数据备份，导出来是个 dat 结尾的文件，实际格式是 zip，你可以用压缩软件解压得到 ZKDB.db）<br>
+这是一个 SQLite3 的数据库，你可以把它修改完以后放回压缩包里去，再导回打卡机里面去</p>
+<p>如果能导出 ZKDB.db，我建议你像 0x03 那样，给数据库加个触发器，每次就算是迟到/早退打卡也会帮你修改成正常打卡时间</p>
+</div>
+        
+    </li>
+</ol>
+            
+                <ol class="comment-list">
+    <li id="li-comment-237" class="comment">
+        <a name="comment-237"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/vYg7fV1teDVEmUVZQV9kVVS6" alt="Doghole">
+            <div class="author-name">
+                <b>
+                    <a href="https://web.archive.org/web/20250125194031/https://www.smileat.me/" rel="external nofollow">Doghole</a>
+                </b>
+                
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="237">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2022-08-08 18:24:31">
+                    2 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>8888 的密码算法更新啦。可以重新试试。</p>
+</div>
+        
+    </li>
+</ol>
+            
+        </div>
+    </li>
+
+            
+                
+    <li id="li-comment-186" class="comment">
+        <a name="comment-186"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/LENTOov9kvkpOHgXEB0rfFCpG" alt="Project.M">
+            <div class="author-name">
+                
+                <b>Project.M</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="186">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2020-12-08 10:19:16">
+                    4 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>一般被工厂初始化后的密码为solokey，pd*@&amp;jz%+这个密码是2008年左右的密码了。<br>
+管理员，你们所说的这种，也只能用在早前的设备上，现在新款的已经不适用了。</p>
+</div>
+        <div class="comment-children">
+            
+                <ol class="comment-list">
+    <li id="li-comment-187" class="comment">
+        <a name="comment-187"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/vYg7fV1teDVEmUVZQV9kVVS6" alt="Doghole">
+            <div class="author-name">
+                <b>
+                    <a href="https://web.archive.org/web/20250125194031/http://smileat.me/" rel="external nofollow">Doghole</a>
+                </b>
+                
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="187">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2020-12-08 19:59:59">
+                    4 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>@Project.M 感谢。需要研究新款的管理员密码</p>
+</div>
+        
+    </li>
+</ol>
+            
+                <ol class="comment-list">
+    <li id="li-comment-264" class="comment">
+        <a name="comment-264"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/58ZG6P5bnDEiQbMbod6MPDQ4" alt="TTTK">
+            <div class="author-name">
+                
+                <b>TTTK</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="264">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2023-02-06 20:29:29">
+                    1 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>工厂初始化是指恢复过出厂设置吗？用sdk貌似可以初始化吧？如果这样那可以冒险用sdk初始化一次，然后telnet上去写个脚本自动打卡了。。。</p>
+</div>
+        
+    </li>
+</ol>
+            
+        </div>
+    </li>
+
+            
+                
+    <li id="li-comment-188" class="comment">
+        <a name="comment-188"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/WT0eYQmUYaC8ixrF6da85uC4Vzvd" alt="和合">
+            <div class="author-name">
+                
+                <b>和合</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="188">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2021-09-24 14:36:09">
+                    3 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>您好，您研究过汉王的人脸考勤机吗？单位有一台汉王人脸通C340，能给提供一些思路吗？谢谢</p>
+</div>
+        <div class="comment-children">
+            
+                <ol class="comment-list">
+    <li id="li-comment-189" class="comment">
+        <a name="comment-189"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/vYg7fV1teDVEmUVZQV9kVVS6" alt="Doghole">
+            <div class="author-name">
+                <b>
+                    <a href="https://web.archive.org/web/20250125194031/http://smileat.me/" rel="external nofollow">Doghole</a>
+                </b>
+                
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="189">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2021-09-25 12:51:50">
+                    3 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>@和合 没有研究过</p>
+</div>
+        
+    </li>
+</ol>
+            
+                <ol class="comment-list">
+    <li id="li-comment-257" class="comment">
+        <a name="comment-257"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/58ZG6P5bnDEiQbMbod6MPDQ4" alt="TTTK">
+            <div class="author-name">
+                
+                <b>TTTK</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="257">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2023-01-28 11:38:58">
+                    1 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>汉王可以进入打卡机内网修改本机时间后用自带的管理软件同步到打卡机然后补卡</p>
+</div>
+        
+    </li>
+</ol>
+            
+        </div>
+    </li>
+
+            
+                
+    <li id="li-comment-190" class="comment">
+        <a name="comment-190"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/oYEGXpbJQaK5lKrort3ScFqtEY" alt="zhongkong">
+            <div class="author-name">
+                
+                <b>zhongkong</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="190">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2021-11-09 10:50:45">
+                    3 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>你好大佬，我想问一下纯小白考勤机是没有联网的，全靠u盘输入输出，修改的时u盘下载的dat文件用记事本打开的现在的话修改完以后会出现打卡时间变成0点的错误数据，请问是哪一步错了</p>
+</div>
+        <div class="comment-children">
+            
+                <ol class="comment-list">
+    <li id="li-comment-191" class="comment">
+        <a name="comment-191"></a>
+        <div class="author">
+            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="36" height="36" src="./0_files/vYg7fV1teDVEmUVZQV9kVVS6" alt="Doghole">
+            <div class="author-name">
+                
+                <b>Doghole</b>
+                <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#" class="reply" to="191">
+                    reply
+                </a>
+                
+            </div>
+            <div class="author-date">
+                <small title="2021-11-10 17:56:30">
+                    3 年前</small>
+            </div>
+        </div>
+        
+        
+        <div class="comment-content"><p>没碰到过dat格式的考勤文件，不过像这种文件，Windows记事本编辑再保存是可能会丢失一些信息的，比如一些记事本显示不出来的编码。又或者是每一条记录是固定长的，比如16个字节一条记录，你要改了时间以后可能就超过16字节，然后挤压到别的信息了。你要直接编辑可以试着用Notepad++，或者十六进制编辑器（010Editor之类的）看下有没有固定格式。</p>
+</div>
+        
+    </li>
+</ol>
+            
+        </div>
+    </li>
+
+            
+        
+    </ol>
+    
+    <ol class="page-navigator comment" data-pagination-prefix="/n/zkteco-attendance-machine-cracking/">
+        
+            
+            
+                <li class="current">
+                    <a class="comment-page-num" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking/1">1</a>
+                </li>
+            
+                <li>
+                    <a class="comment-page-num" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking/2">2</a>
+                </li>
+            
+            
+                <li>
+                    <span>...</span>
+                </li>
+                <li>
+                    <a class="comment-page-num" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking/9">9</a>
+                </li>
+            
+        
+    </ol>
+
+</div>
+</div>
+                    <comment class="post-comment">
+    <div id="respond" class="respond" comment-enabled="true">
+        <div class="cancel-comment-reply">
+            <a id="cancel-comment-reply-link" href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking#respond-post-19" rel="nofollow" style="display: none">取消回复</a>
+        </div>
+        <form class="new-comment-form" onsubmit="" method="post" action="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking/honeyReply" u="/n/zkteco-attendance-machine-cracking/reply">
+            <input type="hidden" name="replyTo">
+            <input type="hidden" name="id">
+            <div class="comment-trigger">
+                <div class="avatar">
+                    <img src="./0_files/visitor.avif" alt="visitor" height="36" width="36" loading="lazy">
+                </div>
+                <div class="trigger-title">撰写评论</div>
+            </div>
+            <div class="new-comment">
+                <textarea name="content" rows="2" class="textarea-box" autocomplete="off" placeholder="" support-markdown="true"></textarea>
+                <span class="comment-error"></span>
+            </div>
+            <div class="comment-preview comment-content" style="display: none;">
+                
+            </div>
+            <div class="comment-triggered">
+                <div class="comment-setting">
+                    
+                        <label><input type="checkbox" name="markdown" checked="" title="开启 Markdown">开启 Markdown</label>
+                        <label><input type="checkbox" name="preview" class="no-cookie" title="预览">预览</label>
+                    
+                    
+                        <label><input type="checkbox" name="subscribeReply" checked="" title="回复邮件通知">回复邮件通知</label>
+                    
+                </div>
+                <div class="input-body input-not-login">
+                    <ul class="ident">
+                        <li><input type="text" name="author" placeholder="Author"></li>
+                        <li><input type="text" name="email" placeholder="Email"></li>
+                        <li><input type="text" name="url" placeholder="Site"></li>
+                    </ul>
+                    <button type="button" class="comment-submit-button" title="提交评论">
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    
+</comment>
+                </div>
+                <footer>
+    <div>
+        © 2015 - 2025
+        <a rel="nofollow" href="https://web.archive.org/web/20250125194031/https://qwq.me/">Doghole</a>
+        
+        | <a href="https://web.archive.org/web/20250125194031/https://qwq.me/feed.xml" target="_blank">Feed</a>
+        · <a href="https://web.archive.org/web/20250125194031/https://qwq.me/sitemap.xml" target="_blank">Sitemap</a>
+        
+        <br>   
+        Dragged by <a title="Doghouse" class="dog-house dh-imgback" href="https://web.archive.org/web/20250125194031/https://qwq.me/change-log.html#%E7%B3%BB%E7%BB%9F"></a>
+        <sup>1.2.10</sup>
+        <span> ×</span> Theme <a title="Bleaching" class="bleaching dh-imgback" href="https://web.archive.org/web/20250125194031/https://qwq.me/change-log.html#%E4%B8%BB%E9%A2%98"></a>
+        
+        <div xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
+        with <a href="https://web.archive.org/web/20250125194031/https://qwq.me/about.html#%E6%9D%A1%E6%AC%BE" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img width="22" height="22" loading="lazy" src="./0_files/cc-e3defa79f640d165173a6d2a6ea3c900.svg" alt="CC" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"><img width="22" height="22" loading="lazy" src="./0_files/by-7813b5794d8ba96aec20acb7f14ff76a.svg" alt="BY" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"><img width="22" height="22" loading="lazy" src="./0_files/nc-e378f908a7f49e2a3812c0d4e70333dd.svg" alt="NC" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"><img width="22" height="22" loading="lazy" src="./0_files/sa-978acd9d54dfd3c39cd92e8acfe1fe7e.svg" alt="SA" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a>
+        license.</div>
+    </div>
+    <div class="doghouse dh-imgback">
+        <div class="badges">
+            <span class="anti-simp" title="反舔狗委员会"></span>
+            <span class="csrr" title="限制级"></span>
+            <span class="killberos" title="KILLBEROS"></span>
+        </div>
+        <a href="https://web.archive.org/web/20250125194031/https://www.travellings.cn/go.html" target="_blank" rel="noopener" title="开往-友链接力">
+            <img class="travellings-color" src="./0_files/travellings-color-small-57fe4298d279c7e5366989717bfa0802.avif" alt="开往-友链接力" width="115">
+        </a>
+        <a href="https://web.archive.org/web/20250125194031/https://www.foreverblog.cn/go.html" target="_blank" title="穿梭虫洞-随机访问十年之约友链博客">
+            <img src="./0_files/wormhole_4_tp.gif" alt="" style="width:auto;height:32px;" class="darkfit" title="穿梭虫洞-随机访问十年之约友链博客">
+            <img src="./0_files/wormhole_2_tp.gif" alt="" style="width:auto;height:32px;" class="darkfit dark" title="穿梭虫洞-随机访问十年之约友链博客">
+        </a>
+    </div>
+</footer>
+            </main>
+            <div class="sidebar">
+    <div class="sidebar-container">
+    <section>
+        <div class="git-like">
+            <div class="stat">
+                <div class="stat-item">
+                    <h3>3588</h3>
+                    <span>DAYS</span>
+                </div>
+                <div class="stat-item">
+                    <h3>90</h3>
+                    <span>POSTS</span>
+                </div>
+                <div class="stat-item">
+                    <h3>377</h3>
+                    <span>REPLIES</span>
+                </div>
+            </div>
+            <div class="graph"><!--?xml version="1.0" encoding="UTF-8"?-->
+
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 150 50">
+  <rect x="1" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-13"></rect>
+  <rect x="1" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-14"></rect>
+  <rect x="1" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-15"></rect>
+  <rect x="1" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-16"></rect>
+  <rect x="1" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-17"></rect>
+  <rect x="11" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-18"></rect>
+  <rect x="11" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-19"></rect>
+  <rect x="11" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-20"></rect>
+  <rect x="11" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-21"></rect>
+  <rect x="11" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-22"></rect>
+  <rect x="21" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-23"></rect>
+  <rect x="21" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-24"></rect>
+  <rect x="21" y="21" stroke-width="1.2" stroke="var(--comment-stroke-1)" width="8" height="8" rx="1" ry="1" fill="var(--comment-fill-1)" data-posts="0" data-comments="1" data-date="2024-11-25"></rect>
+  <rect x="21" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-26"></rect>
+  <rect x="21" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-27"></rect>
+  <rect x="31" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-28"></rect>
+  <rect x="31" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-29"></rect>
+  <rect x="31" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-11-30"></rect>
+  <rect x="31" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-01"></rect>
+  <rect x="31" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-02"></rect>
+  <rect x="41" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-03"></rect>
+  <rect x="41" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-04"></rect>
+  <rect x="41" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-05"></rect>
+  <rect x="41" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-06"></rect>
+  <rect x="41" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-07"></rect>
+  <rect x="51" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-08"></rect>
+  <rect x="51" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-09"></rect>
+  <rect x="51" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-10"></rect>
+  <rect x="51" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-11"></rect>
+  <rect x="51" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-12"></rect>
+  <rect x="61" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-13"></rect>
+  <rect x="61" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-14"></rect>
+  <rect x="61" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-15"></rect>
+  <rect x="61" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-16"></rect>
+  <rect x="61" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-17"></rect>
+  <rect x="71" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-18"></rect>
+  <rect x="71" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-19"></rect>
+  <rect x="71" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-20"></rect>
+  <rect x="71" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-21"></rect>
+  <rect x="71" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-22"></rect>
+  <rect x="81" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-23"></rect>
+  <rect x="81" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-24"></rect>
+  <rect x="81" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-25"></rect>
+  <rect x="81" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-26"></rect>
+  <rect x="81" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-27"></rect>
+  <rect x="91" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-28"></rect>
+  <rect x="91" y="11" stroke-width="1.2" stroke="var(--comment-stroke-4)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-1)" data-posts="1" data-comments="4" data-date="2024-12-29"></rect>
+  <rect x="91" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-30"></rect>
+  <rect x="91" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2024-12-31"></rect>
+  <rect x="91" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-01"></rect>
+  <rect x="101" y="1" stroke-width="1.2" stroke="var(--post-stroke-1)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-1)" data-posts="1" data-comments="0" data-date="2025-01-02"></rect>
+  <rect x="101" y="11" stroke-width="1.2" stroke="var(--post-stroke-1)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-1)" data-posts="1" data-comments="0" data-date="2025-01-03"></rect>
+  <rect x="101" y="21" stroke-width="1.2" stroke="var(--comment-stroke-1)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-1)" data-posts="1" data-comments="1" data-date="2025-01-04"></rect>
+  <rect x="101" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-05"></rect>
+  <rect x="101" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-06"></rect>
+  <rect x="111" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-07"></rect>
+  <rect x="111" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-08"></rect>
+  <rect x="111" y="21" stroke-width="1.2" stroke="var(--comment-stroke-4)" width="8" height="8" rx="1" ry="1" fill="var(--comment-fill-4)" data-posts="0" data-comments="4" data-date="2025-01-09"></rect>
+  <rect x="111" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-10"></rect>
+  <rect x="111" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-11"></rect>
+  <rect x="121" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-12"></rect>
+  <rect x="121" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-13"></rect>
+  <rect x="121" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-14"></rect>
+  <rect x="121" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-15"></rect>
+  <rect x="121" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-16"></rect>
+  <rect x="131" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-17"></rect>
+  <rect x="131" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-18"></rect>
+  <rect x="131" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-19"></rect>
+  <rect x="131" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-20"></rect>
+  <rect x="131" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-21"></rect>
+  <rect x="141" y="1" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-22"></rect>
+  <rect x="141" y="11" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-23"></rect>
+  <rect x="141" y="21" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-24"></rect>
+  <rect x="141" y="31" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-25"></rect>
+  <rect x="141" y="41" stroke-width="1.2" stroke="var(--post-stroke-0)" width="8" height="8" rx="1" ry="1" fill="var(--post-fill-0)" data-posts="0" data-comments="0" data-date="2025-01-26"></rect>
+</svg>
+</div>
+        </div>
+    </section>
+    
+    
+        <section>
+            <div class="sidebar-header">
+                <div class="widget-title extra">
+                    <span class="extra posts">Popular</span>
+                    <span class="origin posts">Posts</span>
+                </div>
+            </div>
+            <ul class="widget-list popular">
+                
+                    
+                        
+                            <li>
+                                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/zkteco-attendance-machine-cracking" class="tag active" title="中控考勤机破解杂记">
+                                    
+                                    
+                                        <span>中控考勤机破解杂记</span>
+                                        <span class="comment-count" title="132条评论" style="float: right">132</span>
+                                    
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/n/sle-4442" class="tag" title="SLE4442 口令破解杂记">
+                                    
+                                    
+                                        <span>SLE4442 口令破解杂记</span>
+                                        <span class="comment-count" title="28条评论" style="float: right">28</span>
+                                    
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/p/261" class="tag" title="自托管评论系统的反垃圾手段探索">
+                                    
+                                    
+                                        <span>自托管评论系统的反垃圾手段探索</span>
+                                        <span class="comment-count" title="25条评论" style="float: right">25</span>
+                                    
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/p/259" class="tag" title="裤衩">
+                                    
+                                    
+                                        <span>裤衩</span>
+                                        <span class="comment-count" title="16条评论" style="float: right">16</span>
+                                    
+                                </a>
+                            </li>
+                        
+                    
+                        
+                            <li>
+                                <a href="https://web.archive.org/web/20250125194031/https://qwq.me/p/129" class="tag" title="某 APP 付费视频解密">
+                                    
+                                    
+                                        <span>某 APP 付费视频解密</span>
+                                        <span class="comment-count" title="15条评论" style="float: right">15</span>
+                                    
+                                </a>
+                            </li>
+                        
+                    
+                
+            </ul>
+        </section>
+    
+    
+    <section class="search-section">
+        <form method="GET" accept-charset="utf-8" action="https://web.archive.org/web/20250125194031/https://qwq.me/search">
+            <input class="search-input" type="text" name="keyword" id="searchbox" autocomplete="off" placeholder="Search...">
+        </form>
+    </section>
+    
+    
+        <section>
+	        <div class="sidebar-header">
+	            <span class="widget-title extra">
+	                <span class="extra tags">Common</span>
+	                <span class="origin tags">Tags</span>
+	            </span>
+	        </div>
+	        <ul class="widget-tags">
+	            
+	                <li>
+	                    <a class="widget-tag macaron-tag-0" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/shit">
+	                        Shit
+	                    </a>
+	                </li>
+	            
+	                <li>
+	                    <a class="widget-tag macaron-tag-1" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/semi-fictional">
+	                        Semi-fictional
+	                    </a>
+	                </li>
+	            
+	                <li>
+	                    <a class="widget-tag macaron-tag-2" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/coding">
+	                        Coding
+	                    </a>
+	                </li>
+	            
+	                <li>
+	                    <a class="widget-tag macaron-tag-3" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/cracking">
+	                        Cracking
+	                    </a>
+	                </li>
+	            
+	                <li>
+	                    <a class="widget-tag macaron-tag-4" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/nsfw">
+	                        NSFW
+	                    </a>
+	                </li>
+	            
+	                <li>
+	                    <a class="widget-tag macaron-tag-5" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/spark">
+	                        Spark
+	                    </a>
+	                </li>
+	            
+	                <li>
+	                    <a class="widget-tag macaron-tag-6" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/fictional">
+	                        Fictional
+	                    </a>
+	                </li>
+	            
+	                <li>
+	                    <a class="widget-tag macaron-tag-7" rel="tag" href="https://web.archive.org/web/20250125194031/https://qwq.me/tag/fuck">
+	                        Fuck
+	                    </a>
+	                </li>
+	            
+	        </ul>
+	    </section>
+    
+    
+    
+        <section>
+            <div class="sidebar-header">
+                <span class="widget-title extra">
+                    <span class="extra replies">Recent</span>
+                    <span class="origin replies">Replies</span>
+                </span>
+            </div>
+            <ul class="widget-list comments">
+                
+                    
+                        
+    
+        <li class="comment">
+            <div class="comment-item">
+                <div class="detail">
+                    <div class="title">
+                        <a title="查看 桃紫 在 #291 中的完整评论" href="https://web.archive.org/web/20250125194031/https://qwq.me/comments/go/664">
+                           
+                            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="20" height="20" src="./0_files/miU85ZNSJovSxm6owpzUq0Ej" alt="桃紫" title="桃紫">
+                             @ #291
+                        </a>
+                        <span title="2025-01-09 16:10:46">16 天前</span>
+                    </div>
+                    <span class="comment-content">你的“活”挺好的……[狗头] </span>
+                </div>
+            </div>
+            
+        </li>
+    
+
+                    
+                        
+    
+        <li class="comment">
+            <div class="comment-item">
+                <div class="detail">
+                    <div class="title">
+                        <a title="查看 Dog 在 #291 中的完整评论" href="https://web.archive.org/web/20250125194031/https://qwq.me/comments/go/663">
+                           
+                            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="20" height="20" src="./0_files/vYg7fV1teDVEmUVZQV9kVVS6" alt="Dog" title="Dog">
+                             @ #291
+                        </a>
+                        <span title="2025-01-09 16:03:50">16 天前</span>
+                    </div>
+                    <span class="comment-content">前提是活好🤪🤪 </span>
+                </div>
+            </div>
+            
+        </li>
+    
+
+                    
+                        
+    
+        <li class="comment">
+            <div class="comment-item">
+                <div class="detail">
+                    <div class="title">
+                        <a title="查看 桃紫 在 #291 中的完整评论" href="https://web.archive.org/web/20250125194031/https://qwq.me/comments/go/662">
+                           
+                            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="20" height="20" src="./0_files/miU85ZNSJovSxm6owpzUq0Ej" alt="桃紫" title="桃紫">
+                             @ #291
+                        </a>
+                        <span title="2025-01-09 15:48:50">16 天前</span>
+                    </div>
+                    <span class="comment-content">这难道不是一种享受😎？ </span>
+                </div>
+            </div>
+            
+        </li>
+    
+
+                    
+                        
+    
+        <li class="comment">
+            <div class="comment-item">
+                <div class="detail">
+                    <div class="title">
+                        <a title="查看 桃紫 在 #290 中的完整评论" href="https://web.archive.org/web/20250125194031/https://qwq.me/comments/go/661">
+                           
+                            <img class="avatar" referrerpolicy="same-origin" loading="lazy" width="20" height="20" src="./0_files/miU85ZNSJovSxm6owpzUq0Ej" alt="桃紫" title="桃紫">
+                             @ #290
+                        </a>
+                        <span title="2025-01-09 15:47:29">16 天前</span>
+                    </div>
+                    <span class="comment-content">我摸不着头脑的方向。 </span>
+                </div>
+            </div>
+            
+        </li>
+    
+
+                    
+                
+            </ul>
+        </section>
+    
+</div>
+</div>
+        </div>
+    </div>
+    <script defer="" src="./0_files/menu-f8581479825f90a63faaee1b1464dd29.js.下载"></script>
+    
+    <script defer="" src="./0_files/post-5933c2e7efdf53cd4d3ef47855f93e22.js.下载"></script>
+    <script defer="" src="./0_files/comment-161165daa2da0c54b2324495baf485ab.js.下载"></script>
+
+
+</body></html>

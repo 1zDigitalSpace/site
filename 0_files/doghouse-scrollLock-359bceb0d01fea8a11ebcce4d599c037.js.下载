@@ -1,0 +1,27 @@
+var _____WB$wombat$assign$function_____=function(name){return (globalThis._wb_wombat && globalThis._wb_wombat.local_init && globalThis._wb_wombat.local_init(name))||globalThis[name];};if(!globalThis.__WB_pmw){globalThis.__WB_pmw=function(obj){this.__WB_source=obj;return this;}}{
+let window = _____WB$wombat$assign$function_____("window");
+let self = _____WB$wombat$assign$function_____("self");
+let document = _____WB$wombat$assign$function_____("document");
+let location = _____WB$wombat$assign$function_____("location");
+let top = _____WB$wombat$assign$function_____("top");
+let parent = _____WB$wombat$assign$function_____("parent");
+let frames = _____WB$wombat$assign$function_____("frames");
+let opener = _____WB$wombat$assign$function_____("opener");
+window.Doghole&&function(t){"use strict";const o=".scrollLock",e=("onwheel"in document.createElement("div")?"wheel":void 0!==document.onmousewheel?"mousewheel":"DOMMouseScroll")+o,i=["webkitAnimationEnd","mozAnimationEnd","MSAnimationEnd","oanimationend","animationend",""].join(".scrollLock.effect ").trim();var n=function(t,o){var e=o.scrollTop,i=0===e&&-1!==[33,36,38].indexOf(t.keyCode);return{top:i,bottom:!i&&o.scrollHeight===e+o.clientHeight&&-1!==[32,34,35,40].indexOf(t.keyCode)}};var r=function(r,s){this.element=r,this.options=t.Utils.extend({},{strict:!1,strictFn:t=>t.scrollHeight>t.clientHeight,selector:void 0,animation:void 0,touch:"ontouchstart"in window,keyboard:!1,unblock:void 0},function(t){var o={};for(var e in t.dataset)if(t.dataset.hasOwnProperty(e)){var i=t.dataset[e];try{i=JSON.parse(i)}catch(t){}o[e]=i}return o}(r),s),this.enabled=!0,this.startClientY=0;let l=t=>{this.startClientY=t.touches[0].clientY},a=(t,o)=>{var e=this.options.animation[o],n=(t,o,e)=>{e.split(" ").filter(t=>""!==t).forEach(e=>{t.classList[o](e)})};t.off(".scrollLock.effect"),n(t,"remove",this.options.animation.top+" "+this.options.animation.bottom),n(t,"add",e),t.on(i,o=>{n(t,"remove",e),t.off(i)})},c=t=>{t.target.scrollTop;var e=n(t,t.target);if((e.top||e.bottom)&&t._unblockedTarget){var i=n(t,t._unblockedTarget);e.top&=i.top,e.bottom&=i.bottom}var r=e.top?"top":!!bottom&&"bottom";if(r)return t.target.trigger(r+o),this.options.animation&&setTimeout(a.bind(this,t.target,type),0),!1},h=(t,o)=>{var e,i=o.scrollTop,n=o.scrollHeight,r=o.clientHeight,s=t.wheelDelta||-t.detail||-t.deltaY,l=0;if("wheel"===t.type){var a=parseFloat(window.getComputedStyle(o).height)/window.innerHeight;l=t.deltaY*a}else this.options.touch&&"touchmove"===t.type&&(s=t.changedTouches[0].clientY-this.startClientY);return{prevent:(e=s>0&&i+l<=0)||s<0&&i+l>=n-r,top:e,scrollTop:i,deltaY:l}};if(this.options.unblock){let t=e;this.options.touch&&(t+=" touchmove.scrollLock"),this.options.keyboard&&(t+=" keydown.scrollLock"),r.on(t,this.options.unblock,t=>{t._unblockedTarget=t.target})}let p=e;this.options.touch&&(p+=" touchmove.scrollLock",r.on("touchstart"+o,this.options.selector,l)),r.on(p,this.options.selector,t=>{if(this.enabled&&!t.ctrlKey&&(!0!==this.options.strict||this.options.strictFn(t.currentTarget))){t.stopPropagation();var e=h(t,t.currentTarget);if(e.prevent&&t._unblockedTarget&&(e.prevent&=h(t,t._unblockedTarget).prevent),e.prevent){t.preventDefault(),e.deltaY&&(t.target.scrollTop=e.scrollTop+e.deltaY);var i=e.top?"top":"bottom";this.options.animation&&setTimeout(a.bind(this,t.currentTarget,i),0),t.target.trigger(i+o)}}}),this.options.keyboard&&(r.getAttribute("tabindex")||r.setAttribute("tabindex",this.options.keyboard.tabindex||0),r.on("keydown.scrollLock",this.options.selector,c))};return r.NAMESPACE=o,r.ANIMATION_NAMESPACE=".scrollLock.effect",r.WHEEL=e,r.ANIMATION=i,r.prototype.toggleStrict=function(){this.options.strict=!this.options.strict},r.prototype.toggle=function(){this.enabled=!this.enabled},r.prototype.enable=function(){this.enabled=!0},r.prototype.disable=function(){this.enabled=!1},r.prototype.destroy=function(){this.disable(),this.element.off(o),this.element=null,this.options=null},t.ScrollLock=r,Element.prototype.scrollLock=function(t){return new r(this,t)},!0}(Doghole)||console.log("Doghole is required!")
+}
+
+/*
+     FILE ARCHIVED ON 12:07:59 Dec 27, 2024 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 15:28:42 Aug 17, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  capture_cache.get: 0.337
+  load_resource: 112.976
+  PetaboxLoader3.resolve: 57.275
+  PetaboxLoader3.datanode: 12.445
+*/

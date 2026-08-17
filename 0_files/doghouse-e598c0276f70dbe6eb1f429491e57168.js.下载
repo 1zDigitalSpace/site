@@ -1,0 +1,825 @@
+var _____WB$wombat$assign$function_____=function(name){return (globalThis._wb_wombat && globalThis._wb_wombat.local_init && globalThis._wb_wombat.local_init(name))||globalThis[name];};if(!globalThis.__WB_pmw){globalThis.__WB_pmw=function(obj){this.__WB_source=obj;return this;}}{
+let window = _____WB$wombat$assign$function_____("window");
+let self = _____WB$wombat$assign$function_____("self");
+let document = _____WB$wombat$assign$function_____("document");
+let location = _____WB$wombat$assign$function_____("location");
+let top = _____WB$wombat$assign$function_____("top");
+let parent = _____WB$wombat$assign$function_____("parent");
+let frames = _____WB$wombat$assign$function_____("frames");
+let opener = _____WB$wombat$assign$function_____("opener");
+// Doghouse/Doghole API
+function Doghole(settings, callback) {
+    const ua = navigator.userAgent, isFirefox = ua.indexOf('Chrome') === -1 || ua.indexOf('Safari') == -1 && ua.indexOf('Firefox') !== -1;
+    let
+    Q = x => document.querySelector(x),
+    A = x => document.querySelectorAll(x),
+    C = x => document.createElement(x),
+    Animate = (() => {
+        
+        // 想起来再加
+        let pxProps = ['top', 'bottom', 'left', 'right', 'width', 'height']
+        let supportedProps = ['opacity'];
+        supportedProps.push(...pxProps);
+        let defaultDuration = 400;
+        let animate = (element, animateOption, duration, before, done, animationKey) => {
+            if (!duration) duration = defaultDuration;
+            if (typeof before === 'function') before(element)
+            if (!animationKey) animationKey = '_animationId'
+            let startValues = {}, endValues = {},
+            computedStyle = getComputedStyle(element);
+            for (let key in animateOption) {
+                if (supportedProps.includes(key)) {
+                    let endValue = animateOption[key];
+                    
+                    if (typeof endValue === 'string') {
+                        let trim = animateOption[key].trim();
+                        let endValue = parseFloat(trim);
+                        if (isNaN(endValue)) continue;
+                    }
+                    let startValue = parseFloat(computedStyle[key])
+                    // TODO: 如果是 'auto' 的处理
+                    if (isNaN(startValue)) startValue = 0
+                    startValues[key] = startValue
+                    endValues[key] = parseFloat(animateOption[key])
+                }
+            }
+            let start = null;
+            function ani(timestamp) {
+                if (!start) start = timestamp;
+                var progress = timestamp - start;
+                
+                for (let key in endValues) {
+                    let startVal = startValues[key], endVal = endValues[key],
+                    currVal = startVal + (progress / duration) * (endVal - startVal);
+                    currVal = Math[startVal < endVal ? 'min' : 'max'](currVal, endVal);
+                    if (pxProps.includes(key)) currVal += 'px';
+                    element.style[key] = currVal;
+                }
+                if (progress < duration) {
+                    element[animationKey] = requestAnimationFrame(ani);
+                }
+                else {
+                    if (typeof done === 'function') done(element)
+                }
+            }
+            element[animationKey] = requestAnimationFrame(ani);
+        },
+        stop = (element) => {
+            if (element._animationId) {
+                cancelAnimationFrame(element._animationId)
+                element._animationId = undefined
+            }
+            if (element._timeout) {
+                clearTimeout(element._timeout)
+                element._timeout = undefined
+            }
+            if (element._interval) {
+                clearInterval(element._interval)
+                element._interval = undefined
+            }
+        },
+        setSlideStyle = (el) => {
+            el.style.display = 'block';
+            el.style.overflow = 'hidden';
+            el.style.marginTop = 
+            el.style.marginBottom = 
+            el.style.paddingTop = 
+            el.style.paddingBottom = '0';
+        },
+        removeSlideStyle = (el) => {
+            el.style.height = 
+            el.style.overflow = 
+            el.style.marginTop = 
+            el.style.marginBottom = 
+            el.style.paddingTop = 
+            el.style.paddingBottom = null;
+        }
+        
+        
+        return {
+            animate: animate,
+            stop: stop,
+            scrollTo: (position, duration, done) => {
+                
+                stop(window);
+                if (!duration) {
+                    window.scrollTo(0, position);
+                    if (typeof done === 'function') done()
+                    return
+                }
+                
+                let
+                startVal = window.pageYOffset,
+                endVal = position,
+                start = null;
+                
+                function ani(timestamp) {
+                    if (!start) start = timestamp;
+                    let elapsedTime = timestamp - start;
+                    let progress =  Math.min(elapsedTime / duration, 1);
+                    let easeInOutQuad = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+                    let currVal = startVal + easeInOutQuad * (endVal - startVal);
+                    currVal = Math[startVal < endVal ? 'min' : 'max'](currVal, endVal);
+                    window.scrollTo(0, currVal);
+                    if (elapsedTime < duration) {
+                        window._animationId = requestAnimationFrame(ani);
+                    }
+                    else {
+                        if (typeof done === 'function') done()
+                    }
+                }
+                window._animationId = requestAnimationFrame(ani);
+            },
+            fadeIn: (element, duration, before, done) => {
+                let _before = () => {
+                    element.style.display = 'block';
+                    if (typeof before === 'function') before()
+                }
+                animate(element, {opacity: 1}, duration, _before, done)
+            },
+            fadeOut: (element, duration, before, done) => {
+                let _done = () => {
+                    element.style.display = 'none';
+                    if (typeof done === 'function') done()
+                }
+                animate(element, {opacity: 0}, duration, before, _done)
+            },
+            slideDown: (element, duration, done) => {
+                
+                // silde 要专门的 flag
+                if (element._slideDown !== undefined) return
+                element._slideDown = null
+                
+                stop(element)
+                if (element._slideUp) {
+                    cancelAnimationFrame(element._slideUp)
+                    element._slideUp = undefined
+                }
+                let currentHeight = 
+                    Math.round(parseFloat(getComputedStyle(element).height));
+                if (isNaN(currentHeight)) currentHeight = 0
+                setSlideStyle(element)
+                let before = (element) => {
+                    //element.style.height = 0
+                },
+                _done = (element) => {
+                    removeSlideStyle(element)
+                    element._slideDown = undefined
+                    if (typeof done == 'function') done(element)
+                }
+                if (currentHeight != 0) {
+                //if (currentHeight == element.scrollHeight) {
+                    before(element)
+                    _done(element)
+                    return
+                }
+                element.style.height = currentHeight + 'px';
+                animate(element, {height: element.scrollHeight}, 
+                    duration, before, _done, '_slideDown')
+            },
+            slideUp: (element, duration, done) => {
+                
+                // silde 要专门的 flag
+                if (element._slideUp !== undefined) return
+                element._slideUp = null
+                
+                stop(element)
+                if (element._slideDown) {
+                    cancelAnimationFrame(element._slideDown)
+                    element._slideDown = undefined
+                }
+                let before = (element) => {
+                    element.style.height = element.scrollHeight + 'px'
+                    setSlideStyle(element)
+                },
+                _done = (element) => {
+                    element.style.display = 'none'
+                    removeSlideStyle(element)
+                    element._slideUp = undefined
+                    if (typeof done == 'function') done(element)
+                }
+                if (getComputedStyle(element).display == 'none') {
+                    before(element)
+                    _done(element)
+                    return
+                }
+                animate(element, {height: 0},
+                    duration, before, _done, '_slideUp')
+            }
+        }
+    })(),
+    Cookies = (() => {
+        let set = (name, value, expiredDays, path='/') => {
+            let exp = new Date(); 
+            if (expiredDays == undefined) {
+                expiredDays = 30;
+            }
+            exp.setTime(exp.getTime() + expiredDays * 24 * 60 * 60 * 1000); 
+            document.cookie = name + "="+ escape(value) + ";expires=" + exp.toGMTString() + ";path="+path; 
+        }
+        return {
+            set: set,
+            get: (name) => {
+                let arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+                if(arr = document.cookie.match(reg)) return unescape(arr[2]); else return null;
+            },
+            del: (name) => {
+                set(name, "", -1);
+            }
+        }
+    })(),
+    Elem = (() => {
+        let parents = (element, selector) => {
+            var parentsArray = [];
+            var parent = element.parentNode;
+            while (parent && parent.nodeType === 1) {
+                if (!selector || parent.matches(selector)) {
+                    parentsArray.push(parent);
+                }
+                parent = parent.parentNode;
+            }
+            return parentsArray;
+        },
+        siblings = (element, selector) => {
+          const parent = element.parentNode;
+          if (!parent) return [];
+          const children = parent.children;
+          const siblingsArray = Array.from(children);
+        
+          // 过滤掉自身
+          const filteredSiblings = siblingsArray.filter(sibling => sibling !== element);
+        
+          if (selector) {
+            return filteredSiblings.filter(sibling => sibling.matches(selector));
+          }
+          return filteredSiblings;
+        },
+        closest = (element, selector) => {
+            do {
+              if (element.matches(selector)) return element;
+              element = element.parentElement || element.parentNode;
+            } while (element !== null && element.nodeType === 1);
+        
+            return null;
+        },
+        next = (element, selector) => {
+            var nextElement = element.nextElementSibling;
+            while (nextElement) {
+                if (!selector || nextElement.matches(selector)) {
+                    return nextElement;
+                }
+                nextElement = nextElement.nextElementSibling;
+            }
+            return null;
+        },
+        offset = (element) => {
+            var offsetTop = element.offsetTop, offsetLeft = element.offsetLeft;
+            var parent = element.offsetParent;
+        
+            while (parent !== null && parent !== document.body) {
+                offsetTop += parent.offsetTop;
+                offsetLeft += parent.offsetLeft;
+                parent = parent.offsetParent;
+            }
+            return {left: offsetLeft, top: offsetTop};
+        },
+        // 笛卡尔积获取组合的层级选择器
+        // 空格敏感，我也敏感
+        // input  ['.comment,div.sub', ' .new,>ul']
+        // output '.comment .new,.comment>ul,div.sub .new,div.sub>ul'
+        cartesian = (strings) => {
+            function _cartesianProduct(arrays) {
+                if (arrays.length === 0) {
+                    return [];
+                }
+                if (arrays.length === 1) {
+                    return arrays[0];
+                }
+                let result = [];
+                let rest = _cartesianProduct(arrays.slice(1));
+                for (let i = 0; i < arrays[0].length; i++) {
+                    for (let j = 0; j < rest.length; j++) {
+                        result.push(arrays[0][i] + rest[j]);
+                    }
+                }
+                return result;
+            }
+            return _cartesianProduct(strings.map(str => str.split(',')))
+        },
+        create = (htmlString) => {
+            let temp = C('div');
+            temp.innerHTML = htmlString;
+            return temp.firstElementChild
+        }
+        Element.prototype.offset = function () {
+            return offset(this)
+        }
+        return {
+            cartesian: cartesian,
+            closest: closest,
+            create: create,
+            next: next,
+            offset: offset,
+            parents: parents,
+            siblings: siblings
+        }
+    })(),
+    Events = (() => {
+        let
+        namespaces = {},
+        getElements = (elements) => {
+            if (!elements) return;
+            if (typeof elements === 'string') elements = document.querySelectorAll(element)
+            if (elements instanceof Element) elements = [elements]
+            return elements
+        },
+        // 获取事件类型，包含命名空间
+        getEventTypes = (eventTypes) => {
+            // TODO: 多个命名空间？
+            eventTypes = eventTypes.split(' ');
+            eventTypes = eventTypes.filter(v => v !== '');
+            eventTypes = [...new Set(eventTypes)];
+            eventTypes = eventTypes.map(v => {
+                let pos = v.indexOf('.');
+                if (pos !== -1) {
+                    return {
+                        name: v.substr(0, pos),
+                        namespace: v.substr(pos)
+                    }
+                }
+                return {
+                    name: v,
+                    namespace: undefined
+                }
+            });
+            return eventTypes
+        },
+        makeHandlerWrapper = (selector, handler) => {
+            return function (event) {
+                let r = undefined;
+                if (!selector) r = handler.bind(event.target).call(event.target, event)
+                else if (typeof selector === 'string') {
+                    
+                    let expectTarget = event.target.matches(selector) && event.target || event.target.closest(selector);
+                    if (expectTarget)
+                        // 子元素绑定事件
+                        r = handler.bind(expectTarget).call(event.target, event)
+                }
+                else if (selector instanceof Array) {
+                    // 笛卡尔积处理
+                    let selectorStr = Doghole.Elem.cartesian(selector),
+                    expectTarget = event.target.matches(selectorStr) && event.target || event.target.closest(selectorStr);
+                    if (expectTarget) {
+                        r = handler.bind(expectTarget).call(event.target, event)
+                    }
+                }
+                else if (typeof selector === 'function')
+                    // 本级元素绑定事件
+                    r = selector.bind(event.target).call(event.target, event)
+                if (r !== undefined && !!r === !1) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    event.cancelBubble = !0
+                }
+                return r
+            }
+        },
+        passiveEvents = ['wheel', 'touchstart', 'touchmove'], 
+        on = (elements, eventTypes, selector, handler) => {
+            getElements(elements).forEach(element => {
+                getEventTypes(eventTypes).forEach(eventType => {
+                    
+                    let eventHandlerWrapper = makeHandlerWrapper(selector, handler);
+                    
+                    if (eventType.namespace) {
+                        if (!namespaces[eventType.namespace]) namespaces[eventType.namespace] = []
+                    }
+                    let eventOption = !passiveEvents.includes(eventType.name)  ? undefined: {passive: !1}
+                    element.addEventListener(eventType.name, eventHandlerWrapper, eventOption);
+                    if (!element.__eventListeners) {
+                        element.__eventListeners = {}
+                    }
+                    if (!element.__eventListeners[eventType.name]) {
+                        element.__eventListeners[eventType.name] = []
+                    }
+                    element.__eventListeners[eventType.name].push(eventHandlerWrapper);
+                    
+                    if (eventType.namespace) {
+                        namespaces[eventType.namespace].push({
+                            element: element,
+                            eventName: eventType.name,
+                            selector: selector,
+                            handler: eventHandlerWrapper
+                        });
+                    }
+                })
+            })
+        }, off = (elements, eventTypes, handler) => {
+            getElements(elements).forEach(element => {
+                // TODO: 处理 option, 如 {passive: xxx}
+                if (!eventTypes) {
+                    // 则移除所有
+                    let events = element.__eventListeners;
+                    if (events)
+                        for (let eventName in events) {
+                            events[eventName].forEach(handler => {
+                                element.removeEventListener(eventName, handler)
+                            })
+                        }
+                    return
+                }
+                
+                getEventTypes(eventTypes).forEach(eventType => {
+                    
+                    // TODO: 命名空间
+                    if (eventType.namespace) {
+                        // 目前是移除该对象的，对应命名空间下的所有 handler
+                        let n = namespaces[eventType.namespace]
+                        if (n) {
+                            n.forEach(event => {
+                                element.removeEventListener(
+                                    eventType.name || event.eventName, event.handler)
+                            })
+                        }
+                        return
+                    }
+                    // 非命名空间，直接移除 handler
+                    if (handler)
+                        element.removeEventListener(eventType.name, makeHandlerWrapper(null, handler));
+                    else if (element.__eventListeners) {
+                        let handlers = element.__eventListeners[eventType.name];
+                        if (handlers)
+                            handlers.forEach(handler => {
+                                element.removeEventListener(eventType.name, handler)
+                            })
+                    }
+                })
+            })
+        },
+        trigger = (element, eventType, eventData) => {
+            var event;
+            // 创建事件对象
+            if (typeof(Event) === 'function') {
+                event = new Event(eventType, { bubbles: true });
+            } else {
+                event = document.createEvent('Event');
+                event.initEvent(eventType, true, true);
+            }
+        
+            // 设置事件数据
+            if (eventData) {
+                for (var prop in eventData) {
+                    if (eventData.hasOwnProperty(prop)) {
+                        event[prop] = eventData[prop];
+                    }
+                }
+            }
+            // 触发事件
+            element.dispatchEvent(event);
+        }
+        Element.prototype.on =
+        function (eventTypes, selector, handler) {
+            on(this, eventTypes, selector, handler)
+        }
+        Element.prototype.off
+        = function (eventTypes, handler) {
+            off(this, eventTypes, handler)
+        }
+        Element.prototype.trigger
+        = function (eventTypes, eventData) {
+            trigger(this, eventTypes, eventData)
+        }
+        return {
+            on: on,
+            off: off,
+            trigger: trigger
+        }
+    })(),
+    Utils = (() => {
+        return {
+            
+            extend: function(target) {
+              // 将第一个参数后的所有参数合并到目标对象中
+              for (var i = 1; i < arguments.length; i++) {
+                var source = arguments[i];
+                if (source) {
+                  // 遍历源对象的所有属性，并将其复制到目标对象中
+                  for (var key in source) {
+                    if (Object.prototype.hasOwnProperty.call(source, key)) {
+                      target[key] = source[key];
+                    }
+                  }
+                }
+              }
+              return target;
+            },
+            getNoteTag: (url) => {
+                if (!url) url = window.location.pathname;
+                return t = /^[\/\\]+([pn])[\/\\]+([^\/\\]*?)(\/.*)?$/.exec(url), 
+                t && `${t[1]}:${t[2]}` || undefined;
+            },
+            getUuid: () => {
+                let timestamp = new Date().getTime();
+                let perforNow = (typeof performance !== 'undefined' && performance.now && performance.now() * 1000) || 0;
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+                    let random = Math.random() * 16;
+                    if (timestamp > 0) {
+                        random = (timestamp + random) % 16 | 0;
+                        timestamp = Math.floor(timestamp / 16);
+                    } else {
+                        random = (perforNow + random) % 16 | 0;
+                        perforNow = Math.floor(perforNow / 16);
+                    }
+                    return (c === 'x' ? random: (random & 0x3) | 0x8).toString(16);
+                });
+            }
+        }
+    })(),
+    Wiki = (() => {
+        let _parseInt = (id) => {
+            let i = parseInt(id);
+            return i + '' != id ? undefined : i;
+        }, u = 'unfolded_wikis',
+        _read = () => {
+            let f = Doghole.Cookies.get(u), e = [];
+            if (!f) {
+                return e;
+            }
+            else {
+                try {
+                    f = JSON.parse(f);
+                    if (!Array.isArray(f)) {
+                        return e;
+                    }
+                    let i = 0;
+                    for (; i < f.length; i++) {
+                        let id = _parseInt(f[i]);
+                        if (id === undefined) continue; 
+                        e.push(id);
+                    }
+                    return [...new Set(e)];
+                }
+                catch (_){} return e;
+            }
+        },
+        _save = (unfolded) => {
+            Doghole.Cookies.set(u, JSON.stringify([...new Set(unfolded)]));
+        }
+        return {
+            read: _read,
+            add: (id) => {
+                let i = _parseInt(id);
+                if (i === undefined) return;
+                let f = _read();
+                f.push(i);
+                f.sort();
+                _save(f);
+            },
+            rm: (id) => {
+                let f = _read(), i = f.indexOf(parseInt(id));
+                if (i > -1) {
+                    f.splice(i, 1);
+                    _save(f);
+                }
+            }
+        }
+    })(),
+    LazyJS = (() => {
+        function loadExistentLink(name, onload) {
+            var target = A(`link[rel="lazy-js"][for="${name}"]`);
+            if (!target.length) return !1;
+            for (let i = 0; i < target.length; i++) {
+                var s = C('script');
+                s.src =  target[i].getAttribute('href');
+                if (i == 0 && typeof onload === 'function') s.onload = onload;
+                document.head.append(s);
+            }
+            return !0;
+        }
+        
+        function loadLink(i, link, onload) {
+            let f = typeof i === 'function';
+            if ((f && i() === true) || (!f && i === true)) {
+                let s = C('script');
+                s.src = link;
+                if (typeof onload === 'function') s.onload = onload;
+                document.head.append(s);
+                return !0;
+            }
+            return !1;
+        }
+        
+        return {
+            loadExistentLink: loadExistentLink,
+            loadLink: loadLink,
+            katex: (callback)=>{
+                let katexes = A('.katex');
+                if (katexes.length) {
+                    function _onload(cb) {
+                        for (let elem of katexes) {
+                            katex.render(elem.textContent, elem)
+                        }
+                        if (cb && typeof cb === 'function') cb();
+                    }
+                    if (!window.katex) loadExistentLink('katex', _onload)
+                    else _onload(callback)
+                }
+            },
+            prism: (callback)=>{
+                if (Q('code[class*="language-"],pre[class*="language-"]')) {
+                    window.prismOnload = async ()=>{
+                        let c = 'code-overflow';
+                        Prism.highlightAll(!1, () => {
+                            A('.code-toolbar').forEach(v => {
+                                if (v.offsetHeight <= 1080) return;
+                                v.classList.add(c);
+                                v.addEventListener('click', f => {
+                                    if (!v.classList.contains(c)) return;
+                                    let toolbar = undefined,
+                                    fold = C('div'),
+                                    span = C('span');
+                                    span.textContent = 'Fold';
+                                    fold.classList.add('toolbar-item');
+                                    fold.appendChild(span);
+                                    fold.addEventListener('click', e => {
+                                        e.stopPropagation();
+                                        v.classList.add(c);
+                                        toolbar.removeChild(fold)
+                                    });
+                                    v.classList.remove(c);
+                                    toolbar = v.querySelector('.toolbar');
+                                    toolbar.prepend(fold);
+                                })
+                            })
+                        });
+                        if (callback && typeof callback === 'function') callback();
+                    };
+                    loadExistentLink('prism', window.prismOnload);
+                }
+            },
+            mermaid: (callback)=>{
+                let elems = A('div.mermaid:not([data-processed="true"])');
+                if (elems.length) {
+                    function _onload(callback) {
+                        mermaid.initialize({startOnLoad:false});
+                        elems.forEach(v => {
+                            let id = 'mermaid-' + Doghole.Utils.getUuid(),
+                            textContent = v.textContent;
+                            v.textContent = '';
+                            v.appendChild((() => {
+                                let div = C('div');
+                                div.setAttribute('id', id);
+                                return div
+                            })());
+                            mermaid.renderAsync(id, textContent, (rendered) => {
+                                v.innerHTML = rendered;
+                                v.setAttribute('data-processed', true);
+                                v.dogbox(Doghole.dogboxDefaultOptions);
+                                if (callback && typeof callback === 'function') callback(v);
+                            })
+                        })
+                    }
+                    if (!window.mermaid) {
+                        loadExistentLink('mermaid', _onload);
+                    }
+                    else {
+                        _onload(callback);
+                    }
+                }
+            }
+        }
+    })()
+    , LazyCSS = (url) => {
+        if (!url) {
+            // fix prefetch, original link tag must have onload attr as "this.rel='stylesheet'"
+            // <link rel="prefetch" href="xxx" as="style" onload="this.rel='stylesheet'">
+            A('link[rel="prefetch"][as="style"]').forEach(link => {
+                link.setAttribute('rel', 'stylesheet')
+            })
+        }
+        else {
+            document.head.appendChild((() => {
+                let link = C('link');
+                link.setAttribute('href', url);
+                link.setAttribute('rel', 'stylesheet');
+                return link
+            })())
+        }
+    },
+    Theme = (() => {
+        
+        let html = Q('html'),
+            themes = [{name: '跟随系统', class: 'auto'}, {name: '日间模式', class: 'bright'}, {name: '夜间模式', class: 'dark'}],
+            htmlClassList = Q('html').classList,
+            themeIcons = [],
+            getSetting = () => {
+                for (let i = 0; i < themes.length; i++) {
+                    if (htmlClassList.contains(themes[i].class)) {
+                        return {curr: themes[i], next: themes[i == themes.length - 1 ? 0 : i + 1]};
+                    }
+                }
+                return {curr: !0, next: themes[0]};
+            },
+            initIconsTitle = (s) => {
+                themeIcons.forEach(icon => {
+                    icon.title = `当前为${s.curr.name}主题，点击切换为${s.next.name}主题`;
+                });
+            },
+            changeTheme = () => {
+                let s = getSetting();
+                if (s.curr) {
+                    htmlClassList.remove(s.curr.class);
+                }
+                htmlClassList.add(s.next.class);
+                Doghole.Cookies.set('theme', s.next.class, 3650);
+                initIconsTitle(getSetting());
+            }, s = getSetting();
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            themeIcons = A('.theme-icon')
+            if (!s.curr) changeTheme()
+            else initIconsTitle(s)
+            themeIcons.forEach(icon => icon.onclick = changeTheme)
+        });
+        
+        return {
+            changeTheme: changeTheme,
+            setThemeIcons: (elements) => this.themeIcons = elements
+        }
+    })();
+    
+    let ret = {
+        Animate: Animate,
+        Cookies: Cookies,
+        Elem: Elem,
+        Events: Events,
+        LazyCSS: LazyCSS,
+        LazyJS: LazyJS,
+        Theme: Theme,
+        Utils: Utils,
+        Wiki: Wiki,
+        dogboxDefaultOptions : {
+            targetWash: (obj) => {
+                if (obj.nodeName == 'DIV' && obj.classList.contains('mermaid')) {
+                    obj = obj.querySelector('svg');
+                }
+                return obj;
+            },
+            rendered: (dogbox)=>{
+                dogbox.box.scrollLock();
+                dogbox.mask.scrollLock();
+                let b = 'blur(2px)'
+                if (isFirefox) {
+                    Q('.move-block').style.filter = b
+                    Q('.header').style.filter = b
+                }
+                else {
+                    dogbox.mask.style.backdropFilter = b
+                }
+            },
+            closed: (dogbox)=>{
+                dogbox.box.scrollLock('disable');
+                dogbox.mask.scrollLock('disable');
+                
+                Q('.move-block').style.filter = 'none'
+                Q('.header').style.filter = 'none'
+            },
+            beforeClose: (dogbox)=>{
+                dogbox.mask.style.backdropFilter = 'unset'
+            }
+        }
+    }
+    
+    try {
+        return ret
+    }
+    finally {
+        let banner =
+'    ____              __\n'+
+'   / __ \\____  ____ _/ /_  ____  __  _____  ___   _\n'+
+'  / / / / __ \\/ __ `/ __ \\/ __ \\/ / / / __`/ _ \\ __\n'+
+' / /_/ / /_/ / /_/ / / / / /_/ / /_/ /__  /  __/__--_\n'+
+'/_____/\\____/\\__, /_/ /_/\\____/\\__,_/\\___/\\________=_\n'+
+'            /____/ Loaded~';
+        console.log(banner);
+        if (callback && typeof callback === 'function') callback(ret)
+    }
+}
+var Doghole = window.Doghole = Doghole();
+}
+
+/*
+     FILE ARCHIVED ON 02:34:26 Apr 07, 2025 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 15:28:39 Aug 17, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  capture_cache.get: 0.346
+  load_resource: 1741.356
+  PetaboxLoader3.resolve: 1682.21
+  PetaboxLoader3.datanode: 49.235
+*/

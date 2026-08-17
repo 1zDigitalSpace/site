@@ -1,0 +1,138 @@
+var _____WB$wombat$assign$function_____=function(name){return (globalThis._wb_wombat && globalThis._wb_wombat.local_init && globalThis._wb_wombat.local_init(name))||globalThis[name];};if(!globalThis.__WB_pmw){globalThis.__WB_pmw=function(obj){this.__WB_source=obj;return this;}}{
+let window = _____WB$wombat$assign$function_____("window");
+let self = _____WB$wombat$assign$function_____("self");
+let document = _____WB$wombat$assign$function_____("document");
+let location = _____WB$wombat$assign$function_____("location");
+let top = _____WB$wombat$assign$function_____("top");
+let parent = _____WB$wombat$assign$function_____("parent");
+let frames = _____WB$wombat$assign$function_____("frames");
+let opener = _____WB$wombat$assign$function_____("opener");
+if(window != top)top.location.href=window.location.href;
+(() => {
+    let
+    Q = x => document.querySelector(x),
+    A = x => document.querySelectorAll(x),
+    C = x => document.createElement(x),
+    burger = Q('.burger'),
+    sidebarContainer = Q('.sidebar-container');
+    
+    if (burger) burger.addEventListener('click', (e) => {
+        let
+        t = Q('.new-comment>textarea[name="content"]'),
+        o = 'burger-open', c = 'burger-close';
+        if (!burger.classList.contains(o)) {
+            burger.classList.remove(c);
+            burger.classList.add(o);
+            sidebarContainer.classList.add('show');
+            if (t) t.style.resize = 'none'
+        }
+        else if (burger.classList.contains(o)) {
+            burger.classList.remove(o);
+            burger.classList.add(c);
+            sidebarContainer.classList.remove('show');
+            if (t) t.style.resize = 'vertical'
+        }
+    })
+    
+    // Recent post active sync
+    if (Q('.post-page')) {
+        let loc = location.href.toLowerCase().replace(/https?:\/\//,'').replace(/\?.*/,'').replace(/#.*/,'');
+        A('.recent a, .popular a').forEach(a => {
+            let h = a.getAttribute('href');
+            if (h) {
+                if (h.indexOf('/') == 0) h = location.host + h;
+                if (h.toLowerCase() == loc) return a.classList.add('active')
+            }
+        })
+    }
+    
+    // Search
+    let searchbox = Q('#searchbox')
+    if (searchbox) searchbox.addEventListener('keypress', (e) => {
+        if (e.which == 13) {
+            let q = this.value;
+            if (q != '') {
+                location.href = '/search/' + q;
+            }
+        }
+    })
+    
+    // Back to top event
+    let back2Top = Q('.back-to-top')
+    if (back2Top) back2Top.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // locate 暂时 off refreshMenu 事件
+        if (Doghole.refreshMenuHandler) {
+            window.removeEventListener('scroll', Doghole.refreshMenuHandler)
+        }
+        Doghole.Animate.scrollTo(0, 800, () => {
+            if (Doghole.refreshMenuHandler) {
+                window.addEventListener('scroll', Doghole.refreshMenuHandler)
+            }
+            if (Doghole.refreshMenu) Doghole.refreshMenu()
+        })
+        //setTimeout(()=>{var r = Doghole.refreshMenu;if(r)r();},1000);
+        return !1
+    })
+        
+    window.addEventListener('scroll', () => {
+        Doghole.Animate.stop(back2Top)
+        Doghole.Animate[this.pageYOffset > 100 ? 'fadeIn' : 'fadeOut'](back2Top)
+    })
+    
+    A('.main, .main-and-side .sidebar-container').forEach(elem => {
+        elem.scrollLock()
+    })
+    
+    A('.anicon').forEach(anicon => {
+        anicon.querySelectorAll('.ani').forEach((ani, i) => {
+            let s = (i + 1) * 0.15 + 's';
+            ani.style.animationDuration = s;
+        })
+    })
+    
+    A(Doghole.Elem.cartesian([
+        '.post-content,.comment-content',
+        ' img:not(.notbox), .mermaid[data-processed="true"]'])).forEach(elem =>
+        elem.dogbox(Doghole.dogboxDefaultOptions)
+    )
+    
+    var l = Doghole.LazyJS, c = Doghole.LazyCSS;
+    l.katex();l.prism();l.mermaid();
+    c('/blog/common/fonts/cn-fontsource-lxgw-neo-xi-hei-regular/font.css');
+    c('https://web.archive.org/web/20250408151059/https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap');
+    c('https://web.archive.org/web/20250408151059/https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap');
+    c('https://web.archive.org/web/20250408151059/https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+    //c('https://web.archive.org/web/20250408151059/https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css');
+    c();
+    
+    // Git-like statistics
+    A('.graph>svg>rect').forEach(r => {
+        let a = x => r.attributes['data-' + x].value, i = parseInt,
+        p = i(a('posts')), c = i(a('comments'));
+        if (p || c) {
+            let v = a('date') + (p ? '\r\nPosts: ' + p : '') + (c ? '\r\nComments: ' + c : ''),
+            t = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+            t.append(v);
+            r.append(t);
+        }
+    })
+})()
+}
+
+/*
+     FILE ARCHIVED ON 15:10:59 Apr 08, 2025 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 15:28:41 Aug 17, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  capture_cache.get: 0.282
+  load_resource: 99.423
+  PetaboxLoader3.resolve: 52.001
+  PetaboxLoader3.datanode: 16.005
+*/
