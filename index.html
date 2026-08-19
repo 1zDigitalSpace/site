@@ -51,7 +51,7 @@
       <p class="hero-sub mono reveal" style="--d:.15s">DIGITAL&nbsp;SPACE&nbsp;CLUB</p>
       <p class="hero-typed mono"><span id="typedText"></span><span class="caret"></span></p>
       <div class="hero-btns reveal" style="--d:.3s">
-        <a href="#slogan" class="btn magnetic"><span>探索社团</span><span>&darr;</span></a>
+        <a href="#about" class="btn magnetic"><span>探索社团</span><span>&darr;</span></a>
         <a href="#join" class="btn solid magnetic" data-join-modal><span>加入我们</span><span>&rarr;</span></a>
       </div>
     </div>
@@ -62,7 +62,7 @@
   <div class="scroll-hint mono"><span class="mouse"><i></i></span>SCROLL</div>
 </header>
 
-<!-- ═══════════ Slogan 视频页 ═══════════ -->
+<!-- ═══════════ Slogan 视频页 ═══════════ 
 <section class="slogan" id="slogan">
   <video class="slogan-video" id="sloganVideo" autoplay muted loop playsinline preload="auto">
     <source src="https://kkk.intwing.com/PCbanner.mp4" type="video/mp4" />
@@ -76,7 +76,7 @@
 
 <main>
 
-<!-- ═══════════ 关于我们 ═══════════ -->
+ ═══════════ 关于我们 ═══════════ -->
 <section class="section" id="about">
   <div class="sec-head reveal">
     <p class="sec-kicker mono">// 01 &middot; WHO WE ARE</p>
@@ -131,10 +131,9 @@
         <div class="work-body">
           <h3>数字兰州一中</h3>
           <p>以三维建模还原兰州一中校园的 Web 交互作品，在浏览器里即可自由漫游校园的一砖一瓦。社团旗舰项目。</p>
-          <div class="card-tags mono"><span>#三维建模</span><span>#GLB</span><span>#Web交互</span></div>
           <div class="work-links mono">
-            <a href="https://hello.1zdigital.space/digitallzyz" target="_blank" rel="noopener">预览完整版 &#8599;</a>
-            <a href="https://hello.1zdigital.space/digitallzyz/simplified.html" target="_blank" rel="noopener">预览精简版 &#8599;</a>
+            <a href="https://hello.1zdigital.space/digitallzyz" target="_blank" rel="noopener">预览完整版</a>
+            <a href="https://hello.1zdigital.space/digitallzyz/simplified.html" target="_blank" rel="noopener">预览精简版</a>
           </div>
         </div>
       </article>
@@ -148,9 +147,8 @@
         <div class="work-body">
           <h3>弘毅大礼堂抽奖系统</h3>
           <p>为学校弘毅大礼堂活动开发的现场抽奖系统，大屏滚动、即抽即中，把现场气氛推向高潮。</p>
-          <div class="card-tags mono"><span>#Web</span><span>#大屏互动</span><span>#活动现场</span></div>
           <div class="work-links mono">
-            <a href="https://hello.1zdigital.space/hy" target="_blank" rel="noopener">在线体验 &#8599;</a>
+            <a href="https://hello.1zdigital.space/hy" target="_blank" rel="noopener">在线体验</a>
           </div>
         </div>
       </article>
@@ -164,10 +162,17 @@
         <div class="work-body">
           <h3>智能坐姿监测</h3>
           <p>基于 MediaPipe 与 OpenCV 的桌面应用，用摄像头实时检测坐姿，长时间坐姿不端时语音提示，守护你的颈椎。</p>
-          <div class="card-tags mono"><span>#MediaPipe</span><span>#OpenCV</span><span>#PyQt6</span></div>
-          <div class="work-links mono">
-            <a href="https://github.com/MicroPotatoChips/poseture_monitor" target="_blank" rel="noopener">项目主页 &#8599;</a>
-            <a href="https://github.com/MicroPotatoChips/poseture_monitor/releases/download/v0.0.1/poseture_monitor.exe" target="_blank" rel="noopener">软件下载 &#8599;</a>
+          <div class="work-links mono" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- 桌面端 -->
+            <div style="display: flex; gap: 0; flex-wrap: nowrap;">
+              <a href="https://github.com/MicroPotatoChips/poseture_monitor" target="_blank" rel="noopener" style="flex: 2; text-align: center; border-radius: 999px 0 0 999px; border-right: none; padding: 6px 12px; white-space: nowrap;">桌面端主页</a>
+              <a href="https://github.com/MicroPotatoChips/poseture_monitor/releases/download/v0.0.1/poseture_monitor.exe" target="_blank" rel="noopener" style="flex: 1; text-align: center; border-radius: 0 999px 999px 0; padding: 6px 12px; white-space: nowrap;">下载</a>
+            </div>
+            <!-- Android端 -->
+            <div style="display: flex; gap: 0; flex-wrap: nowrap;">
+              <a href="https://github.com/MicroPotatoChips/PostureGuard" target="_blank" rel="noopener" style="flex: 2; text-align: center; border-radius: 999px 0 0 999px; border-right: none; padding: 6px 12px; white-space: nowrap;">Android主页</a>
+              <a href="https://github.com/MicroPotatoChips/PostureGuard/releases/download/1.1.1/PostureGuard.apk" target="_blank" rel="noopener" style="flex: 1; text-align: center; border-radius: 0 999px 999px 0; padding: 6px 12px; white-space: nowrap;">下载</a>
+            </div>
           </div>
         </div>
       </article>
@@ -181,7 +186,6 @@
         <div class="work-body">
           <h3>洗洁精机箱</h3>
           <p>把洗洁精空瓶改造成电脑机箱的创意装机，整机费用不到 200 元 &mdash;&mdash; 极客精神，融入生活美学。</p>
-          <div class="card-tags mono"><span>#创意装机</span><span>#硬件改装</span><span>#不到200元</span></div>
         </div>
       </article>
     </div>
@@ -410,7 +414,7 @@
     </div>
     <div class="reveal" style="--d:.08s">
       <a class="card friend-card" href="https://1zdigital.space/" target="_blank" rel="noopener">
-        <img class="friend-avatar" src="https://cravatar.com/avatar/0fc2c5f90ea8afbfb604182b74a423ce?d=mp&amp;s=240" alt="呖呖李" loading="lazy" decoding="async" />
+        <img class="friend-avatar" src="https://cdn-community.bcmcdn.com/47/community/3UgImXDbTBmIPz3SL7jvvg1ovtmven7DHiyVY0roXRzm.webp" alt="呖呖李" loading="lazy" decoding="async" />
         <div class="friend-meta">
           <h3>呖呖李</h3>
           <p>digital 宇宙正在加载中，欢迎来到这个数据驱动的世界。这里记录了&ldquo;我&rdquo;在地球的混入人类心得。</p>
@@ -446,7 +450,7 @@
     </div>
     <div class="reveal" style="--d:.4s">
       <a class="card friend-card" href="https://hello.1zdigital.space/qian" target="_blank" rel="noopener">
-        <img class="friend-avatar" src="https://cdn-community.bcmcdn.com/47/community/d2ViXzMwMDFfMzQwODM0OF8wXzE3NjMzOTU5MDYyNDVfMDBhOGVhNWQ.jpeg" alt="千" loading="lazy" decoding="async" />
+        <img class="friend-avatar" src="https://cdn-community.bcmcdn.com/47/community/SIr7D7sPPllbbXKNWZjqrLAchuoUon8iLFSjl3y33WF5.jpg" alt="千" loading="lazy" decoding="async" />
         <div class="friend-meta">
           <h3>千</h3>
           <p>你好啊喵</p>

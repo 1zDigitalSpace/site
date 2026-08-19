@@ -157,10 +157,9 @@ const bootLines = [
 
 /* ───────────── Hero 打字机 ───────────── */
 const phrases = [
-  '在芯片与代码的世界里挥洒青春。',
-  '推广数码科技，培养技术素养与创新能力。',
-  '自由探索 · 动手实践 · 技术分享。',
-  '共同开启通向未来的科技之门。',
+  '你指尖跃动的电光，是我此生不灭的信仰，唯我超电磁炮永世长存！',
+  '数码空间，前进四！',
+  '吾王剑锋所指，吾等心之所向。',
   '不浪费每一寸晶圆。',
   '厨邦酱油美味鲜，晒足一百八十天！',
   '啊啊 这个这个 这个这个我们 这个这个啊 这个是吧 啊 这个这个啊啊 这个啊',
@@ -294,6 +293,8 @@ $$('a[href^="#"]:not([data-join-modal])').forEach(a => {
 /* ───────────── 分页滚动（滚轮 / 键盘整屏翻页） ───────────── */
 (function fullPage() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // 手机/平板触摸设备禁用翻页
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
 
   const root = document.documentElement;
   const navLinks = $('#navLinks');
@@ -301,89 +302,114 @@ $$('a[href^="#"]:not([data-join-modal])').forEach(a => {
   let animId = 0;
   let coolUntil = 0;
   let acc = 0, accTimer = null;
+  let isScrolling = false;
 
-  /* 停靠点：每个区块的顶部；高于一屏的区块每隔一屏补一个停靠点 */
+  /* 停靠点：只取每个区块的顶部和底部，过滤掉太近的 */
   function computeStops() {
-    const els = [$('#home'), $('#slogan'), ...$$('main .section'), $('.footer')].filter(Boolean);
+    const els = [$('#home'), ...$$('main .section'), $('.footer')].filter(Boolean);
     const max = Math.max(0, root.scrollHeight - innerHeight);
     const pts = new Set([0, Math.round(max)]);
     els.forEach(el => {
       const top = Math.round(el.getBoundingClientRect().top + scrollY);
-      const bottom = Math.round(top + el.offsetHeight - innerHeight);
-      for (let y = top; y < bottom; y += innerHeight) pts.add(y);
-      if (bottom > top) pts.add(bottom);
-      pts.add(top);
+      const bottom = Math.round(top + el.offsetHeight);
+      pts.add(Math.min(top, max));
+      pts.add(Math.min(bottom, max));
     });
-    stops = [...new Set([...pts].map(y => Math.min(Math.max(y, 0), Math.round(max))))]
-      .sort((a, b) => a - b);
+    // 排序并过滤掉距离太近的停靠点（小于屏幕高度的 50%）
+    const sorted = [...pts].map(y => Math.min(Math.max(y, 0), Math.round(max))).sort((a, b) => a - b);
+    const filtered = [];
+    const minGap = innerHeight * 0.5;
+    for (const y of sorted) {
+      if (filtered.length === 0 || y - filtered[filtered.length - 1] >= minGap) {
+        filtered.push(y);
+      }
+    }
+    stops = filtered;
   }
 
-  /* 平滑滚动到目标停靠点（期间暂时接管 scroll-behavior / snap，避免冲突） */
+  /* 平滑滚动到目标停靠点 */
   function goTo(target) {
+    if (isScrolling) return;
     cancelAnimationFrame(animId);
     const start = scrollY;
     const dist = target - start;
-    if (!dist) { animId = 0; return; }
-    const dur = Math.min(950, 450 + Math.abs(dist) * 0.3);
+    if (Math.abs(dist) < 5) { animId = 0; return; }
+    isScrolling = true;
+    // 根据距离动态调整时长，至少 500ms，每 1000px 增加 300ms，上限 2000ms
+    const dur = Math.min(2000, Math.max(500, 500 + Math.abs(dist) * 0.3));
     const t0 = performance.now();
     root.style.scrollBehavior = 'auto';
     root.style.scrollSnapType = 'none';
     (function frame(now) {
       const t = Math.min((now - t0) / dur, 1);
-      const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; // easeInOutCubic
+      // easeInOutCubic
+      const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       scrollTo(0, start + dist * e);
       if (t < 1) { animId = requestAnimationFrame(frame); return; }
       animId = 0;
       root.style.scrollBehavior = '';
       root.style.scrollSnapType = '';
-      coolUntil = performance.now() + 250; // 屏蔽触控板惯性余波
-      computeStops();
+      isScrolling = false;
+      coolUntil = performance.now() + 400;
     })(t0);
   }
 
-  /* 翻到下一页（dir=1）或上一页（dir=-1） */
+  /* 翻页 */
   function step(dir) {
+    if (isScrolling || performance.now() < coolUntil) return;
     const y = scrollY;
     let i = 0;
-    stops.forEach((s, k) => { if (s <= y + 2) i = k; });
-    const target = dir > 0 ? stops[i + 1] : (Math.abs(stops[i] - y) <= 2 ? stops[i - 1] : stops[i]);
+    stops.forEach((s, k) => { if (s <= y + 5) i = k; });
+    let target;
+    if (Math.abs(stops[i] - y) <= 30) {
+      target = stops[i + dir];
+    } else {
+      let nearest = 0, minDist = Infinity;
+      stops.forEach((s, k) => {
+        const d = Math.abs(s - y);
+        if (d < minDist) { minDist = d; nearest = k; }
+      });
+      target = stops[nearest + dir];
+    }
     if (target === undefined) return;
     goTo(target);
   }
 
-  /* 滚轮：一次手势翻一页（触控板小步长先累积） */
+  /* 滚轮 */
   addEventListener('wheel', e => {
     if (!document.body.classList.contains('loaded')) return;
-    if (e.ctrlKey || navLinks.classList.contains('open')) return; // 缩放 / 菜单展开时不接管
-    if (document.body.classList.contains('lb-open')) return; // 灯箱打开时不翻页
+    if (e.ctrlKey || navLinks.classList.contains('open')) return;
+    if (document.body.classList.contains('lb-open')) return;
+    if (isScrolling) { e.preventDefault(); return; }
     e.preventDefault();
-    if (animId || performance.now() < coolUntil) return;
+    if (performance.now() < coolUntil) return;
     acc += e.deltaMode === 1 ? e.deltaY * 32 : e.deltaY;
     clearTimeout(accTimer);
-    accTimer = setTimeout(() => { acc = 0; }, 180);
-    if (Math.abs(acc) < 50) return;
+    accTimer = setTimeout(() => { acc = 0; }, 150);
+    if (Math.abs(acc) < 60) return;
     const dir = acc > 0 ? 1 : -1;
     acc = 0;
     step(dir);
   }, { passive: false });
 
-  /* 键盘：方向键 / PageUp / PageDown / 空格 / Home / End */
+  /* 键盘 */
   addEventListener('keydown', e => {
     if (!document.body.classList.contains('loaded')) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
-    if (document.body.classList.contains('lb-open')) return; // 灯箱打开时不翻页
+    if (document.body.classList.contains('lb-open')) return;
+    if (isScrolling) return;
     const t = e.target;
     if (t && t.closest && t.closest('a, button, input, textarea, select')) return;
     const dir = { ArrowDown: 1, PageDown: 1, ' ': 1, ArrowUp: -1, PageUp: -1 }[e.key];
     if (dir !== undefined) {
       e.preventDefault();
-      if (!animId) step(e.key === ' ' && e.shiftKey ? -1 : dir);
+      step(e.key === ' ' && e.shiftKey ? -1 : dir);
     } else if (e.key === 'Home') {
       e.preventDefault();
-      if (!animId) goTo(stops[0]);
+      goTo(stops[0]);
     } else if (e.key === 'End') {
       e.preventDefault();
-      if (!animId) goTo(stops[stops.length - 1]);
+      goTo(stops[stops.length - 1]);
     }
   });
 
@@ -467,7 +493,7 @@ function startTerm() {
   })();
 }
 
-/* ───────────── Slogan 背景视频 ───────────── */
+/* ───────────── Slogan 背景视频 ───────────── 
 (function sloganVideo() {
   const sec = $('.slogan');
   const v = $('#sloganVideo');
@@ -482,7 +508,7 @@ function startTerm() {
   io.observe(sec);
   // 视频加载失败时隐藏，露出渐变底色
   v.addEventListener('error', () => { v.style.display = 'none'; }, true);
-})();
+})();*/
 
 /* ───────────── 照片灯箱（点击照片放大查看） ───────────── */
 (function lightbox() {
