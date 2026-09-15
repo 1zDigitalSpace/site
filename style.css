@@ -146,31 +146,33 @@ figure,p,h1,h2,h3 {
   background:#e4edff;
   color:var(--ink)
 }
-.nav-link:hover {
+.nav-link:not(.nav-cta):hover {
   background:#e9efff
 }
 /* 突出按钮：导航 CTA → 蓝粉渐变 */
+/* 导航 CTA：更亮的粉蓝渐变，去掉扩散光晕 */
 .nav-cta {
-  background:var(--grad);
-  color:white;
-  margin-left:15px;
-  display:flex;
-  align-items:center;
-  gap:18px;
-  border-radius:15px;
-  box-shadow:0 8px 20px -12px #ff4dff80;
-  transition:filter .25s,box-shadow .25s,transform .25s
+  background: linear-gradient(135deg, #ff5fd6, #4db2ff);
+  color: #fff;
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  border-radius: 15px;
+  text-shadow: 0 1px 2px rgba(80, 30, 120, .25);
+  box-shadow: inset 0 1px 0 #ffffff40;
+  transition: transform .25s, box-shadow .25s, filter .25s;
 }
 .nav-cta::after {
-  content:'↗';
-  font-size:18px;
-  line-height:1
+  content: '↗';
+  font-size: 18px;
+  line-height: 1;
 }
 .nav-cta:hover {
-  filter:brightness(1.08);
-  box-shadow:0 12px 26px -12px #4d9effb3;
-  color:white;
-  transform:translateY(-2px)
+  filter: saturate(1.15) brightness(1.05);
+  box-shadow: inset 0 1px 0 #ffffff59, 0 6px 16px -10px rgba(120, 80, 200, .45);
+  color: #fff;
+  transform: translateY(-1px);
 }
 .nav-toggle {
   display:none;
