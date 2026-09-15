@@ -1,6 +1,92 @@
-<html>
-<head><title>404 Not Found</title></head>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 · 信号丢失 — 数码空间 DIGITAL SPACE</title>
+<meta name="description" content="页面未找到 —— 你访问的坐标不存在于数码空间。" />
+<meta name="robots" content="noindex" />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,800;1,400&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="experience.css" />
+<link rel="stylesheet" href="motion.css" />
+<link rel="stylesheet" href="css/refraction.css" />
+<style>
+  /* 404 页面移动端：终端与按钮之间留出间距 */
+  @media (max-width: 760px) {
+    .hero .terminal { margin-top: 28px; }
+  }
+</style>
+</head>
 <body>
-<center><h1>404 Not Found</h1></center>
-<hr><center>nginx</center>
+
+<a class="skip-link" href="#home">跳转到正文</a>
+
+<!-- ═══════════ Nav ═══════════ -->
+<nav class="nav" id="nav" aria-label="主导航">
+  <a href="/" class="nav-logo mono"><img src="assets/logo.png" alt="数码空间社 Logo" class="nav-logo-img" width="1170" height="1159" />DIGITAL_SPACE<span class="blink">_</span></a>
+  <div class="nav-links" id="navLinks">
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="打开菜单" aria-controls="navLinks" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ═══════════ 404 Hero ═══════════ -->
+<header class="hero" id="home">
+  <div class="hero-atmosphere" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <p class="hero-eyebrow mono"><span></span> DIGITAL SPACE CLUB <i>ERR / 404</i></p>
+      <h1 class="hero-title">404</h1>
+      <p class="hero-sub mono reveal" style="--d:.15s">SIGNAL&nbsp;LOST</p>
+      <p class="hero-typed mono"><span id="typedText">你访问的坐标不存在于数码空间</span><span class="caret"></span></p>
+      <div class="hero-btns reveal" style="--d:.3s">
+        <a href="/" class="btn solid magnetic" data-back><span>返回上一页</span><span>&larr;</span></a>
+      </div>
+    </div>
+    <div class="terminal reveal" style="--d:.2s" aria-label="终端输出">
+      <div class="term-bar">
+        <span class="term-dot" style="background:#ff5f57"></span>
+        <span class="term-dot" style="background:#febc2e"></span>
+        <span class="term-dot" style="background:#28c840"></span>
+        <span class="term-title mono">guest@digital-space: ~</span>
+      </div>
+      <div class="term-body">
+        <div class="term-line"><span class="prompt cmd">$</span><span class="cmd"> cd /请求的页面</span></div>
+        <div class="term-line"><span class="prompt out">&gt;</span><span class="out"> bash: 没有那个文件或目录</span></div>
+        <div class="term-line"><span class="prompt cmd">$</span><span class="cmd"> ls ./数码空间</span></div>
+        <div class="term-line"><span class="prompt out">&gt;</span><span class="out"> 首页/&nbsp;&nbsp;关于/&nbsp;&nbsp;作品/&nbsp;&nbsp;历程/&nbsp;&nbsp;加入我们/</span></div>
+        <div class="term-line"><span class="prompt cmd">$</span><span class="cmd"> ./recover.sh --target=home</span></div>
+        <div class="term-line"><span class="prompt ok">&gt;</span><span class="ok"> [ OK ] 正在引导你返回首页...</span></div>
+        <div class="term-line"><span class="prompt cmd">$</span><span class="term-caret"></span></div>
+      </div>
+      <div class="term-status mono"><span><i></i> <span id="termStatus">READY</span></span><span>UTF-8 · BASH</span></div>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <a href="/" class="scroll-hint mono" data-back><span class="scroll-arrow">↩</span> BACK TO PREVIOUS</a>
+    <p class="hero-note mono">E quindi uscimmo a riveder le stelle.</p>
+    <span class="hero-page mono">ERR — 404</span>
+  </div>
+</header>
+
+
+<script>
+  /* 返回上一页；若无历史记录，则回落至首页 */
+  document.querySelectorAll('[data-back]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      if (window.history.length > 1) {
+        e.preventDefault();
+        window.history.back();
+      }
+    });
+  });
+</script>
+
+<script src="main.js"></script>
+<script src="js/vendor/hyalite.js" defer></script>
+<script src="js/refraction.js" defer></script>
 </body>
+</html>

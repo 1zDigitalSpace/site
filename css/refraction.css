@@ -1,0 +1,52 @@
+/* Progressive enhancement: the original glass remains the fallback. */
+/* 配色：浅蓝 × 粉（对齐 Heo 主题 #4d9eff / #ff4dff） */
+.nav.has-refraction {
+  background: linear-gradient(115deg, #ffffff85, #f2f7ff75);
+  -webkit-backdrop-filter: var(--hyalite, blur(22px));
+  backdrop-filter: var(--hyalite, blur(22px));
+  box-shadow: var(--hyalite-edge, inset 0 1px 0 #fff), 0 12px 30px -18px #1a2a4a55;
+}
+.gallery-arrow.has-refraction, .gallery-expand.has-refraction {
+  -webkit-backdrop-filter: var(--hyalite, blur(18px));
+  backdrop-filter: var(--hyalite, blur(18px));
+  background: linear-gradient(140deg, #ffffff38, #ffffff0c);
+  box-shadow: var(--hyalite-edge, inset 0 1px 0 #fff), 0 7px 16px #0003;
+}
+.gallery-arrow.has-refraction:hover { background: #9ecbff4d; }
+/* Glass stays behind the original image: no photo pixels enter the lens. */
+.photo-refraction {
+  display: none;
+  position: absolute;
+  inset: 2px;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, #ffffff24, #ffffff04 48%, #ffffff18);
+  -webkit-backdrop-filter: var(--hyalite, blur(1px));
+  backdrop-filter: var(--hyalite, blur(1px));
+  box-shadow: var(--hyalite-edge, inset 0 1px 0 #fff);
+}
+.photo-refraction.is-available { display: block; }
+.photo-refraction:not(.has-refraction) { visibility: hidden; }
+.vibe-stage .vibe-fig.has-refraction-frame {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.vibe-stage .vibe-fig img {
+  position: relative;
+  z-index: 2;
+  filter: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.vibe-stage .vibe-fig::after { z-index: 3; }
+.orbit-label.has-refraction {
+  -webkit-backdrop-filter: var(--hyalite, blur(12px));
+  backdrop-filter: var(--hyalite, blur(12px));
+  box-shadow: var(--hyalite-edge, inset 0 1px 0 #fff), 0 12px 32px -22px #2f4e7a55;
+  border-color: #ffffffb3;
+  background: linear-gradient(135deg, #ffffff85, #e6f2ff3d);
+}
+@media (max-width: 760px) {
+  .nav.has-refraction { background: linear-gradient(115deg, #ffffffa6, #f2f7ff99); }
+}
