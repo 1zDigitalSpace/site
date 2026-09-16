@@ -17,6 +17,7 @@
 * {
   box-sizing:border-box
 }
+
 html {
   scroll-behavior:smooth;
   scroll-padding-top:110px
@@ -146,6 +147,7 @@ figure,p,h1,h2,h3 {
   background:#e4edff;
   color:var(--ink)
 }
+
 .nav-link:not(.nav-cta):hover {
   background:#e9efff
 }
