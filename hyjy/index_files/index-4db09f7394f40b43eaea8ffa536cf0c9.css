@@ -202,7 +202,7 @@
   font-family: 'Vampiro One';
   font-style: normal;
   font-weight: 400;
-  src: url(https://web.archive.org/web/20250408151053im_/https://fonts.gstatic.font.im/s/vampiroone/v18/gokqH6DoDl5yXvJytFsdLnquuPl4og.woff2) format('woff2');
+  src: url(http://web.archive.org/web/20250408151053im_/https://fonts.gstatic.font.im/s/vampiroone/v18/gokqH6DoDl5yXvJytFsdLnquuPl4og.woff2) format('woff2');
   unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 /* latin */
@@ -210,7 +210,7 @@
   font-family: 'Vampiro One';
   font-style: normal;
   font-weight: 400;
-  src: url(https://web.archive.org/web/20250408151053im_/https://fonts.gstatic.font.im/s/vampiroone/v18/gokqH6DoDl5yXvJytFsdLnqguPk.woff2) format('woff2');
+  src: url(http://web.archive.org/web/20250408151053im_/https://fonts.gstatic.font.im/s/vampiroone/v18/gokqH6DoDl5yXvJytFsdLnqguPk.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
@@ -218,7 +218,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://web.archive.org/web/20250408151053im_/https://fonts.gstatic.com/s/firacode/v10/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sFVc.ttf) format('truetype');
+  src: url(http://web.archive.org/web/20250408151053im_/https://fonts.gstatic.com/s/firacode/v10/uU9eCBsR6Z2vfE9aq3bL0fxyUs4tcw4W_D1sFVc.ttf) format('truetype');
 }
 @font-face {
   font-family: "doghouse";
@@ -1089,7 +1089,7 @@ embed.qq-music {
 }
 /*
      FILE ARCHIVED ON 15:10:53 Apr 08, 2025 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 15:28:37 Aug 17, 2026.
+     INTERNET ARCHIVE ON 15:48:36 Sep 16, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
@@ -1097,8 +1097,8 @@ embed.qq-music {
 */
 /*
 playback timings (ms):
-  capture_cache.get: 0.289
-  load_resource: 283.254
-  PetaboxLoader3.resolve: 233.91
-  PetaboxLoader3.datanode: 22.587
+  capture_cache.get: 1.391
+  load_resource: 228.058
+  PetaboxLoader3.resolve: 107.882
+  PetaboxLoader3.datanode: 118.886
 */

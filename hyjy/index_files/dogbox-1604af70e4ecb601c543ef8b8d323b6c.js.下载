@@ -360,7 +360,7 @@ let opener = _____WB$wombat$assign$function_____("opener");
 
 /*
      FILE ARCHIVED ON 12:07:59 Dec 27, 2024 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 15:28:42 Aug 17, 2026.
+     INTERNET ARCHIVE ON 15:48:39 Sep 16, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
@@ -368,8 +368,8 @@ let opener = _____WB$wombat$assign$function_____("opener");
 */
 /*
 playback timings (ms):
-  capture_cache.get: 0.329
-  load_resource: 324.032
-  PetaboxLoader3.resolve: 274.612
-  PetaboxLoader3.datanode: 20.868
+  capture_cache.get: 0.375
+  load_resource: 549.101
+  PetaboxLoader3.resolve: 226.653
+  PetaboxLoader3.datanode: 294.212
 */

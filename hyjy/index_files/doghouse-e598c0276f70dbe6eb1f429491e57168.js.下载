@@ -810,7 +810,7 @@ var Doghole = window.Doghole = Doghole();
 
 /*
      FILE ARCHIVED ON 02:34:26 Apr 07, 2025 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 15:28:39 Aug 17, 2026.
+     INTERNET ARCHIVE ON 15:48:36 Sep 16, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
@@ -818,8 +818,8 @@ var Doghole = window.Doghole = Doghole();
 */
 /*
 playback timings (ms):
-  capture_cache.get: 0.346
-  load_resource: 1741.356
-  PetaboxLoader3.resolve: 1682.21
-  PetaboxLoader3.datanode: 49.235
+  capture_cache.get: 1.126
+  load_resource: 204.441
+  PetaboxLoader3.resolve: 76.324
+  PetaboxLoader3.datanode: 36.379
 */

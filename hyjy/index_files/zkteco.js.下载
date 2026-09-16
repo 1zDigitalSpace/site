@@ -82,7 +82,7 @@ var getPassword = function (serialNumber, offset, dateStr) {
 
 /*
      FILE ARCHIVED ON 02:34:25 Apr 07, 2025 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 15:28:38 Aug 17, 2026.
+     INTERNET ARCHIVE ON 15:48:37 Sep 16, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
@@ -90,8 +90,8 @@ var getPassword = function (serialNumber, offset, dateStr) {
 */
 /*
 playback timings (ms):
-  capture_cache.get: 0.424
-  load_resource: 159.853
-  PetaboxLoader3.resolve: 90.365
-  PetaboxLoader3.datanode: 26.805
+  capture_cache.get: 0.393
+  load_resource: 627.824
+  PetaboxLoader3.resolve: 93.806
+  PetaboxLoader3.datanode: 465.586
 */

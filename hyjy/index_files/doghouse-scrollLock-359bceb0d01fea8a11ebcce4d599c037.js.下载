@@ -12,7 +12,7 @@ window.Doghole&&function(t){"use strict";const o=".scrollLock",e=("onwheel"in do
 
 /*
      FILE ARCHIVED ON 12:07:59 Dec 27, 2024 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 15:28:42 Aug 17, 2026.
+     INTERNET ARCHIVE ON 15:48:39 Sep 16, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
@@ -20,8 +20,8 @@ window.Doghole&&function(t){"use strict";const o=".scrollLock",e=("onwheel"in do
 */
 /*
 playback timings (ms):
-  capture_cache.get: 0.337
-  load_resource: 112.976
-  PetaboxLoader3.resolve: 57.275
-  PetaboxLoader3.datanode: 12.445
+  capture_cache.get: 0.453
+  load_resource: 128.932
+  PetaboxLoader3.resolve: 78.906
+  PetaboxLoader3.datanode: 23.253
 */
