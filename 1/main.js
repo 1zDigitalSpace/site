@@ -159,6 +159,10 @@ const bootLines = [
 const phrases = [
   '星河揽梦，电掣流光',
   'E quindi uscimmo a riveder le stelle.',
+  'We live in stories we collectively believe in.',
+  'Per aspera ad astra.',
+  'Il faut cultiver notre jardin.',
+  'What can be shown cannot be said.',
   '不浪费每一寸晶圆。',
   '啊啊 这个这个 这个这个我们 这个这个啊 这个是吧 啊 这个这个啊啊 这个啊',
   '你好李鑫'
