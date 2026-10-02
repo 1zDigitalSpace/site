@@ -1,9 +1,10 @@
 /* Progressive enhancement: the original glass remains the fallback. */
+/* 配色：浅蓝 × 绿（对齐 Heo 主题 #4d9eff / #52e040） */
 .nav.has-refraction {
-  background: linear-gradient(115deg, #ffffff85, #f4f8eb75);
+  background: linear-gradient(115deg, #ffffff85, #f2f7ff75);
   -webkit-backdrop-filter: var(--hyalite, blur(22px));
   backdrop-filter: var(--hyalite, blur(22px));
-  box-shadow: var(--hyalite-edge, inset 0 1px 0 #fff), 0 12px 30px -18px #23381c55;
+  box-shadow: var(--hyalite-edge, inset 0 1px 0 #fff), 0 12px 30px -18px #1a2a4a55;
 }
 .gallery-arrow.has-refraction, .gallery-expand.has-refraction {
   -webkit-backdrop-filter: var(--hyalite, blur(18px));
@@ -11,7 +12,7 @@
   background: linear-gradient(140deg, #ffffff38, #ffffff0c);
   box-shadow: var(--hyalite-edge, inset 0 1px 0 #fff), 0 7px 16px #0003;
 }
-.gallery-arrow.has-refraction:hover { background: #e8ffc54d; }
+.gallery-arrow.has-refraction:hover { background: #9ecbff4d; }
 /* Glass stays behind the original image: no photo pixels enter the lens. */
 .photo-refraction {
   display: none;
@@ -42,10 +43,10 @@
 .orbit-label.has-refraction {
   -webkit-backdrop-filter: var(--hyalite, blur(12px));
   backdrop-filter: var(--hyalite, blur(12px));
-  box-shadow: var(--hyalite-edge, inset 0 1px 0 #fff), 0 12px 32px -22px #35553455;
+  box-shadow: var(--hyalite-edge, inset 0 1px 0 #fff), 0 12px 32px -22px #2f4e7a55;
   border-color: #ffffffb3;
-  background: linear-gradient(135deg, #ffffff85, #f2f9e83d);
+  background: linear-gradient(135deg, #ffffff85, #e6f2ff3d);
 }
 @media (max-width: 760px) {
-  .nav.has-refraction { background: linear-gradient(115deg, #ffffffa6, #f4f8eb99); }
+  .nav.has-refraction { background: linear-gradient(115deg, #ffffffa6, #f2f7ff99); }
 }
