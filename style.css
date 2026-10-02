@@ -2087,3 +2087,23 @@ img[hidden] {
     transform:none!important
   }
 }
+/* 侧面滚动条：蓝粉渐变 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #eef4ff;
+  opacity: 0;
+}
+::-webkit-scrollbar-thumb {
+  background: #009940;
+  border-radius: 10px;
+  border: 2px solid #eef4ff;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #005c26;
+}
+::-webkit-scrollbar-corner {
+  background: #eef4ff;
+}
